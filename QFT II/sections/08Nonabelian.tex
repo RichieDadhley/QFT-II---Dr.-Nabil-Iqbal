@@ -1,0 +1,513 @@
+\chapter{Non-Abelian Gauge Theories}
+
+\mybox{
+    Just a reminder/disclaimer: This chapter was not part of the taught material, however I have worked from Dr. Iqbal's notes to fill it in here.
+}
+
+Finally let's discuss non-Abelian gauge theories. Being gauge theories, a lot of the tricks and tips we use here will be reminiscent (or indeed identical in some places!) of the previous chapter. However the non-Abelian nature of our gauge fields will obviously be important and so will give rise to some completely new things. It is these "additional things" that essentially result in the differences between QED (the electromagnetic force) and QCD (the strong force). 
+
+\section{Non-Abelian Gauge Invariance}
+
+As before, the first thing we have to do is ask the question of how things transform and how we must modify our action if we are to "promote" our global symmetry to a gauge one. So the first thing we need is our non-Abelian group to define our transformations. Of course any\footnote{Compact, simple.} one will do (if we want to stay completely general), however in order to have some relation to the standard model (which is where QCD lives), we shall keep SU($N$)\footnote{The gauge group of QCD is SU$(3)$.} in the back of our minds. 
+
+\subsection{Recap On Group Theory}
+
+In order to proceed (and to set notational convention) let's start by recalling some group theory. Recall that a Lie group, $G$, has an associated Lie algebra, $\mathfrak{g}$, and we can use basis vectors $T^a$, with $a=1,...,\dim\mathfrak{g}$, of the Lie algebra to \textit{generate} the Lie group. This is true on an abstract level; that is we do not need a representation in order to do this but it is a general statement about Lie groups and their algebras. To give a more concrete example, if we were working with $SU(2)$, for example, we would have $\dim\mathfrak{g}= 2^2 -1 = 3$ generators. At no point have we mentioned the Pauli matrices or any kind of representation. We shall stick to the notation of $T^a$ being the abstract generators and then introduce other notations as we go for specific representations. 
+
+Now also recall that a Lie algebra comes equipped with a antisymmetric bilinear map, known as a Lie bracket, $[\cdot, \cdot ]$. We can use the Lie bracket in order to define the \textit{structure} constants, $f^{abc}$:\footnote{Note an $i$ is included here. This is different to the convention used on the group theory course. This is just the convention Dr. Iqbal is using and so I am sticking to it here.}
+\be 
+\label{eqn:StructureConstants}
+    [T^a, T^b] = if^{abc}T^c,
+\ee 
+where a sum over $c$ is implied. It is also easy to see that $f^{abc}$ is completely antisymmetric in its indices.  
+\bbox 
+    Recall the Jacobi identity for the Lie bracket 
+    \bse 
+        \big[X,[Y,Z]\big] + \big[Z,[X,Y]\big] + \big[Y,[Z,X]\big] = 0.
+    \ese 
+    Use this along with \Cref{eqn:StructureConstants} to show that 
+    \bse 
+        f^{ade}f^{bcd} + f^{bde}f^{cad} + f^{cde}f^{abd} = 0.
+    \ese 
+\ebox  
+
+Again this is all abstract, and we can get a better handle on it by giving a concrete example (using this as a chance to introduce some more notation). 
+
+\bex 
+    Let our Lie group be SU($2$). Then we can use the \textit{fundamental representation}
+    \bse 
+        T^a|_\text{fund.} =: t^a = \frac{1}{2}\sig^a
+    \ese 
+    with $a=1,2,3$ and $\sig^a$ being the Pauli matrices. We have used this to define our notational for the fundamental representation, little $t$. Our structure constants are then just the Levi-Civita tensor,\footnote{Perhaps I'm being a little bit overkill with subscripts etc here. This is just to try make sure the idea is clear.} 
+    \bse 
+        [t^a,t^b]_{SU(2)} = i\epsilon^{abc}t^c.
+    \ese 
+\eex 
+
+\subsection{Building The Action}
+
+Ok now let's talk about fields so we can start building our Lagrangian. As we are ultimatley leading to QCD, let's introduce a Fermion field $\psi$. We will let it transform in the fundamental representation\footnote{Note there is no reason a priori to assume this. The reason we do this is because we know that quarks carry 3 possible colours and so transform in the fundamental representation of SU(3).} of our SU($N$) group:
+\bse 
+    \psi(x) \mapsto \psi'(x) = U(x) \psi(x), \qand \overline{\psi}(x) \mapsto \overline{\psi}'(x) = \psi(x) U^{\dagger}(x),
+\ese
+where $U(x)\in SU(N)$ is our fundamental representation of the action of the gauge group. 
+
+We can then try construct our Dirac action, 
+\bse 
+    S[\psi, \overline{\psi}] = \int d^4 x \, \overline{\psi}(i\slashed{\p} -m)\psi, 
+\ese 
+and check for gauge invariance. We already know this is not gauge invariant from our discussion above, namely because the derivative acts on $U(x)$. We already know how to fix this: we define a covariant derivative $D_{\mu}$ to counteract the bad terms so that 
+\be 
+\label{eqn:NonAbelianCovariantDerivativeTransformation}
+    D_{\mu}\psi(x) \mapsto D_{\mu}'\psi'(x) =  U(x) D_{\mu}\psi(x).
+\ee 
+Now recall we did this for the Abelian case by introducing a gauge field $A_{\mu}$ and having it transform in a certain way. We want to do a similar thing, but now we need to be a bit more careful: we now have $\dim\mathfrak{g}$ different generators, and so our transformation matrix is given by 
+\bse 
+    U(x) = \exp\big( i \a^a(x) t^a\big),
+\ese
+where $\a^a\in \C$. We didn't have to worry about this before because we were dealing with a $U(1)$ gauge theory and this only has one generator (so we only had $\Lambda$ in our exponential). Now recalling that the generators come from the basis of the Lie algebra, it follows that they are linearly independent, and so we can only deal with them one at a time. We therefore have to introduce $\dim\mathfrak{g}$ different gauge fields in our covariant derivative. Put another way, when the derivative acts on $U(x)$ we will get $\dim\mathfrak{g}$ different terms by 
+\bse 
+    (\p_{\mu}\a^1) t^1 + (\p_{\mu}\a^2) t^2 + ... + (\p_{\mu}\a^{\dim\mathfrak{g}}) t^{\dim\mathfrak{g}},
+\ese 
+all of which are linearly independent. So we have to introduce a different $A_{\mu}$ for every term in order to remove all the behaviour. It is hopefully clear that the answer to this problem is to define our covariant derivative via 
+\mybox{
+    \be 
+    \label{eqn:NonAbelianCovariantDerivative}
+        D_{\mu} := \p_{\mu} - ig A^a_{\mu}(x)t^a,
+    \ee 
+}
+\noindent where $g$ is the \textit{gauge-coupling}.\footnote{It plays the role $e$ played in QED.}
+
+Ok now that we have our covariant derivative, we can ask the question about how the $A_{\mu}^a$s need to transform in order to give us a gauge invariant action. Well we have 
+\bse 
+    \begin{split}
+        D_{\mu}\psi &\mapsto D_{\mu}' \psi'(x) \\
+        & = \big(\p_{\mu} - ig A^{\prime a}_{\mu}(x) t^a\big)\big(U(x)\psi(x)\big) \\
+        & = \big(\p_{\mu}U(x)\big)\psi(x) + U(x) \p_{\mu}\psi(x) - igA^{\prime a}_{\mu}(x) t^a U(x) \psi(x),
+    \end{split}
+\ese 
+where we note we have \textit{not} commuted the $U(x)$ through the  $A^{\prime a}_{\mu}$ term; this is because we have a $t^a$ and $U(x)$ contains generators too, so we cannot simply commute them. If we then demand \Cref{eqn:NonAbelianCovariantDerivativeTransformation} holds, we can easily\footnote{Bonus exercise, show this.} show that we require
+\mybox{
+    \be 
+    \label{eqn:NonAbelianGaugeFieldTransformation}
+        A^{\prime a}_{\mu}(x)t^a = U(x) \bigg( A^a_{\mu}(x)t^a + \frac{i}{g}\p_{\mu}\bigg)U^{\dagger}(x).
+    \ee 
+}
+
+\br 
+    Firstly note that if we had defined \Cref{eqn:NonAbelianCovariantDerivative} with a plus sign instead of a minus sign everything would be the same expect that we would get a minus sign in \Cref{eqn:NonAbelianGaugeFieldTransformation}. Indeed you are completely free to put this minus sign in either place, and for the Abelian case (\Cref{eqn:GaugeInvariantDerivative,eqn:GaugeTransformationOnFields}) we did exactly this. This was not an inconsistency in these notes, but is one of the strange conventions that exist. That is it is standard to put the plus sign with $D_{\mu}$ for Abelian cases, while the plus sign goes with the $A_{\mu}'$ for non-Abelian cases.
+\er 
+
+\br 
+    The $U^{\dagger}(x)$ appearing on the right-hand side of \Cref{eqn:NonAbelianGaugeFieldTransformation} comes strictly from the fact that we're using SU($N$). In general we put $U^{-1}(x)$ in its place. If you want to keep everything general, feel free to make this substitution, as very little of what follows depends on the SU($N$) specialisation.
+\er 
+
+\br 
+    Recall (or look up) that the adjoing representation of a Lie group has the Lie algebra as its vector space and it acts as 
+    \bse 
+        U T^a U^{-1}.
+    \ese 
+    Keeping the above remark in mind, \Cref{eqn:NonAbelianGaugeFieldTransformation} looks \textit{almost} like the adjoint transformation. The pesky bit is that we also have the derivative term in there. As we will see in a moment, this derivative term essentially causes our gauge fields to rotate in the vector space.
+\er 
+
+Ok great, we have a formula for the transformation of our gauge fields and a gauge invariant action! The next instructive thing to do is to expand \Cref{eqn:NonAbelianGaugeFieldTransformation} and obtain the infinitesimal result. We shall leave this as an exercise. 
+
+\bbox 
+    Expanding to $\cO(\a)$ show that \Cref{eqn:NonAbelianGaugeFieldTransformation} is equivalent to 
+    \bse
+        A^{\prime a}_{\mu}(x) t^a = A^{\prime a}_{\mu}(x) t^a - \a^b(x) f^{bac} t^c A^a_{\mu}(x) + \frac{1}{g}\p_{\mu}\a^a(x) t^a.
+    \ese
+\ebox 
+
+We can do some index gymnastics on the result of the above exercise to obtain 
+\mybox{
+    \be 
+    \label{eqn:NonAbelianGaugeFieldInfitesimalTransformation}
+        A^{\prime a}_{\mu}(x) = f^{abc} A^b_{\mu}(x) \a^c(x) + \frac{1}{g}\p_{\mu}\a^a. 
+    \ee 
+}
+
+Why was this instructive? Well it allows us to make a few important points:
+\ben[label=(\roman*)]
+    \item The last term in \Cref{eqn:NonAbelianGaugeFieldInfitesimalTransformation} is identical to our Abeliean gauge field transformation, \Cref{eqn:GaugeTransformationOnFields}. 
+    \item The first term is something new, though. We see that it comes with the structure constants (which necessarily vanish for the Abelian case), and so we see it stems fundamentally from the non-Abelian nature of our gauge group. In order to understand what this term means we need to recall that our index $a$ runs over the Lie algebra indices, which are the indices of a vector space. We can therefore think about our $A_{\mu}^a$s as being vectors in this space and pointing in some direction. What this first term is telling us is that non-Abelian-ness of the group is causing our vector to rotate. 
+    \item Although we have used the fundamental representation in the above discussion, it is hopefully clear that essentially nothing relied on it specifically. Indeed it is likely that your action will contain several different fields, each of which might transform in different representations. For example in the standard model quarks transform in the fundamental representation of SU(3) while leptons transform in the trivial representation.\footnote{This is the theoretical statement that quarks carry colour charge while leptons do not. See a course on SM for more information.} 
+    
+    The important point is that the transformation of our gauge fields do \textit{not} depend on the representation of the fields they couple too, as otherwise we would have it transforming in multiple different ways, and this would change its charge structure which would be unreasonable physically. 
+\een 
+
+\bnn 
+    Before moving on to constructing a full non-Abelian (or \textit{Yang-Mills} action), let's make a comment on some common notation. We will sometimes use 
+    \be 
+    \label{eqn:AmuMatrixValued}
+        A_{\mu} := A_{\mu}^a t^a
+    \ee 
+    to denote the \textit{matrix} version of the gauge field.\footnote{More technically it is a Lie-algebra-valued one form.} This is just a short hand that saves us having to write a bunch of indices everywhere.  
+\enn 
+
+\section{The Yang-Mills Field Strength Action}
+
+We are now in a position where we know how to introduce a covariant derivative in order to compensate the for the non-gauge invariant parts in derivative terms. We now want to use this in order to write down the most general gauge invariant action. 
+
+As with the Abelian case, we want to introduce the field strength in order to make our gauge fields propagating degrees of freedom. Completely analogously to the Abelian case we obtain this by noting that 
+\bse 
+    [D_{\mu},D_{\nu}]\psi \mapsto U(x) [D_{\mu},D_{\nu}]\psi,
+\ese 
+and then we keep the definition \Cref{eqn:Fmunu}:
+\be 
+\label{eqn:FmunuNonAbeianOne}
+    ig F_{\mu\nu} := [D_{\mu},D_{\nu}],
+\ee 
+where we have replaced $e\to g$ for consistency. We can now use \Cref{eqn:NonAbelianCovariantDerivative} to get an expression for the field strength in terms of the gauge fields $A_{\mu}$. Again we should remember that we really have $\dim\mathfrak{g}$ different gauge fields, labelled by the values of $a$, and so we should use \Cref{eqn:AmuMatrixValued} to write \Cref{eqn:FmunuNonAbeianOne} as
+\bse 
+    ig F_{\mu\nu}^a t^a = [D_{\mu}, D_{\nu}].
+\ese 
+From here we can show that 
+\mybox{
+    \be 
+    \label{eqn:FmunuNonAbelian}
+        F_{\mu\nu}^a = \big(\p_{\mu}A_{\nu}^a - \p_{\nu}A_{\mu}^a\big) + gf^{abc} A_{\mu}^b A_{\nu}^c,
+    \ee 
+}
+\noindent where a sum over $b$ and $c$ is implied. 
+
+\bbox 
+    Prove \Cref{eqn:FmunuNonAbelian}. \textit{Hint: Note the first term is just the Abelian term, so it's just the second one you need to derive.}
+\ebox 
+
+Now there is an important difference between the Abelian field strength and the non-Abelian one: recall that $F_{\mu\nu}^{\text{Abelian}}$ was \textit{itself} gauge invariant, and so it was trivially true that the product term $F_{\mu\nu}F^{\mu\nu}$ was gauge invariant. The same isn't true for the non-Abelian case. We can show this by recalling that it transforms in the adjoint\footnote{Again we are assuming $SU(N)$ to get the dagger.}
+\bse 
+    F_{\mu\nu}^{\prime} = F_{\mu\nu}^{\prime a}t^a = U(x) F_{\mu\nu}^a t^a U^{\dagger}(x).
+\ese 
+Plugging through the algebra\footnote{Additional exercise, do this.} we can show that 
+\bse 
+    F_{\mu\nu}^{\prime a} = F_{\mu\nu}^a - f^{abc}\a^b F^c_{\mu\nu} + \cO(\a^2),
+\ese 
+where as always the sum over $b$ and $c$ is assumed. Note this result at least makes \textit{some} sort of sense as the non-gauge invariant bit is given by the structure constants $f^{abc}$, which vanish is we then consider the Abelian case. 
+
+However not all hope is lost as we can still make a term that is gauge invariant in a product by taking a trace over our gauge indices $a$. Explicitly, 
+\bse 
+    \begin{split}
+        \tr[F_{\mu\nu}^{\prime}F^{\prime \mu\nu}] & = \tr[U(x) F_{\mu\nu} U^{\dagger}(x) U(x) F^{\mu\nu}U^{\dagger}(x)] \\
+        & = \tr[ U(x) F_{\mu\nu} F^{\mu\nu} U^{\dagger}(x)] \\
+        & = \tr[F_{\mu\nu}F^{\mu\nu} U^{\dagger}(x)U(x)] \\
+        & = \tr[F_{\mu\nu}F^{\mu\nu}],
+    \end{split}
+\ese 
+where we have used the cyclicity of the trace. We can therefore write this part of the action as 
+\mybox{
+    \be 
+    \label{eqn:SYM}
+        S_{YM}[A] = \int d^4 x \bigg(-\frac{1}{2}\tr[F_{\mu\nu}F^{\mu\nu}]\bigg)
+    \ee 
+}
+
+We have done this in terms of the matrix valued expressions, but we can just as easily do it in terms of the decomposition in terms of generators by introducing the following fact. 
+\bcl 
+    It is always possible to pick a basis for $\mathfrak{su}(N)$ such that the generators obey 
+    \be 
+    \label{eqn:TraceOfGenerators}
+        \tr[t^at^b] = \frac{1}{2}\del^{ab}.
+    \ee 
+\ecl 
+
+\bbox 
+    Use \Cref{eqn:TraceOfGenerators} to show that \Cref{eqn:SYM} can be written in the, perhaps more familiar, form
+    \bse
+        S_{YM}[A] = \int d^4 x\bigg(-\frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu}\bigg). 
+    \ese  
+    \textit{Hint: Note that the trace is over the SU($N$) space, so anything that doesn't have a $a$ index is just seen as a number from the trace's perspective.}
+\ebox
+
+This result is important and so we shall put it in one of our nice boxes. 
+\mybox{
+    \be
+    \label{eqn:SYMWitha}
+        S_{YM}[A] = \int d^4 x\bigg(-\frac{1}{4} F_{\mu\nu}^a F^{a\mu\nu}\bigg). 
+    \ee 
+}
+
+\br 
+    Perhaps this remark should have been sooner, but note that we have always put the $a$ index as a superscript, even when it came to doing sums. Although it might seem `more natural' (given our GR training) to write something like 
+    \bse 
+        F_{\mu\nu}^a F^{\mu\nu}_a.
+    \ese 
+    The problem with this is we don't actually have anything to `lower' indices in our SU($N$) space, whereas with Lorentz indices we can use the metric. To be a bit more clear we \textit{define}
+    \bse 
+        A_{\mu} := A^{\nu}g_{\mu\nu} 
+    \ese  
+    where $A$ is some abstract vector, however we can't make any such definition for the lowering of our $a$ indices.\footnote{To the differential geometry familiar, essentially what we're saying is that we can think of the metric as a linear mapping between vector fields and 1-forms, whereas no such map exists for our $a$ indices.}
+\er 
+
+\subsection{Some Classical Aspects}
+
+Before moving on to study the quantum theory let's look at some of the \textit{classical} aspects of the theory. This subsection will hopefully help highlight the subtleties that often go on during the quantisation process in QFT, by which we mean that we often just look at the classical theory (i.e. the Lagrangian) and start doing quantum physics (i.e. drawing Feynman diagrams with loops etc). This clearly normally works pretty well, however let's now outline an example of what can go wrong in this na\"{i}ve extension. 
+
+We start by finding the classical field equations that accompany our Yang-Mills action, which we obtain by varying the action 
+\bse 
+    \begin{split}
+        \del S_{YM}[A] & = \int d^4 x \bigg(-\frac{1}{2}F^{a\mu\nu} \del F_{\mu\nu}^a \bigg) \\
+        & = \int d^4x \bigg(-\frac{1}{2}F^{a\mu\nu}\big[ \p_{\mu}\del A^a_{\nu}  - \p_{\nu}\del A^a_{\mu} + g f^{abc} \big( \del A_{\mu}^b A_{\nu}^c + A_{\mu}^b \del A_{\nu}^c\big)\big]\bigg) \\
+        %& = \int d^4 x \bigg(-\frac{1}{2}\bigg)\big[ -\p_{\mu}F^{a\mu\nu} \del A_{\nu}^a + \p_{\nu} F^{a\mu\nu} \del A_{\mu}^a - gf^{abc}F^{c\mu\nu} \big( \del A^b_{\mu} A^a_{\nu} + A_{\mu}^b \del A^a_{\nu} \big)\big] \\ 
+        % Can't quite get the above line to work out correctly.
+        & = \int d^4 x \big( \p_{\mu}F^{a\mu\nu} + gf^{abc}A^a_{\mu}F^{c\mu\nu}\big) \del A^b_{\nu},
+    \end{split}
+\ese
+where several tricks have been played (e.g. integrate by parts and use the antisymmetric nature of $F^{\mu\nu}$). We set this to zero for all variations and so conclude 
+\bse 
+    \p_{\mu}F^{a\mu\nu} + g f^{abc}A^a_{\mu}F^{c\mu\nu} = 0.
+\ese 
+Then if we recall that $F_{\mu\nu}$ transforms in the adjoint we see this is nothing but\footnote{This comes from the general rule $D_{\mu}A^{\mu} = \p_{\mu}\Phi - g T^aA^a_{\mu}\Phi$ for some general field $\Phi$ which transforms in the the $T^a$ representation.}
+\mybox{
+    \be 
+    \label{eqn:YangMillsEquation}
+        D_{\mu}F^{a\mu\nu} = 0.
+    \ee 
+}
+\noindent This is known as the classical \textit{Yang-Mills equation}, and, despite the simple looking notation, it is highly non-linear, as can easily be seen from the previous line ($A_{\mu}^aF^{c\mu\nu}$ contains products between the $A$s).
+
+We now consider coupling our gauge fields $A_{\mu}^a$ to matter. In order to make connection with the standard model, and in particular the $SU(3)$ sector, we consider couplings to Fermions, $\psi$. However in order to stay somewhat general we do not specify the type of Fermion just yet. This last generality statement is the same as saying we leave the representation arbitrary and so our covariant derivative acts as 
+\bse 
+    D_{\mu}\psi = \p_{\mu}\psi - ig A^a_{\mu} T^a \psi,
+\ese
+where $T^a$ are our the relevant generators. We then have the action 
+\bse 
+    S[\psi,\overline{\psi},A] = \int d^4 x \, \bigg(-\frac{1}{2}\tr[F_{\mu\nu}F^{\mu\nu}] + \overline{\psi}\big(i\slashed{D} - m\big)\psi\bigg),
+\ese 
+which we can vary in order to obtain the following equations of motion 
+\be 
+\label{eqn:YangMillsWithField}
+    D_{\mu}F^{a\mu\nu} = -g\big(\overline{\psi} \g^{\nu} T^a \psi\big) \qand \big(i\slashed{D}-m)\psi = 0.
+\ee 
+We can compare the first to \Cref{eqn:YangMillsEquation} and notice that the right-hand side would just be our classical Noether current if we had a \textit{global} symmetry.
+
+We now specialise to quarks and replace $\psi$ with $q_i$, where the index $i$ labels the flavour of quark,\footnote{That is: up, down, charm, strange top or bottom.} and take $N=3$. Our action then becomes 
+\bse 
+    S[\psi,\overline{\psi},A] = \int d^4 x \, \bigg(-\frac{1}{2}\tr[F_{\mu\nu}F^{\mu\nu}] + \sum_i \overline{q}_i\big(i\slashed{D} - m_i\big)q_i\bigg),
+\ese 
+where we have allowed the masses for each quark to be different (as indeed they are). As we have mentioned a few times above, this is just the action for QCD, and here our $3^3-1=8$ gauge fields are the \textit{gluons}. It is an experimental fact that quarks carry one of three colours --- conventionally named red, green and blue --- from which it follows that they transform in the fundamental representation, i.e. $T^a=t^a$. 
+
+Now comes the subtle points in the classical to quantum transition. We wont go into too much detail,\footnote{Namely because Dr. Iqbal doesn't and currently I want to get these notes finished so I can move on to other modules.} but the idea is as follows: imagine in the classical theory forcing a quark to sit still in at some point $x$. This is just the statement that we want to the spatial component of the current in \Cref{eqn:YangMillsWithField} to be a delta function. If we do this we find, to lowest order in $g$, that 
+\bse 
+    D_{\mu}F^{a\mu\nu} = g (t^a)_{11} \del^{(3)}(\vec{x}).
+\ese
+As we said before, the left-hand side of this equation is actually highly non-linear and messy, but apparently it turns out that you can show that these non-linear terms don't contribute in any way, and so we are left with a Maxwell-type expression 
+\bse 
+    \p_{\mu} F^{a\mu\nu} = g(t^a)_{11}\del^{(3)}(\vec{x}),
+\ese 
+which we know from our undergrad days has a inverse-square solution, namely
+\bse 
+    F^{art} \sim \frac{1}{r^2}.
+\ese
+
+This is where our problems arise. Physically this is telling us that if we increase the distance between two quarks the $SU(3)$-type electric field (or \textit{colour} field) dies off. This therefore means that we could essentially separate the two quarks and study them (essentially) completely independently. This is \textit{not} what we see in reality: confinement tells us that we cannot isolate a quark, never mind asking the question of "does it give off a $1/r^2$ colour field?" Another problem with the results we draw from here is that gluons are \textit{not} massless. 
+
+So we see that, unlike for QED where the classical theory gave us almost the exact QFT, the classical QCD results are wildly wrong and so we should be careful in the future before na\"{i}vely powering through with classical results. 
+
+\br 
+    It is important to note that the massiveness of the gluons has \textit{nothing} to do with spontaneous symmetry breaking and the Higgs mechanism. It is for this reason we really shouldn't say that the Higgs gives everything mass. 
+\er 
+
+\section{Quantisation Non-Abelian Gauge Theories}
+
+Now that we have seen the subtleties of the classical theory, let's look towards the quantisation of our non-Abelian theory. Of course if we keep our Fermion content we will also obtain the quantisation of the Fermions, but we have already seen this, so we can forget about it. Note we also drop the calculation of the gauge fields to the Fermions, but we are hopefully now trained enough to "see it" by considering the action. What we really want to focus on is the pure Yang Mills action \Cref{eqn:SYMWitha}. Before proceeding let's just comment on the things we expect to get from this term
+\ben[label=(\roman*)]
+    \item This term contains $\p A \p A$ terms, and so we expect to get the propagator for our gauge fields, 
+    \item Recalling that $F_{\mu\nu}^a$ contains a nonlinear term of the form $gf^{abc} A^b_{\mu}A^c_{\nu}$, we expect to get couplings between the gauge fields themselves. In particular we expect to get both 3-point couplings (from $fAA\p A$) and 4-point couplings (from $fAA fAA$). Note as with the Abelian case, this interacting behaviour is completely fixed by gauge invariance.
+\een 
+We highlighted this now because we see that this expect additional coupling behaviour is completely new. The other thing we want to point out is that we only have one parameter in our theory, $g$, and so if our theory is going to renormalisable it better be the case that fixing $g$ fixes \textit{all} divergent behaviour at that level simultaneously. We do not discuss this in much detail here but more can be found via the QCD course. 
+
+\subsection{Self Interactions}
+
+First let's look at the gauge field self interactions. Our action is
+\bse 
+    S_{YM}[A] = \int d^4 x \bigg(-\frac{1}{4}\big[ \p_{\mu}A_{\nu}^a - \p_{\nu}A_{\mu}^a + g f^{abc}A_{\mu}^b A_{\nu}^c\big] \big[ \p^{\mu}A^{a\nu} - \p^{\nu}A^{a\mu} + g f^{ade}A^{d\mu} A^{e\nu}\big]\bigg),
+\ese 
+which we can expand out to see the form of the self-interaction terms. That is collect all the terms that have 3 $A$s and all the terms that have 4 $A$s and look at the prefactors. We do not do the expansion here but just not a couple things 
+\ben[label=(\roman*)]
+    \item The 3-point interactions will all come with derivatives. We are yet to see how to translate these into Feynman rules, but it is simpler then we might think: simply go to momentum space with the usual prescription $\p_{\mu} \to -ip_{\mu}$. We therefore expect the momenta of our gauge fields to enter the coupling strength. Note, we obviously have to be careful about the sign of $p_{\mu}$, and in the diagrams that follow we use the convention of having \textit{all} momenta flowing \textit{into} the vertex. 
+    \item The 4-point interaction will not come with derivatives and so we do not expect any momentum dependence.
+    \item The ordering of the gauge fields matters. That is, for example,
+    \bse 
+        A^b_{\mu}A^c_{\nu} A^{d\mu}A^{e\nu} \neq A^b_{\mu} A^{d\mu} A^c_{\nu} A^{e\nu}. 
+    \ese 
+    This will translate into us keeping track of the Lie algebra indices (the $a,b$ etc) on the Feynman diagrams. 
+\een 
+
+Very good, so now in order to get the vertices we have to do what we just outlined above (expand out and replace derivatives etc). We do not do this calculation here as it is quite tedious,\footnote{For the interested reader, a derivation was set on the first tutorial sheet for QCD by Dr. Huss, so if you take that course, see that sheet.} but simply give the result. Let's give the results first then see how we can remember them.
+
+\bnn 
+    In order to draw parallels with QCD we depict our non-Abelian gauge fields with a "springy" line, as this is standard for gluons. It is worth noting, though, that this is a gluon specific thing: we have already used a wavey line for the photon and it is standard to use either dashed or wavey lines for the $W^{\pm}$ and $Z$ gauge bosons. Of course none of this matters as it is just a convention, but this is just included for clarity.
+\enn 
+
+\mybox{
+    \begin{center}
+        \btik 
+            \begin{scope}
+                \gluon (0,1.5) -- (0,0);
+                \node at (0,1.8) {$a,\mu$};
+                \draw[thick, ->] (0.3,1.1) -- (0.3,0.4) node [midway, right] {$k$};
+                \gluon[rotate around={120:(0,0)}] (0,1.5) -- (0,0);
+                \node at (1.7,-0.8) {$b,\nu$};
+                \draw[thick, ->, rotate around={120:(0,0)}] (0.3,1.1) -- (0.3,0.4);
+                \node at (-0.85,0.05) {$q$};
+                \gluon[rotate around={-120:(0,0)}] (0,1.5) -- (0,0);
+                \node at (-1.7,-0.8) {$c,\rho$};
+                \draw[thick, ->, rotate around={-120:(0,0)}] (-0.3,1.1) -- (-0.3,0.4);
+                \node at (0.85,0.05) {$p$};
+                \node[right] at (2,0.5) {$ = -gf^{abc}\big[\eta^{\mu\nu}(k-p)^{\rho} + \eta^{\nu\rho}(p-q)^{\mu} +\eta^{\rho\mu}(q-k)^{\nu}\big] $};
+            \end{scope}
+            \begin{scope}[yshift=-3cm]
+                \gluon[rotate around={45:(0,0)}] (0,1.5) -- (0,0);
+                \node at (-1.25,1.3) {$a,\mu$};
+                \gluon[rotate around={-45:(0,0)}] (0,1.5) -- (0,0);
+                \node at (1.25,1.3) {$b,\nu$};
+                \gluon[rotate around={135:(0,0)}] (0,1.5) -- (0,0);
+                \node at (1.25,-1.3) {$c,\rho$};
+                \gluon[rotate around={-135:(0,0)}] (0,1.5) -- (0,0);
+                \node at (-1.25,-1.3) {$d,\sig$};
+                \node[right] at (2,0) {$=$};
+                \node[right] at (2.5,1) {$-ig^2 \big[ f^{abe}f^{cde} (\eta^{\mu\rho}\eta^{\nu\sig} - \eta^{\mu\sig}\eta^{\nu\rho})$};
+                \node[right] at (3.3,0.25) {$+ f^{ace}f^{bde} (\eta^{\mu\nu}\eta^{\rho\sig} - \eta^{\mu\sig}\eta^{\nu\rho})$};
+                \node[right] at (3.3,-0.5) {$+ f^{ade}f^{bce} (\eta^{\mu\nu}\eta^{\rho\sig} - \eta^{\mu\rho}\eta^{\nu\sig})  \big]$};
+            \end{scope}
+        \etik 
+    \end{center}
+}
+
+Ok so how do we go about remembering (at least the rough form of) these result? First let's look at the 3-point vertex. 
+
+\subsubsection{3-Point Vertex}
+
+Firstly we recall that the three gauge field interaction comes from the product on one derivative, $\p A$, and one structure constant, $g f AA$, term. The former doesn't have any factors of $g$ and so we expect our 3-point interaction to be of order $g$. We also include a factor of $-1$, because these always crop up at vertices.
+
+Next, as we said in (iii) above, we have to keep track of the Lie algebra indices as well as the Lorentz ones. We have 3 gluons and so we expect each term in the expansion to have 3 Lie algebra indices and 3 Lorentz ones. Putting this together with the fact that we know the momenta enter the rule, as per (i) above, we see that the only reasonable combination are terms of the form 
+\bse 
+    -g f^{\cdot \cdot \cdot} \eta^{\bullet \bullet} (f(p,k,q))^{\bullet},
+\ese 
+where the $\cdot$s need to be filled by Lie algebra indices, the $\bullet$s by Lorentz ones and $f(p,q,k)$ is some \textit{linear} combination of the momenta.
+
+Now we remember that ordering matters, and so before we can proceed we need to draw the vertex and distribute indices and momenta. We do just that, and for ease of explanation assume it is done as per the diagram above. Now comes the memory part; the idea is to start at the top and work clockwise when distributing indices and then take cyclic permutations for the Lorentz ones. That is each term comes with $f^{abc}$ but we get three different terms corresponding to the 3 cyclic permutations of $\mu,\nu$ and $\rho$. Finally the only other thing we have to remember is that our momentum dependence comes with a minus sign and again we go clockwise. Putting this all together, we expect to get, for example, the term $-gf^{abc}\eta^{\mu\nu}(k-p)^{\rho}$, which agrees exactly with the first term above.
+
+\br 
+    Note that we actually could go \textit{anti}clockwise with the same prescriptions and get the same result. This follows from the fact that we would need pick up a minus sign from swapping two $f^{abc}$ indices and another minus sign for swapping the momentum parts, i.e. $(k-p)^{\rho} = -(p-k)^{\rho}$. 
+\er 
+
+\bbox 
+    Without looking at the answer, try and use the above memory steps to arrive at the 3-point interaction vertex. 
+\ebox   
+
+\subsubsection{4-Point Vertex}
+
+Ok what about the $4$-point vertex. This is a lot uglier and I don't feel like I'm going to be able to give an explanation that makes memory any easier than anything any reader could come up with. 
+
+\subsection{Propagator}
+
+We now need to study the propagator for the non-Abelian gauge fields. As these are gauge fields, we still run into the same infinite contribution from the path integral over all, unphysical, gauge paths and so we will once again need to use the Fadeev-Poppov procedure. However, as we will shortly see, things become a bit more complicated when we have a non-Abelian gauge field. 
+
+Again we work with the gauge fixing condition 
+\bse 
+	G^a_{\omega}(A) := \p_{\mu} A^{a \mu}(x) - \omega^a(x),
+\ese 
+where the $a$ reminds us that this is actually a gauge fixing condition for \textit{each} gluon. We then recall that our general gauge transformation (in the fundamental) is given by 
+\bse 
+	U(x) = \exp\big( i \a^a(x) t^a\big),
+\ese
+and that our gauge fields try to transform in the adjoint. That is, if we denote the transformed field via $ (A^{\a})^a_{\mu} $, we have 
+\bse 
+	(A^{\a})^a_{\mu} t^a = U(x) \bigg( A^a_{\mu} t^a + \frac{i}{g} \p_{\mu} \bigg) U^{\dagger}(x),
+\ese 
+which, by direct calculation, gives us 
+\bse 
+	(A^{\a})^a_{\mu} = A^a_{\mu} + \frac{1}{g}D_{\mu} \a^a.
+\ese 
+
+Now just as before we want to introduce a functional delta function in order to cleverly insert $1$ into our path integral. Again we use 
+\bse 
+	1 = \int [\pD \a ] \del\big[G_{\omega}(A^{\a}) \big] \det\bigg( \frac{\del G_{\omega}(A^{\a}) }{\del \a} \bigg)
+\ese 
+so that our path integral becomes 
+\bse 
+	Z = \int [\pD A] [\pD \a] \del\big[G_{\omega}(A^{\a}) \big] \det\bigg( \frac{\del G_{\omega}(A^{\a}) }{\del \a} \bigg) e^{iS[A]}.
+\ese 
+
+This is all \textit{exactly} the same as Abelian case, however we now notice a very important difference, which stems from the determinant term. Using the above expressions, we have (dropping the $a$ index for convenience)
+\bse 
+	\begin{split}
+		\frac{\del G_{\omega}(A^{\a}) }{\del \a} & = \frac{\del}{\del \a} \big( \p_{\mu} (A^{\a})^{\mu} - \omega\big) \\
+		& = \frac{\del}{\del \a}\bigg( \p_{\mu} \bigg[  A^{\mu} + \frac{1}{g}D^{\mu} \a \bigg] - \omega\bigg) \\
+		& = \frac{1}{g} \p_{\mu} D^{\mu}.
+	\end{split}
+\ese 
+The reason this is a problem is because our covariant derivative contains our gauge field $A^{\mu}$! This means that we \textit{cannot} simply strip the determinant factor outside the path integral as we did for the Abelian case. We shall return to this problem shortly, but first we note that this is going to have absolutely no effect on the propagator of the gauge field (which comes from the inverse of the quadratic term in the action, remember), and so following the same ideas as before we introduce a Gaussian weight etc to arrive at 
+\bse 
+	Z = \int [\pD A] \det\bigg( \frac{1}{g} \p_{\mu} D^{\mu} \bigg) \exp\bigg( iS[A] -i \int d^4 x \frac{1}{2\xi} \big(\p_{\mu} A^{\mu}\big) \bigg),
+\ese 
+from which we can read off the propagator. We have to remember, though, that our $A^{\mu}$ is a Lie-algebra valued expression and we should decompose it into the $\dim\mathfrak{g}$ different gauge fields $A_{\mu}^a$. In terms of the propagator this just corresponds to including a $\del^{ab}$ in the answer. This is just telling us that the colour (for the example of $SU(3)$) of the gluon doesn't change as it propagates. Explicitly we have the momentum space result
+\mybox{
+    \be 
+        D_{\mu\nu}^{ab}(p) = - \frac{i}{p^2} \bigg(\eta_{\mu\nu} - (1-\xi) \frac{p_{\mu}p_{\nu}}{p^2}\bigg) \del^{ab}.
+    \ee 
+}
+\noindent Here the gauge choice $\xi=1$ is referred to as \textit{Feynman-'t Hooft gauge}.
+
+\subsection{Ghosts}
+
+Now we need to work out what this pesky determinant term is doing. Clearly as it stands this determinant is ugly and ruins our ability to understand the problem. However, we now remember that a Gaussian integral over Grassman variables results in a expression with the determinant in the numerator and so we can \textit{interpret} this as such. That is we replace 
+\be 
+\label{eqn:DeterminantToGhosts}
+	\det\big( \p_{\mu} D^{\mu} \big) = \int [\pD c][\pD \overline{c}] \exp \bigg( i  \int d^4 x \, \overline{c} \big(-\p_{\mu}D^{\mu} \big) c \bigg),
+\ee
+where $c$ and $\overline{c}$ are Grassman variables. They appear quadratically in our partition function, and so we can think of  the $c/\overline{c}$ as propagating degrees of freedom. That is we think of them as quantum fields that are Lorentz scalars (i.e. they transform in the trivial representation of the Lorentz group) but they transform in the adjoint of the gauge group. We call such fields \textit{Fadeev-Poppov ghosts}, and they play a huge role in non-Abelian gauge QFTs. Before moving on let’s make a few comments:
+\ben[label=(\roman*)]
+	\item Although these fields are anticommuting (they are Grassman variables), they are \textit{not} spinors. There are clearly many reasons for this but perhaps the easiest argument to make is they transform in the trivial representation of the Lorentz group, which spinors, by definition, do not. 
+	\item It is very important to note that this is merely a trick we use to make our expression easier to understand and manipulate. This is important as it tells us that the Fadeev-Poppov ghosts are not physical fields and so we should never expect to get an external ghost field. However they can contribute to interior of diagrams, and as we shall briefly describe in a moment actually give nice intuitive results this way.
+	\item As the ghost fields transform in the adjoint, they couple to gluons and so they have an actual qualitative effect. For example, the vacuum polarisation diagram for the gluon receives a contribution from a ghost loop. 
+\een 
+
+Ok let's find the propagator for the ghosts and their coupling to the gluons. We can rewrite the exponential in \Cref{eqn:DeterminantToGhosts} as a contribution to the action in the form
+\bse 
+    S_{\text{ghost}}[c,\overline{c},A] = \int d^4x \, \overline{c}^a \big(-\p^2 \del^{ac} - g \p^{\mu} f^{abc} A_{\mu}^b \big) c^c
+\ese 
+from which we can read off the propagator and interaction vertex. We summarise these in terms of diagrams now.
+\mybox{
+    \begin{center}
+        \btik 
+            \begin{scope}
+                \midarrow[dashed] (-1,0) -- (1,0);
+                \node at (-1.2,0) {$a$};
+                \node at (1.2,0) {$b$};
+                \node[right] at (2.5,0) {\Large{$= \frac{i}{p^2}\del^{ab}$}};
+            \end{scope}
+            \begin{scope}[yshift = -3cm]
+                \gluon (0,1.5) -- (0,0);
+                \node at (0,1.8) {$b,\mu$};
+                \midarrow[dashed, rotate around={120:(0,0)}] (0,0) --  (0,1.5);
+                \node at (1.5,-0.8) {$c$};
+                \draw[thick, ->, rotate around={120:(0,0)}] (0.3,1.1) -- (0.3,0.4);
+                \node at (-0.85,0.05) {$p$};
+                \midarrow[dashed, rotate around={-120:(0,0)}] (0,0) -- (0,1.5);
+                \node at (-1.6,-0.8) {$a$};
+                \node[right] at (2.5,0.5) {\Large{$ = gf^{abc} p^{\mu} $}};
+            \end{scope}
+        \etik 
+    \end{center}
+}
+
+\subsection{Wrapping Up}
+
+We're now done! Well we need to put the coupling to Fermions back in, but we have already studied this and the ghosts don't interact with them (as they came purely from \Cref{eqn:DeterminantToGhosts}). Our full action is then 
+\bse 
+    S[\psi,\overline{\psi},A,c,\overline{c}] = S_{YM}[A] + S_{\text{quark}}[\psi,\overline{\psi},A] + S_{\text{ghost}}[c,\overline{c},A].
+\ese 
+From here we now have a full set of Feynman rules in order to start doing the quantum theory. For example if we make out gauge group SU($3$) we are now (theoretically) fully capable of calculating the contributions from QCD Feynman diagrams. We could then go on to look at the renormalisability of QCD and plug through that. We do not present that here (it is discussed in the QCD course), but just make a couple comments:
+\ben[label=(\roman*)]
+    \item QCD is in fact renormalisable. 
+    \item From dimension counting arguments we can show\footnote{See QCD notes.} that a diagram corresponding to 2-gluons to 2-ghosts\footnote{Forgetting for the minute that we can't have external ghosts} processes would be superficially logarithmically divergent (i.e. they have SDOD $= 0$). However it turns out that these diagrams are all indeed convergent. This is very important for the renormalisability of the theory as our action doesn't contain any $2$-gluon-$2$-ghost terms, and so we couldn't absorb the infinite contribution. 
+    \item As we mentioned before, the \textit{only} free parameter we have in our action is $g$, whereas we have multiple different divergent diagrams (e.g. we can have both gluon and Fermion loops). It turns out that it doesn't matter which diagram we choose to use to renormalise $g$, it will simultaneously make all the diagrams convergent. This is a really non-trivial result and will be discussed in more detail in the QCD notes. 
+    \item Finally, we would be fair to ask the question "what are the Fadeev-Poppov ghosts of?" The answer to this is what we said we would return to in (ii) above. Recall that a general gauge field\footnote{In 4-dimensions, otherwise just use $d$.} has $4$ components but only 2 physical polarisations. Put another way, 2 of the polarisations are so-called \textit{spurious}. Physical things only make sense in external states (this is why stuff can be off shell as a propagator) and so there doesn't seem any reason why these two spurious polarisations couldn't propagate around a loop. However we do not want them to contribute to anything, as they are unphysical, and so we need some way to counteract them. This is where the ghosts come in: as ghosts are anticommuting fields the idea is that we compensate for our spurious loop with a ghost loop, with the latter picking up a minus sign for the same reason we get a minus sign for closed Fermion loops. These two contributions then exactly cancel and so we get the result we want. 
+\een 
+
+\br 
+    Dr. Iqbal then has a discussion at the end of his notes entitled "Qualitative discussion: Non-Abelian gauge theory at long distances". It is mainly a discussion of confinement, but, as the title says, it is qualitative and all I could really do is just copy it across. I see little point in doing this, and so just end these notes here. If I get time later I shall read up on this stuff and try fill this in here more qualitatively. 
+\er 

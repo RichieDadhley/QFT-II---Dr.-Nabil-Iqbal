@@ -1,0 +1,673 @@
+\chapter{Loops and Renormalisation}
+
+So far all that we have considered is \textit{tree-level} diagrams. These diagrams are a bit boring because they always work out nicely. This is a repercussion of the fact we have the same number of integrals as we do delta functions. We know from our canonical studies that loops mess this equality up and we end up with an undetermined momenta.\footnote{If it is not clear why this is the case, just draw a loop diagram and check. It basically comes from the fact that at least one of the internal momenta will appear in two delta functions, so integrating over it kills both!}
+
+Now loops might seem a bit of a pain because of this, however it's actually where a lot of the interesting results lie. Indeed it's a property that only appears in the quantum theory and so the presence of loops can be thought of as an important differentiation of the classical and quantum theory. Loops also give rise to divergent terms and we need to renormalise them. So it's important we study them properly. 
+
+\section{Loops in $\phi^4$}
+
+We shall again use our $\phi^4$ theory as a proxy to study loops. Let's continue to consider our $2\to 2$ scattering, but now look at the $\l^2$ diagrams. There are three such diagrams:
+\begin{center}
+    \btik 
+        \begin{scope}[scale=1.5, xshift=-3.5cm]
+            \midarrow (1,1) -- (0,0.5);
+            \node at (1.1,1.1) {$2$};
+            \node at (0.4,0.9) {$p_2$};
+            \midarrow (-1,1) -- (0,0.5);
+            \node at (-1.1,1.1) {$1$};
+            \node at (-0.4,0.9) {$p_1$};
+            \midarrow (0,-0.5) -- (1,-1);
+            \node at (1.1,-1.1) {$2'$};
+            \midarrow (0,-0.5) -- (-1,-1);
+            \node at (-1.1,-1.1) {$1'$};
+            \draw[thick, decoration={markings, mark=at position 0.5 with {\arrow{<}}}, postaction={decorate}] (0,0) circle [radius=0.5cm];
+            \draw[thick, decoration={markings, mark=at position 0.5 with {\arrow{<}}}, postaction={decorate}] (0,0) circle [radius=-0.5cm];
+            \draw[fill=black] (0,0.5) circle [radius=0.047cm];
+            \draw[fill=black] (0,-0.5) circle [radius=0.047cm];
+            \node at (1.2,0) {$k+p_1+p_2$};
+            \node at (-0.75,0) {$k$};
+        \end{scope}
+        \begin{scope}[scale=1.5]
+            \midarrow (1,1) -- (0.5,0);
+            \node at (1.1,1.1) {$2$};
+            \midarrow (-1,1) -- (-0.5,0);
+            \node at (-1.1,1.1) {$1$};
+            \node at (-1,0.5) {$p_1$};
+            \midarrow (0.5,0) -- (1,-1);
+            \node at (1.1,-1.1) {$2'$};
+            \midarrow (-0.5,0) -- (-1,-1);
+            \node at (-1.1,-1.1) {$1'$};
+            \node at (-1,-0.5) {$p_1'$};
+            \beforemidarrow (0,0) circle [radius=0.5cm];
+            \beforemidarrow (0,0) circle [radius=-0.5cm];
+            \draw[fill=black] (0.5,0) circle [radius=0.047cm];
+            \draw[fill=black] (-0.5,0) circle [radius=0.047cm];
+            \node at (0,0.7) {$k$};
+            \node at (0,-0.7) {$k+p_1-p_1'$};
+        \end{scope}
+        \begin{scope}[scale=1.5, xshift=3.5cm]
+            \midarrow (1,1) -- (0.5,0);
+            \node at (1.1,1.1) {$2$};
+            \midarrow (-1,1) -- (-0.5,0);
+            \node at (-1.1,1.1) {$1$};
+            \node at (-1,0.5) {$p_1$};
+            \midarrow (0.35,-0.425) -- (1.5,-1);
+            \draw[thick] (-0.5,0) -- (0.25,-0.375);
+            \node at (1.35,-1.1) {$2'$};
+            \draw[thick] (0.5,0) -- (0.05,-0.225);
+            \draw[thick] (-0.05,-0.275) -- (-0.25,-0.375);
+            \midarrow (-0.35,-0.425) -- (-1.5,-1);
+            \node at (-1.35,-1.1) {$1'$};
+            \node at (1,-0.5) {$p_2'$};
+            \beforemidarrow (0,0) circle [radius=0.5cm];
+            \beforemidarrow (0,0) circle [radius=-0.5cm];
+            \draw[fill=black] (0.5,0) circle [radius=0.047cm];
+            \draw[fill=black] (-0.5,0) circle [radius=0.047cm];
+            \node at (0,0.7) {$k$};
+            \node at (0,-0.7) {$k+p_1-p_2'$};
+        \end{scope}
+    \etik 
+\end{center}
+
+We do not calculate these diagrams in full detail in these notes, but just look at the form they take. Recall the Mandelstam variables 
+\be 
+\label{eqn:Mandelstam}
+    \begin{split}
+        s = (p_1+p_2)^2 \\
+        t = (p_1'-p_1)^2 \\
+        u = (p_2'-p_1)^2
+    \end{split}
+\ee
+We can use the Feynman rules to obtain an integral equation for the diagrams. Let's look at the left-most diagram. The loop momentum $k$ is undetermined\footnote{It flows into both vertices so it appears in two delta functions. This is what we meant in the previous footnote.} and so we must integrate over it. We therefore get
+\bse 
+    D_{\text{one-loop}} = \frac{(-i\l)^2}{2} \int \frac{d^4k}{(2\pi)^4} \frac{i}{k^2-m^2} \frac{i}{(k+p_1+p_2)^2-m^2}
+\ese 
+Now note that this is a Lorentz scalar (i.e. it has no Lorentz index), and because we integrate over all $k$, the only thing it can depend on $p_1+p_2$ through the scalar part of it, i.e. $s= (p_1+p_2)^2$.\footnote{For a few more examples/explanation of this see my QED notes.} Therefore 
+\be 
+\label{eqn:D1Vs}
+    D_{\text{one-loop}} = (-i\l)^2 V(s).
+\ee
+This is nice, but what can we conclude about $V(s)$? Does our integral even converge? Well, at large $k$ it is controlled by 
+\bse 
+    I = \int \frac{d^4k}{(2\pi)^4} \frac{1}{k^4},
+\ese 
+where again we integrate over \textit{all} momenta. If we denote the maximum $k$ by $\Lambda$, we see that 
+\bse 
+    I \sim \log \Lambda \qquad \implies \qquad D_{\text{one-loop}} \sim \l^2 \log\Lambda.
+\ese
+This is bad: we want to take $\Lambda\to\infty$, and so our integral will diverge! At first we might panic and think "we've broken our QFT!" However, as we are hopefully familiar with from the canonical study, infinities are actually at the very heart of QFT and give us most of the interesting behaviour. Let's look into what this infinity is and where it's coming from. We will make one simplifying assumption first: Assume that we are in a kinematic regime where $s,t,u >> m$. Therefore we can essentially set $m=0$. We do this so that we can focus just on the high momenta divergence and not worry about other complicating subtleties.
+
+Ok so let's carefully calculate the divergent part of $V(s)$. We have just seen this comes directly from $I$. Luckily there is a standard procedure of how to deal with terms like this: 
+\ben
+    \item \textbf{Wick rotate}: Note that our integral is over \textit{Lorentzian} $4$-momenta. If we wick rotate to \textit{Euclidean} momenta
+    \bse 
+        k_0 = ik_0^E, \qquad (k^2)_L = (-(k^E)^2)_E,
+    \ese 
+    with
+    \bse 
+        d^4 k = i d^4k^E
+    \ese 
+    then our integral becomes 
+    \bse 
+        I = i \int \frac{d^4k^E}{(2\pi)^4} \frac{1}{k_E^4}.
+    \ese 
+    We now note that this is spherically symmetric under SO(4). We can therefore use the $4$D analogue of spherical coordinates:
+    \bse 
+        \int d^4k^E = \text{Vol}\big(S^3\big) \int_0^{\infty} d|k_E| |k_E|^3 = 2\pi^2 \int_0^{\infty} d|k_E| |k_E|^3,
+    \ese 
+    where we have used Vol$(S^3) = 2\pi^2$.\footnote{This is easily shown by taking the $4$D coordinates. See, e.g., page 193 of Peskin \& Schroeder.} This turns our integral into 
+    \bse 
+        I = \frac{i}{8\pi^2}\int_0^{\infty} d|k_E| \frac{1}{|k_E|}.
+    \ese 
+    \item \textbf{Regulate the integral}: As we just saw, it is the limit $\Lambda\to\infty$ that caused our integral to diverge. We therefore cut off integral at high, but finite, momenta. There are many ways to do this, we will use what is known as a \textit{hard cut off}, i.e. take the max Euclidean momentum $|k_E^{\text{max}}|=\Lambda$ for some finite $\Lambda$.\footnote{This type of regularisation is \textit{not} gauge invariant, and so we could run into problems for gauge theories. See my QED notes for more info on other regularisation schemes.} So the divergent part is
+    \be 
+    \label{eqn:IDiv}
+        I_{\text{div}} = \frac{i}{8\pi^2}\int_0^{\Lambda} d|k_E| \frac{1}{|k_E|} = \frac{i}{8\pi^2} \log \Lambda.
+    \ee
+\een 
+
+Ok, let's return to thinking about $V(s)$. We know that this is dimensionless, but we have also said that it depends on $s$, which is dimensionful. The only other dimensionful thing ($m=0$, remember) entering $V(s)$ is $\Lambda$. We therefore require
+\bse 
+    V(s) = f\bigg(\frac{\Lambda^2}{s}\bigg).
+\ese
+So our problem is now to find the function $f(\Lambda^2/s)$. Well we just found the $\Lambda$ dependence, \Cref{eqn:IDiv}, so we also know the $s$ dependence:
+\bse 
+    V(s) = -\frac{i}{32\pi^2} \log \bigg(\frac{\Lambda^2}{s}\bigg) + \text{const.},
+\ese 
+where we have included the $i^2/2$ factor from $D_{\text{one-loop}}$ (see the definition \Cref{eqn:D1Vs}) and an additional $1/2$ in the prefactor to get $\Lambda^2$ in the log. We have also included some constant term which must be $s$-independent. However this term will become negligible in our large $s$ limit, so we will forget about it from now on. 
+
+Note that there was nothing special about the fact that we were considering the $s$ diagram, and indeed the $t$ and $u$ diagrams follow trivially from here. The full set of one loop diagrams, then, give 
+\mybox{
+    \be 
+    \label{eqn:DOneLoop}
+        D_{\text{one-loop}} = \frac{i\l^2}{32\pi^2} \bigg[ \log \bigg(\frac{\Lambda^2}{s}\bigg) + \log \bigg(\frac{\Lambda^2}{t}\bigg) + \log \bigg(\frac{\Lambda^2}{u}\bigg)\bigg]. 
+    \ee 
+}
+
+We have now found the $2\to 2$ scattering to second order, we simply add the above result to our tree-level result:
+\be 
+\label{eqn:iMOneLoop}
+    i\cM(s,t,u; \Lambda) = -i\l + \frac{i\l^2}{32\pi^2} \bigg[ \log \bigg(\frac{\Lambda^2}{s}\bigg) + \log \bigg(\frac{\Lambda^2}{t}\bigg) + \log \bigg(\frac{\Lambda^2}{u}\bigg)\bigg]
+\ee 
+where we note that the matrix element is obviously dependent on $s,t$ and $u$. This is actually what we expect: the matrix element tells us about scattering probabilities and these are obviously dependent on the momenta in question which are exactly $s,t$ and $u$.
+
+\section{Coming To Terms With Divergences}
+
+We just said that our matrix element depends nicely depends on $s,t$ and $u$ but we also seem to have $\Lambda$ dependence. This might make us panic! Why? Well if we want to be solving our original integral, we are supposed to keep in mind that we want to take the limit $\Lambda\to\infty$. This would give us an infinite probability for our $2\to 2$ scattering to happen! There is no need to panic though, let's calm down a bit and see what's going on here. 
+
+Let's make a few comments of what we've done leading up to here
+\ben 
+    \item QFT has told us that in order to scatter two $\phi$ particles we need integrate to arbitrarily high momentum, which are arbitrarily small distances. This seems like a weird thing to require: we don't expect to need to use some full quantum gravity theory just to study a simple process like this. Indeed we expect our theory to break down in this limit and so wouldn't necessarily even trust our results even if they didn't diverge. 
+    \item In normal physics, we relate one observable quantity to another. For example $pV=NkT$ tells us how to relate the pressure of a gas to the temperature given we know the volume. However our formula above is different. It relates the observable $i\cM$\footnote{Really we mean the probablity which is related to $|i\cM|^2$, but the argument follows through.} to something that is not observable, namely $\l$! It is a parameter appearing in the Lagrangian and these are never directly detectable. We shall refer to this $\l$ as the \textit{bare coupling}. 
+\een     
+    
+So what do we do? Well, as we just said, the above infinity arises when we try relate something unmeasurable to something physical. This infinity is therefore not physical itself and so it looks like everything is nice again provided that whatever the physical thing is doesn't give us some other infinity. Let's try to give $\l$ some kind of physical meaning, then. 
+
+How do we do this? We go to our experimentalist friends, who have done the real life scattering at some energy scale $s_0,t_0,u_0$ and got some number $i\cM(s_0,t_0,u_0)$. We then \textit{define} our physical $\l$, denoted $\l_p$, using this result as
+\be 
+\label{eqn:LambdaPhysical}
+    -i\l_p := i\cM(s_0,t_0,u_0). 
+\ee 
+This kind of definition is called a \textit{renormalisation condition}.
+
+How does this relate to our bare coupling, $\l$? Well we can simply use our theoretical result, \Cref{eqn:iMOneLoop}:
+\bse 
+    -i\l_p = -i\l + \frac{i\l^2}{32\pi^2} \bigg[ \log \bigg(\frac{\Lambda^2}{s_0}\bigg) + \log \bigg(\frac{\Lambda^2}{t_0}\bigg) + \log \bigg(\frac{\Lambda^2}{u_0}\bigg)\bigg].
+\ese 
+We want to solve this for $\l(\l_p)$. Now, as will perhaps be clearer in a moment,\footnote{Wait for \Cref{rem:LambdaLambdaPOrder} and \Cref{eqn:DelLambdaFirstOrder}.} in perturbation theory we treat $\l$ and $\l_p$ to be of the same order, and so if we only work to leading order we are free to replace the $\l^2$ term with $\l_p^2$. We therefore have
+\bse 
+    \l = \l_p+ \frac{i\l_p^2}{32\pi^2} \bigg[ \log \bigg(\frac{s_0}{\Lambda^2}\bigg) + \log \bigg(\frac{t_0}{\Lambda^2}\bigg) + \log \bigg(\frac{u_0}{\Lambda^2}\bigg)\bigg].
+\ese 
+We can then plug this into $i\cM(s,t,u)$ to get an expression that relates an observable, $\l_p$, to another observable, $i\cM(t,s,u)$:
+\mybox{
+    \be 
+    \label{eqn:iMOneLoopRenormalised}
+        i\cM(s,t,u) = -i\l_p + \frac{i\l_p^2}{32\pi^2} \bigg[ \log \bigg(\frac{s_0}{s}\bigg) + \log \bigg(\frac{t_0}{t}\bigg) + \log \bigg(\frac{u_0}{u}\bigg)\bigg].
+    \ee
+}
+\noindent We note that this is no longer divergent as our $\Lambda$ `dependence' has dropped out. This is why we separated the $\Lambda$ in the argument of \Cref{eqn:iMOneLoop} with a semi-colon. Note that we can study the theory to any momenta (i.e. the arguments on the left-hand side are proper variables not fixed numbers) by comparing it to our reference value $(s_0,t_0,u_0)$.
+
+What we have just done is the infamous \textit{renormalisation}; that is renormalisation is simply the `common sense' idea of setting your theory up relative to some reference point. It is important to note that we did \textit{not} remove our divergence by `subtracting it away' or anything, it was simply never observable so we just insisted we look only at observable things in the first place. Where did our divergence go, then? Well it sits in the relationship between $\l$ and $\l_p$, so essentially it sits in our, physically unmeasurable,\footnote{Are you getting the hint yet?} Lagrangian parameter $\l$. 
+
+As we have just mentioned, there is a small cost to our renormalisation process: we can only do physics relative to our measured reference point $(s_0,t_0,u_0)$. This is essentially a loss of a tiny amount of information. However this tiny loss in information has come at a \textit{huge} benefit: we have obtained the momentum dependence of our scattering amplitude! 
+
+Finally it's worth noting that we are going to have to do this loss of information procedure for every separate infinity we get from the Lagrangian. However if we have the same number of parameters in our Lagrangian as we do infinities of this kind, we will be able to absorb them all into these bare parameters and move on. We obviously require that the infinities that arise at higher order loops corrections (i.e. two loops, three loops, etc.) are essentially related to the original ones. If they are not and they give rise to something completely new, we will have to introduce some new term into our Lagrangian to absorb our infinity. This process can then get wildly out of hand and we can end up having to include new parameters for \textit{every} higher order loop correction. In the full perturbative expansion, then, we need to include an \textit{infinite} number of new terms all of which need to be fixed by experimental measurement. Doing this will obviously \textit{completely} constrain our equation to only work for these specific values and so becomes completely useless for predicting other behaviour. A theory of this kind is, creatively, called \textit{non-renormalisable}. 
+
+\section{Renormalised Perturbation Theory}
+
+What we have done above is give an idea of the concept of renormalisation, but now we actually need to see that it actually \textit{works}, and if it does work if we can always do it. We will answer these two questions in turn. 
+
+\subsection{Counterterms \& Renormalisation Conditions}
+
+First a comment on notation. We will drop the $p$ appearing in the subscript $\l_p$, and simply use $\l$ to denote the physical coupling.\footnote{If you do get confused, I recommend looking at the QED course as there we were explicit about what was the bare parameter and what was the renormalised one.} This hopefully won't cause any confusion as we will only be working with the physical one from now on. We will also use $m^2$ to denote the physical mass, and we shall assume $Z=1$. This collection of conditions is our \textit{renormalisation conditions}, and the latter two conditions correspond to taking the "on-mass-shell" scheme.\footnote{Again see QED for more info on what this means.}
+
+So what do we do? Well essentially what we're saying above is take our original Lagrangian and plug in the substitutions
+\bse 
+    \l \to \l + \del_{\l}, \qquad m^2 \to m^2 + \del_m, \qand \phi \to \phi\sqrt{1+ \del_{Z}}.
+\ese 
+This corresponds exactly to what we were doing above when we had $\l = \l_p + (...)$. This is why we no longer need to worry about the subscript $p$. 
+
+\br 
+\label{rem:LambdaLambdaPOrder}
+    Note that our substitution above corresponds exactly to what we said before about taking $\l$ and $\l_p$ to be the same order in perturbation theory. This will become explicit in \Cref{eqn:DelLambdaFirstOrder}.
+\er 
+
+Ok so our $\l\phi^4$ theory becomes
+\bse 
+    \cL = \frac{1}{2} (\p\phi)^2 -\frac{1}{2}m^2 \phi^2 - \frac{\l}{4!}\phi^4 + \frac{1}{2}\del_Z (\p\phi)^2 - \frac{1}{2}\del_m\phi^2 - \frac{\del_{\l}}{4!} \phi^4
+\ese
+This might \textit{look} like a new theory, but of course it is exactly the same one just expressed in terms of the physical parameters and some additional terms. These additional terms are called \textit{counter terms} and they are what we will have to adjust order by order in perturbation theory if we want to maintain our renormalisation conditions, that is keep on on-mass-shell conditions.
+
+Now recall that our Feynman diagrams come from the terms in our Lagrangian, and so now we have new Feynman rules corresponding to our counter terms. For this theory we get two new terms, one corresponding to the propagator the other to the vertex. The standard way to denote these is with a $\otimes$ symbol, i.e. our new Feynman rules look like:
+\begin{center}
+    \btik 
+        \begin{scope}[xshift=-3.5cm]
+            \draw[thick] (-1,0) -- (-0.25,0);
+            \draw[thick] (0,0) circle [radius=0.25];
+            \draw[thick, rotate around={45:(0,0)}] (-0.25,0) -- (0.25,0);
+            \draw[thick, rotate around={-45:(0,0)}] (-0.25,0) -- (0.25,0);
+            \draw[thick] (0.25,0) -- (1,0);
+            \node at (2.5,0) {$= i (p^2\del_Z-\del_m)$};
+        \end{scope}
+        \begin{scope}[xshift=3.5cm]
+            \draw[thick,rotate around={45:(0,0)}] (-1,0) -- (-0.25,0);
+            \draw[thick, rotate around={-45:(0,0)}] (-1,0) -- (-0.25,0);
+            \draw[thick,rotate around={45:(0,0)}] (0.25,0) -- (1,0);
+            \draw[thick, rotate around={-45:(0,0)}] (0.25,0) -- (1,0);
+            \draw[thick] (0,0) circle [radius=0.25];
+            \draw[thick, rotate around={45:(0,0)}] (-0.25,0) -- (0.25,0);
+            \draw[thick, rotate around={-45:(0,0)}] (-0.25,0) -- (0.25,0);
+            \node at (1.75,0) {$=-i\del_{\l}$};
+        \end{scope}
+    \etik 
+\end{center}
+
+\br 
+\label{rem:HigherOrderCorrections}
+    Note that the expressions we have obtained for these correction diagrams look like the original expressions. That is the propagator term looks like a propagator "$p^2-m^2$", and the vertex correction looks like a vertex $-i\l$. This is an important result, and it essentially tells us that when we consider higher order corrections we do not need to introduce new diagrams, but we simply alter our correction term values, $\del_Z, \del_m$ and $\del_{\l}$.\footnote{For a slightly more detailed discussion of this, see section 3.3.4 of my QED notes.}
+\er 
+
+Ok so we have our new diagrams, we now need to ensure our renormalisation conditions are satisfied. As we've mentioned countless times, we do this by taking some experimental result and using this result as a reference point. How do we translate this into conditions on our propagator and coupling? Well we remember where they come from.
+
+\begin{itemize}
+    \item \textbf{Propagator}: The propagator comes from the two point function $\bra{\Omega}\cT[\phi(x)\phi(y)]\ket{\Omega}$, and so our on-mass-shell condition tells us to make the following demand\footnote{Note we have just set $y=0$ on the second term to simplify things a bit. We can do this because $N$-point functions only depend on the difference $(x-y)$.}
+    \be
+    \label{eqn:PropagatorRenormCondition}
+        \int d^4x \, e^{ip\cdot x} \bra{\Omega}\cT[\phi(x)\phi(0)]\ket{\Omega} \overset{!}{=} \frac{i}{p^2-m^2} + (\text{regular at } p^2=m^2).
+    \ee 
+    What this says is that the pole of our propagator, $p^2=m^2$, gives us the physical mass and that the residue is $1$. These are exactly the two conditions we wanted. If we compare this to our LSZ theorem, \Cref{eqn:LSZMomentum}, we see that the residue = 1 condition is equivalent to requiring $Z=1$. This should be viewed as a normalisation on the field $\phi$, and so $Z$ is often given the name \textit{wave-function normalisation}. 
+    \item \textbf{Coupling}: The coupling $\l$ comes from the $4$-point function. We can relate this to the first order amplitude, as there are no other factors contributing to the diagram, which gives us our familiar condition 
+    \be
+    \label{eqn:CouplingRenormCondition}
+        i\cM(s_0,t_0,u_0) \overset{!}{=} -i\l
+    \ee 
+    for some fixed energy scale $(s_0,t_0,u_0)$. This condition is clearly dependent on \textit{which} $(s_0,t_0,u_0)$ we choose,\footnote{Note, though, that it doesn't matter which one we pick as this is only a \textit{reference} point.} and it is standard to use $(m^2,0,0)$. However remember that in these notes we are working with high energies, and so we can't use this condition. Instead we shall just leave the values simply as $(s_0,t_0,u_0)$ without specifying their values. This will actually be nice because it will allow us to see how these factors carry through in our calculations. 
+\end{itemize}
+
+\subsection{Determining The Counterterms}
+
+Now that we have our renormalisation conditions, we can use them to work out what our counter terms are. That is we can use \Cref{eqn:PropagatorRenormCondition,eqn:CouplingRenormCondition} to determine $\del_{\l}, \del_Z$ and $\del_m$. At first we might think this is impossible as we only have 2 equations but three things to find, but we have to remember \Cref{eqn:PropagatorRenormCondition} contains two pieces of information: the position of the pole \textit{and} the residue value. 
+
+\subsubsection{Coupling}
+
+Let's do the coupling first as it is more straight forward. To first order the only two Feynman diagrams we get are 
+\begin{center}
+    \btik 
+        \draw[thick] (-0.5,0.5) -- (0.5,-0.5);
+        \draw[thick] (-0.5,-0.5) -- (0.5,0.5);
+        \draw[fill=black] (0,0) circle [radius=0.07cm];
+        %
+        \node at (1.25,0) {$+$};
+        % 
+        \draw[thick] (2,0.5) -- (3,-0.5);
+        \draw[thick] (2,-0.5) -- (3,0.5);
+        \draw[thick] (2.5,0) circle [radius=0.25cm];
+        %
+        \node at (4.5,0) {$= -i\l -i\del_{\l}$};
+    \etik 
+\end{center}
+which, from \Cref{eqn:CouplingRenormCondition}, tells us that we require 
+\be
+\label{eqn:DelLambdaFirstOrder}
+    \del_{\l} = 0 + \cO(\l^2).
+\ee 
+This is the condition we used before to set $\l^2=\l_p^2$. 
+
+Now let's look at second order. Before we jump in and start drawing diagrams, its important that we note that our expansion is in $\l$ \textit{not} $\del_{\l}$. What we mean by this is we consider diagrams with two $\l$ vertices but we still only have the single $\del_{\l}$ diagram drawn above. This obviously then means we have to alter our result \Cref{eqn:DelLambdaFirstOrder} to compensate for all the diagrams, not just the first order "cross" diagram. The fact that we can do this (i.e. not needing to consider diagrams with two $\del_{\l}$ vertices) is related to the fact that our correction term looks like a vertex again, see \Cref{rem:HigherOrderCorrections}. 
+
+So at second order we have the diagrams 
+\begin{center}
+    \btik 
+        \begin{scope}[xshift=-3.5cm]
+            \draw[thick] (1,1) -- (0,0.5);
+            \draw[thick] (-1,1) -- (0,0.5);
+            \draw[thick] (0,-0.5) -- (1,-1);
+            \draw[thick] (0,-0.5) -- (-1,-1);
+            \draw[thick] (0,0) circle [radius=0.5cm];
+            \draw[fill=black] (0,0.5) circle [radius=0.07cm];
+            \draw[fill=black] (0,-0.5) circle [radius=0.07cm];
+            \node at (1.75,0) {$+$};
+        \end{scope}
+        \begin{scope}
+            \draw[thick] (1,1) -- (0.5,0);
+            \draw[thick] (-1,1) -- (-0.5,0);
+            \draw[thick] (0.5,0) -- (1,-1);
+            \draw[thick] (-0.5,0) -- (-1,-1);
+            \draw[thick] (0,0) circle [radius=-0.5cm];
+            \draw[fill=black] (0.5,0) circle [radius=0.07cm];
+            \draw[fill=black] (-0.5,0) circle [radius=0.07cm];
+            \node at (1.75,0) {$+$};
+        \end{scope}
+        \begin{scope}[xshift=3.5cm]
+            \draw[thick] (1,1) -- (0.5,0);
+            \draw[thick] (-1,1) -- (-0.5,0);
+            \draw[thick] (0.35,-0.425) -- (1.5,-1);
+            \draw[thick] (-0.5,0) -- (0.25,-0.375);
+            \draw[thick] (0.5,0) -- (0.05,-0.225);
+            \draw[thick] (-0.05,-0.275) -- (-0.25,-0.375);
+            \draw[thick] (-0.35,-0.425) -- (-1.5,-1);
+            \draw[thick] (0,0) circle [radius=-0.5cm];
+            \draw[fill=black] (0.5,0) circle [radius=0.07cm];
+            \draw[fill=black] (-0.5,0) circle [radius=0.07cm];
+            \node at (1.75,0) {$+$};
+        \end{scope}
+        \begin{scope}[xshift=7cm]
+            \draw[thick] (1,1) -- (-1,-1);
+            \draw[thick] (1,-1) -- (-1,1);
+            \draw[thick] (0,0) circle [radius=0.25cm];
+        \end{scope}
+    \etik
+\end{center}
+which gives us 
+\bse 
+    i\cM(s,t,u) = -i\l + \frac{\l^2}{32\pi^2}\bigg[ \log(\frac{\Lambda^2}{s}) + \log(\frac{\Lambda^2}{t}) + \log(\frac{\Lambda^2}{u})\bigg] -i\del_{\l},
+\ese 
+and then \Cref{eqn:CouplingRenormCondition} gives us 
+\bse 
+    i\del_{\l} = i\frac{\l^2}{32\pi^2}\bigg[ \log(\frac{\Lambda^2}{s_0}) + \log(\frac{\Lambda^2}{t_0}) + \log(\frac{\Lambda^2}{u_0})\bigg] + \cO(\l^3).
+\ese 
+This then gives us the same result we obtained before
+\bse 
+    i\cM = -i\l + \frac{\l^2}{32\pi^2}\bigg[ \log(\frac{s_0}{s}) + \log(\frac{t_0}{t}) + \log(\frac{u_0}{u})\bigg].
+\ese
+
+We have bothered to obtain this result this way for two reasons: firstly it gives further support for our result and secondly it allows us to see how we proceed for higher orders. Note in particular that $\del_{\l}$ is always going to be to the same order as the truncation of the perturbation, i.e. at third order we expect $\del_{\l} \sim \l^3$ etc. We therefore see that our renormalisation scheme does indeed work to all orders, we just have to continuously keep adjusting the value of $\del_{\l}$. 
+
+\br 
+    Again the fact that this works to all orders is a direct repercussion of the fact that our correction term takes the same form as our original coupling. If it had not we would have to introduce a new term into the Lagrangian at every order and we would end up needing an infinite number of them for the full perturbation expansion, and this would kill our ability to predict anything. 
+\er 
+
+\subsubsection{Propagator}
+
+Ok that's the coupling done, now let's do the propagator. This will take a little bit more time and involves us introducing what are known as \textit{one-particle irreducible} (1PI) diagrams. 
+
+Recall that our on-mass-shell renormalisation condition required that the pole of our theory gives us the physical mass of the particle. We therefore need to keep track of how the pole shifts, and in order to do this will need sum an infinite set of diagrams. To gain more clarity on what we mean, let's look at the structure of the two-point function. 
+
+At order $\l^0$ we of course just have the exact result 
+\bse 
+    \int d^4 x \, e^{ip\cdot x} \bra{\Omega}\cT[\phi(x)\phi(0)]\ket{\Omega} = D_F(p).
+\ese 
+This is what we expect as the free propagator is non-divergent. However at order $\l$ we get the following diagram 
+\begin{center}
+    \btik 
+        \midarrow (-1,0) -- (0,0);
+        \node at (-0.5,-0.3) {$p$};
+        \draw[thick] (0,0) -- (1,0);
+        \draw[thick] (0,0) .. controls (-1.5,1.5) and (1.5,1.5) .. (0,0);
+        \draw[fill=black] (0,0) circle [radius=0.07cm];
+    \etik  
+\end{center}
+which is divergent and needs to be counteracted with our corrected propagator
+\begin{center}
+    \btik 
+        \midarrow (-1,0) -- (-0.25,0);
+        \node at (-0.625,-0.3) {$p$};
+        \draw[thick] (0,0) circle [radius=0.25];
+        \draw[thick, rotate around={45:(0,0)}] (-0.25,0) -- (0.25,0);
+        \draw[thick, rotate around={-45:(0,0)}] (-0.25,0) -- (0.25,0);
+        \draw[thick] (0.25,0) -- (1,0);
+    \etik 
+\end{center}
+where in both diagrams we have labelled the incoming momentum. 
+
+What about second order in $\l$? Well there's two diagrams we can get, namely:
+\begin{center}
+    \btik 
+        \begin{scope}[xshift=-3cm]
+            \midarrow (-1,0) -- (0,0);
+            \node at (-0.5,-0.3) {$p$};
+            \draw[thick] (0,0) -- (1,0);
+            \draw[thick] (0,0) .. controls (-1.5,1.5) and (1.5,1.5) .. (0,0);
+            \draw[fill=black] (0,0) circle [radius=0.07cm];
+            \draw[thick] (1,0) -- (1.5,0);
+            \draw[thick] (1.5,0) -- (2.5,0);
+            \draw[thick] (1.5,0) .. controls (0,1.5) and (3,1.5) .. (1.5,0);
+            \draw[fill=black] (1.5,0) circle [radius=0.07cm];
+        \end{scope}
+        \begin{scope}[xshift=3cm]
+            \midarrow (-1,0) -- (0,0);
+            \node at (-0.5,-0.3) {$p$};
+            \draw[thick] (0,0) -- (1,0);
+            \draw[thick] (0,0) .. controls (-1.5,1.5) and (1.5,1.5) .. (0,0);
+            \draw[fill=black] (0,0) circle [radius=0.07cm];
+            \draw[thick] (0,1.14) .. controls (-1.5,2.64) and (1.5,2.64) .. (0,1.14);
+            \draw[fill=black] (0,1.14) circle [radius=0.07cm];
+        \end{scope}
+    \etik 
+\end{center}
+Now the second one looks new (and perhaps a bit scary) but the first one just looks like two copies of our first order diagram "stuck together". Indeed it is exactly what it is, and the continuation of this argument motives the definition of our 1PIs. 
+
+\bd[One-Particle Irreducible]
+    If a diagram can be cut along a propagator line and give to separate diagrams of lower order it is \textit{not} 1PI. If we cannot do this it is 1PI. We denote the full set of 1PI diagrams as $-i\Sigma(p)$. 
+\ed 
+
+\noindent For clarity on the above definition, the right second order diagram is 1PI but the left one is not. It is also important to note that our corrected propagator (i.e. the one with the $\otimes$ on it) is counted in our 1PI definition. 
+
+\bbox 
+    There are three\footnote{Ignoring the $\otimes$ diagrams.} 1PI diagrams for $\phi^4$ theory at order $\l^3$. Draw them. 
+    
+    \textit{Hint: I'm just going to leave this here...}
+    \begin{center}
+        \includegraphics[scale=0.2]{images/MickeyMouse.png}
+    \end{center}
+    \textit{Also the word "sunset" might help...}
+\ebox  
+
+Our full propagator term is then given by the sum 
+\begin{center}
+    \btik 
+        \midarrow (-0.5,0) -- (0.5,0);
+        %
+        \node at (1,0) {$+$};
+        %
+        \midarrow (1.5,0) -- (2,0);
+        \draw[thick] (2.5,0) circle [radius=0.5cm];
+        \node at (2.5,0) {1PI};
+        \midarrow (3,0) -- (3.5,0);
+        % 
+        \node at (4,0) {$+$};
+        % 
+        \midarrow (4.5,0) -- (5,0);
+        \draw[thick] (5.5,0) circle [radius=0.5cm];
+        \node at (5.5,0) {1PI};
+        \midarrow (6,0) -- (7,0);
+        \draw[thick] (7.5,0) circle [radius=0.5cm];
+        \node at (7.5,0) {1PI};
+        \midarrow (8,0) -- (8.5,0);
+        %
+        \node at (9,0) {$+$};
+        \node at (9.5,0) {$...$};
+    \etik 
+\end{center}
+which mathematically is 
+\bse 
+    D_F(p) + D_F(p)\big(-i\Sigma(p)\big) D_F(p) + ... = D_F(p)\sum_{n=0}^{\infty}\Big[\big(-i\Sigma(p)\big) D_F(p)\Big]^n,
+\ese
+which is just a geometric sum,\footnote{Note really we should be a bit more careful because for Fermions the propagator is a matrix valued expression. This is discussed a bit more in my QED notes.} and so we get 
+\bse 
+    D_F(p) \frac{1}{1+ i\Sigma(p)D_F(p)} = \frac{i}{p^2-m^2-\Sigma(p)},
+\ese 
+where we have used the result $D_F(p) = (p^2-m^2)^{-1}$. This result is really worth stressing and so we put it again in a nice box:
+\mybox{
+\be 
+\label{eqn:SF(p)}
+    S_F(p) = \frac{i}{p^2-m^2-\Sigma(p)}
+\ee 
+}
+\noindent where we have just introduced the common notational definition $S_F(p)$. 
+
+Ok so what we have just shown is that $\Sigma(p)$ is exactly the shift in our pole, and so if we are to get our on-mass-shell renormalisation condition we require 
+\mybox{
+\be 
+\label{eqn:SigmaOnShell}
+    \Sigma(p^2=m^2) = 0, \qand \bigg(\frac{d \Sigma}{dp^2}\bigg)\bigg|_{p^2=m^2}=0.
+\ee 
+}
+\noindent where the second result gives us our residue condition.\footnote{The proof of this was an exercise on the course, so I don't want to type the answer here. If you can't see it at all, feel free to email me and I'll give you some hint.}
+
+Let's now evaluate this to order $\l$. From the diagrams above, we have\footnote{Note the factor of $1/2$. It is a symmetry factor.}
+\bse 
+    -i\Sigma(p^2) = -\frac{i\l}{2} \int \frac{d^4 k}{(2\pi)^4} \frac{i}{k^2-m^2} + i(p^2\del_Z -\del_m),
+\ese
+where $k$ is the momentum in the loop. Now we note that the loop part is completely independent of $p^2$ and so is the $\del_m$ term, so our residue condition (the derivative one) simply gives us $\del_Z=0$ and then the pole condition gives us our $\del_m$ result. We summarise these again in a nice box:
+\mybox{
+\be 
+\label{eqn:PropagatorCorrectionFirstOrder}
+    \del_Z = 0, \qand \del_m = - \frac{\l}{2} \int \frac{d^4 k}{(2\pi)^4} \frac{i}{k^2-m^2}.
+\ee 
+}
+\noindent We could then evaluate the integral to get an explicit expression for $\del_m$ but we do not do that here, as the result depends on our cut-off value $\Lambda$. 
+
+\br 
+    Note the fact that we got $\del_Z=0$ above is purely a repercussion of the fact we are only working to order $\l$. If we worked to higher orders, our diagrams will have non-trivial dependence on $p^2$ and so we will get something non-zero for $\del_Z$.
+\er 
+
+\section{What Theories Are Renormalisable \& What Does This Mean?}
+
+Ok so we have successfully (at least outlined how to) renormalised our $\phi^4$ theory to all orders. The obvious question is "can we always do this? If not what are the conditions we need to ensure that we can?" The answer to the first question is "no", and the answer to the second question takes a bit of work. 
+
+Let's recap what we did above: essentially we drew the diagrams and found the ones that were divergent and then introduced counter terms for these diagrams and then constrained the result using an experiment. What we need, therefore, is some way to determine if a diagram is divergent and how this divergence will be effected as we edit the diagram by, say, adding another vertex.
+
+We will do this by generalising our $\phi^4$ theory in $4$-dimensions to $\phi^n$ theory in $d$-dimensions. Our action is then
+\bse 
+    S[\phi] = \int d^d x \, \bigg(\frac{1}{2}(\p\phi)^2 - \frac{m^2}{2}\phi^2 - \frac{\l}{n!} \phi^n\bigg).
+\ese 
+Now we invoke some dimensional analysis arguments. Recall that in QFT we work in so-called \textit{natural units} (i.e. $\hbar=c=1$) in which case we can categorise the dimension of everything by simply stating its mass dimension. The most important one to note here is $[x]=-1$, from which it follows that $[\p]=+1$ and $[dx]=-1$.\footnote{If this notation or argument doesn't make sense to you, see your canonical field theory notes.} 
+
+Now recall that the action appears inside an exponential in our path integrals. This tells us\footnote{As the Taylor expansion of an exponential contains powers of the argument, and if we are to add these things they must all have the same dimension. The only way we can satisfy this is if it is dimensionless.} we \textit{must} have $[S]=0$. Now our integral measure is going to give us a dimension factor of $[d^dx]=-d$, and so we must cancel all of these with the Lagrangian, i.e. $[\cL]=+d$. We can then work from here to find the dimension of our field, and from there the dimension of our coupling constant. 
+\bbox 
+    Convince yourself that 
+    \bse 
+        [\phi]= \frac{d-2}{2} \qquad \implies \qquad [\l] = d-n\bigg(\frac{d-2}{2}\bigg)
+    \ese
+    for our theory. 
+\ebox 
+
+Why are we talking about this? Well because it allows us to define what is known as the \textit{superficial degree of divergence} (SODD), $D$. This is essentially how badly a diagram \textit{looks} like its diverging. That is, if the SDOD is $D$ then the diagram diverges as $\Lambda^D$.
+
+\br
+\label{rem:SDOD}
+    We say "looks" because it turns out that the SDOD is not always correct: it can both underestimate and overestimate the actual divergence of the diagram. For example symmetry factors can cause two diagrams to partially cancel, thereby lowering the SDOD. For a bit more information on this see my QED notes.
+\er 
+
+With the above remark in mind, we are going to pretend that the SDOD is a good measure of the actual divergence and plough on. We want to relate $D$ to things in the diagram, but how do we do this? Well recall that our divergences are coming from the integrals and in particular by the ratio of the number of dimensions we're integrating over to the momentum powers in the denominator. This is why we were get $\log$ divergences: we were integrating $1/p^4$ with measure $d^4p$. 
+
+Next recall that each loop comes with an undetermined momentum and therefore the Feynman rules tell us to include a $d$-dimensional integral. This is going to give us a mass dimension of $+d$. Similarly every propagator comes with a $1/(p^2-m^2)$, and in the high energy limit (which is where the divergences we are talking about come from) this simply becomes $1/p^2$. Momentum has units of energy which has units of inverse length and so each propagator gives us a factor of $-2$. We therefore get 
+\bse 
+    D = dL - 2P,
+\ese    
+where $L/P$ are the number of loops/propagators in the diagram, respectively. This is hopefully an intuitively clear result: the more loops we have the worse our divergence and the more propagators we have the better. 
+
+Ok this is nice, but is there a way for us to express this result in terms of something easier to see, say the parameters appearing in the Lagrangian? The answer, of course,\footnote{Otherwise I wouldn't be typing this.} is "yes", let's see how. 
+
+Imagine we have a diagram with exactly $N$ external lines (i.e. both incoming \textit{and} outgoing particles) and $V$ vertices. Now \textit{imagine} that our Lagrangian contained a term of the form $\eta\phi^N$ then we would be able to draw this diagram with exactly one vertex. This vertex will give a factor of $\eta$, and so, from our previous discussion, we see that the dimension of the diagram is just 
+\be
+\label{eqn:DiagramDimension}
+    [\text{Diag}] = [\eta] = d - N\bigg(\frac{d-2}{2}\bigg).
+\ee 
+We stressed the word "imagine" above as it is possible, and indeed probable, that our theory won't contain exactly this term. We just use this argument to obtain the dimensions for the diagram. If our theory might not contain this interaction vertex, why are we bothering to discuss it? Well, if we are going to sum the diagrams, which we always do to get the full amplitude, each diagram \textit{must} have the same dimension.\footnote{By the same argument made in footnote 16.} We can then use this as the \textit{definition} of the dimension of our diagram and compare it to one that we can get for our actual theory. 
+
+In our actual theory we construct the diagrams by `gluing together' a bunch of propagators and vertices. These vertices will each give a dimensionful contribution of $[\l]$ to the dimension of the diagram. Therefore if the diagram has $V$ vertices, the most divergent part\footnote{Note any other contributions to the diagram will only make it \textit{less} divergent, so here we're considering the worst case scenario.} of the diagram has dimension
+\bse 
+    V[\l] + \big[\Lambda^D\big] = V\bigg[ d - n\bigg(\frac{d-2}{2}\bigg)\bigg] + D
+\ese 
+where the second term comes from the definition of the SDOD. We can then equate this \Cref{eqn:DiagramDimension} and rearrange for $D$ to obtain
+\mybox{
+\be 
+\label{eqn:SDOD}
+    D = d + V\bigg[n\bigg(\frac{d-2}{2}\bigg) - d\bigg] - N\bigg(\frac{d-2}{2}\bigg). 
+\ee 
+}
+
+For the purposes of the next comment, let's rewrite the above as 
+\bse 
+    D = d - V[\l] - N\bigg(\frac{d-2}{2}\bigg).
+\ese 
+Now the last term is always negative,\footnote{Provided $d>1$. As Dr. Iqbal points out the QM case, namely $d=1$, seems to be different. I have no idea why.} and the first term is obviously always positive. Let's categorise this result by the values of $[\l]$, then. 
+\begin{itemize}
+    \item $[\l]>0$, \textbf{Super-Renormalisable}: In this case the more vertices we include the less divergent the diagram is. This tells us that we only have a finite number of divergent \textit{diagrams} and so we can obviously renormalise the theory. Indeed there becomes a point when we no longer need to add corrections to our counter terms at all. That is once we hit the $V$ value that renders $D\leq 0$, \textit{all} higher order diagrams are convergent given our counter terms. This is why we call them \textit{super}-renormalisable, in contrast to the next case. 
+    \item $[\l]=0$, \textbf{Renormalisable}: In this case adding additional vertices doesn't change anything because that term vanishes. We therefore see the only way to ensure a convergent diagram is to increase the number of external states, $N$. However \textit{all} diagrams with $N$ less then this critical value will be divergent. That is if a diagram is divergent at one-loop order it will continue to be divergent at all higher order loops. We therefore get an infinite number of divergent diagrams, but we have a \textit{finite} number of divergent \textit{amplitudes}, i.e. all scattering processes with enough external states are convergent. This amounts to the fact that we only need a finite number of experiments (as there are only finitely many divergent amplitudes) but we will have to continuously alter our correction terms to higher and higher orders. This was the case for our $\phi^4$ in $d=4$ theory, which is in agreement with $[\l]=0$ there.
+    \item $[\l]<0$, \textbf{Non-Renormalisable}: In this case the more vertices we include the more external states we need to keep our amplitudes from diverging. This tells us that not only do we have an infinite number of divergent diagrams but we also have an infinite number of divergent \textit{amplitudes}. This means we would need more and more experiments at higher order loops to fix our counter terms and we would end up needing an infinite number. This would completely constrain our reference point and we would not be able to predict any other physics, rendering the theory useless.
+\end{itemize}
+
+We have therefore come up with a method for just "seeing" if the theory is divergent by simply finding the dimension of the coupling constants appearing in the Lagrangian. The method we have described is known as \textit{power-counting renormalisation}, for obvious reasons.
+
+\br 
+    As we mentioned before, the SDOD only gives us what the divergence of a diagram "looks" like. We gave an example in \Cref{rem:SDOD} of how it can overestimate the divergence of a diagram, but the more worrying case would be it underestimating the divergence of the diagram. When could this happen? Well if we had a badly divergent subdiagram, as in, for example, 
+    \begin{center}
+        \btik
+            \draw[thick] (1,1) -- (0.5,0);
+            \draw[thick] (-1,1) -- (-0.5,0);
+            \draw[thick] (0.5,0) -- (1,-1);
+            \draw[thick] (-0.5,0) -- (-1,-1);
+            \draw[thick] (0,0) circle [radius=0.5cm];
+            \draw[thick] (0,0.5) .. controls (-1,1.5) and (1,1.5) .. (0,0.5);
+            \draw[fill=black] (0.5,0) circle [radius=0.07cm];
+            \draw[fill=black] (-0.5,0) circle [radius=0.07cm];
+            \draw[fill=black] (0,0.5) circle [radius=0.07cm];
+        \etik 
+    \end{center}
+    It turns out\footnote{See section 3.3.4 of my QED notes, for a bit more detail.} that this will not actually effect our discussion above as we can essentially `shrink' the loop in the above diagram and replace it by our first order vertex correction. That is we can replace this diagram with 
+    \begin{center}
+        \btik 
+            \draw[thick] (1,1) -- (0.5,0);
+            \draw[thick] (-1,1) -- (-0.5,0);
+            \draw[thick] (0.5,0) -- (1,-1);
+            \draw[thick] (-0.5,0) -- (-1,-1);
+            \draw[thick] (0,0) circle [radius=0.5cm];
+            \draw[fill=black] (0.5,0) circle [radius=0.07cm];
+            \draw[fill=black] (-0.5,0) circle [radius=0.07cm];
+            \draw[fill=white] (0,0.5) circle [radius=0.25cm];
+            \draw[thick, rotate around={45:(0,0.5)}] (-0.25,0.5) -- (0.25,0.5);
+            \draw[thick, rotate around={-45:(0,0.5)}] (-0.25,0.5) -- (0.25,0.5);
+        \etik 
+    \end{center}
+    and proceed as above.
+\er 
+
+\section{A Few Non-Renormalisable Theories}
+
+Let's now give some more physical significance to our somewhat abstract results above about what it means for a theory to be non-renormalisable. We shall explain the idea here and then give real world examples. 
+
+Our result above was based around the dimension of the coupling, but what does this actually mean? The answer comes from recalling that the matrix element $i\cM$ essentially tells us the probability for a particular scattering to occur;\footnote{Well technically its the modulus squared that gives us the probability, but the idea is the same. Another way you could argue this result would be the fact that, as we have seen, $i\cM$ is a complex number and so cannot possibly have physical dimensions.} it is therefore dimensionless. However we have seen explicitly that the coupling parameters appear in our matrix elements, and so if they are dimensionful we must include some other dimensionful quantity to cancel them out. 
+
+To see why this causes us problems, lets consider $\phi^6$ theory in $d=4$ dimensions. By our arguments above this theory is non-renormalisable. The coupling constant for this term will have dimension $-2$, and so we can write the term in the Lagrangian as
+\bse 
+    \cL_6 = \int d^4 x \, \frac{c}{M^2} \phi^6,
+\ese 
+where $[M]=+1$ and $c$ is some dimensionless constant. Now imagine we have a diagram that just contains a single one of these vertices then we expect 
+\bse 
+    i\cM_6 \sim \frac{c}{M^2},
+\ese 
+and we need to include something to cancel the dimensions. Obviously we can't just stick anything in there, and with a bit of thought we see that the \textit{only} thing we can use is the physical energy of the scattering, $E$. Recalling the $[E]=+1$, we see that what we require is 
+\bse 
+    i\cM_6 \sim \frac{c}{M^2}E^2.
+\ese
+Why is this a problem? Well recall our divergences were coming from the high momentum (and therefore high energy) limit. It follows from the above, then, that the theory becomes more and more strongly coupled at higher energies, and there becomes a point at which our perturbation theory breaks down. That is, our theory is no good at predicting physics at high energies/small distances. 
+
+So what do we do? Well we don't really have a choice, we cannot take our cut off value $\Lambda$ to infinity, and so we \textit{must} carry it through in our calculation and make sure that we are only asking questions valid in the energy limit $E << \Lambda$. We then just hope that this restriction isn't going to effect our calculations too badly. The idea we just sketched out is the basic concept of \textit{effective field theory}, and apparently we will discuss this in more detail in the Renormalisation Group course in second term.\footnote{Notes to come... Provided I don't crash and fail the exams...} For now let's just look at two examples of non-renormalisable theories.
+
+\subsection{Pions}
+
+Pions are a group of mesons, i.e. quark-antiquark pair. There are three of them known, denoted by $\pi^+,\pi^-$ and $\pi^0$, where the superscript indicates their electric charge. The pions are massive, and their masses are all very close, being approximately 135MeV. If we work in a limit where quarks are massless, though, we can express the action as 
+\bse 
+    S = \int d^4 x\, \bigg(\frac{1}{2}\p_{\mu}\Vec{\pi}\cdot \p^{\mu}\Vec{\pi} + \frac{1}{2F_{\pi}^2}(\p_{\mu}\Vec{\pi}\cdot \vec{\pi})(\p^{\mu}\Vec{\pi}\cdot\vec{\pi}) + ... \bigg)
+\ese 
+where $\vec{\pi}$ is a $3$ vector whose entries are the three pions and $F_{\pi}$ is the so-called \textit{pion decay constant}. The kinetic term in this action tells us that $[\vec{\pi}]=+1$ and so we it follows that $[F_{\pi}]=+1$. As it appears in the denominator, then, this theory is non-renormalisable. This theory therefore breaks down at energies $E\sim F_{\pi}$ (which has been measured to be around 93MeV), and we must replace it with something else. 
+
+It turns out that we do in fact know what we need to replace this theory with, its QCD, which \textit{is} renormalisable. What was going wrong with our pion theory? Well at high energies it implies that the pions will `split' into their quark antiquark pairs, whereas we know from QCD that this is not possible. That is QCD tells us that quark states are \textit{not} asymptotically free, but we must \textit{always} observe quarks in at least twos. 
+
+Let's contrast this theory with the following example. 
+
+\subsection{Gravity}
+
+You are probably aware that it is a big current goal to come up with a full QFT for gravity. It is often said that "gravity and quantum field theory don't get along", well, as we will see here, that is not quite the true statement. 
+
+Recall from GR that the action for gravity is the so-called \textit{Einstein-Hilbert action}
+\bse 
+    S = \frac{1}{16\pi G_N} \int d^4x\, \sqrt{-g} R,
+\ese 
+where $R$ is the \textit{Ricci scalar}. We can boldly attempt to treat this as a QFT by expanding around flat spacetime:\footnote{If you think this seems like a strange thing to do, this is actually where the study of gravitational waves comes from. These are obviously now experimentally verified objects, and so we are not totally crazy for doing something like this.} 
+\bse 
+    g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu},
+\ese 
+where $\eta_{\mu\nu}$ is the Minkowski metric and $h_{\mu\nu}$ is our small perturbation parameter, which we treat as a quantum field. If we plug this bold expansion into our Einstein-Hilbert action and use the behaviour $R \sim (\p h)^2$, our action becomes 
+\bse 
+    S = \frac{1}{16\pi G_N}\int d^4x (\p h)^2 \big(1 + h^2 + h^4 + ...\big),
+\ese 
+where we have of course dropped all the index behaviour as we are only really interested in the power behaviour. This result tells us that $h$ must be dimensionless (as otherwise $h^2+h^4$ wouldn't make sense) and so it follows (note the derivatives) that $[G_N]=-2$. This defines a dimensionful scale called the \textit{Planck scale}
+\bse 
+    m_{Pl}^2 := \frac{1}{16\pi G_N} \sim 10^{19}GeV.
+\ese 
+
+We can make our action look more like a normal QFT (i.e. put the dimensionful stuff in the expansion) by redefining our perturbation field to be 
+\bse 
+    \widetilde{h} := m_{Pl}^2 h,
+\ese 
+giving us 
+\bse 
+    S = \int d^4 x\, \big(\p\widetilde{h}\big)^2 \bigg( 1 + \widetilde{h}^2 + \frac{1}{m_{Pl}^2}\widetilde{h}^4 + ... \bigg).
+\ese 
+We see from here straight away that this theory is non-renormalisable, and so it must break down as high energies. This is what people mean by "gravity and QFT don't get along". Note, though, that this theory \textit{does} work provided we stick to low enough energies. This therefore corrects the statement to "gravity and QFT don't get along \textit{at arbitrarily high energies}". 
+
+The difference to the pion case, though, is that we do not as of yet know what theory we need to replace this one. The main problem in trying to find such a theory is that the energy scale we're talking about is \textit{way} beyond our current experimental capacity and so we have no way to test the theories. The most famous theory we have so far is string theory, and this is why so many people are interested in studying it. 

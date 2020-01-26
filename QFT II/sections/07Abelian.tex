@@ -1,0 +1,370 @@
+\chapter{Abelian Gauge Theory}
+
+We previously worked through global symmetries in the path integral approach and derived the Ward identities. We are yet to talk about local (gauge) theories, though. The rest of this course is dedicated to exactly this discussion. We, of course, deal with the easier abelian gauge theories first and then move on to the full beast of non-abelian gauge theories. 
+
+\section{Gauge Invariance}
+
+In order to discuss gauge symmetry, it is often useful to first pick a specific global symmetry and then "make it local" to see how things change. Here we do this by considering a theory with a global $U(1)$ theory. We will use the Dirac action as a proxy. 
+
+Recall that the Dirac action is given by
+\bse 
+    S[\psi,\overline{\psi}] = \int d^4x \, \overline{\psi} \big( i\slashed{\p} - m\big) \psi
+\ese 
+This admits a global $U(1)$ symmetry which acts as
+\be
+\label{eqn:GlobalU(1)}
+    \psi(x) \to \psi'(x) = e^{i\Lambda} \psi(x), \qand \overline{\psi}(x) \to \psi'(x) = \overline{\psi}'(x) e^{i\Lambda}
+\ee 
+where $\Lambda$ is \textit{constant} in spacetime. Any two configurations that are related by the symmetry are both physical. That is if $\psi$ is a field we integrate over in the path integral, then we must also integrate over $\psi'$. This is an important point and something that we will return to when talking about gauge symmetries. 
+
+Let's now "make this into a gauge symmetry", i.e. let's \textit{demand} invariance under \Cref{eqn:GlobalU(1)} with $\Lambda(x)$ being spacetime dependent. As we will see, the truth this that this is not a symmetry in the same way that the global one was. Really we should refer to it as a \textit{gauge redundancy}, however we will not use this terminology in this course much. Things that are invariant under our gauge symmetries are called \textit{gauge invariant}. 
+
+Let's now see the repercussions of this procedure, i.e. let's ask the question "What is, and more importantly what isn't, gauge invariant in our current Lagrangian?" Obviously the mass term is fine:
+\bse 
+    m\overline{\psi} (x)\psi(x) \to m \overline{\psi} e^{-i\Lambda(x)} e^{i\Lambda(x)}\psi(x) = m \overline{\psi}(x)\psi(x).
+\ese 
+Now note that this worked out because we had the fields evaluated at the \textit{the same spacetime point}. That is if we had 
+\bse 
+    m\overline{\psi}(x)\psi(y) \to m\overline{\psi} e^{i(\Lambda(x)-\Lambda(y))} \psi(y) \neq m\overline{\psi}(x)\psi(y)
+\ese 
+when $x\neq y$. It follows from this that we expect the kinetic term with derivatives to \textit{not} be invariant. This is simply because, roughly speaking, the derivative compares neighbouring points. Indeed this turns out to be the case, and a quick calculation reveals
+\bse 
+    \p\psi' \to e^{i\Lambda(x)} \big(i\p_{\mu}\Lambda + \p_{\mu}\big)\psi(x). 
+\ese
+This tells us that our Dirac action is \textit{not} gauge invariant and so we don't have a gauge symmetry. This is not good, and we need to do something to fix it. 
+
+This should prick up the ears of people familiar with GR: we have some derivative behaviour that doesn't quite add up. We had a similar problem in GR when taking derivatives of tensor fields. In this case we replaced the partial derivative by the covariant derivative, which was just given by the original partial derivative plus something (the connection coefficients). We draw from this previous experience and we seek to replace our partial derivative here with a so-called \textit{gauge invariant derivative}, which we define via\footnote{The $e$ that appears in here is the \textit{gauge field coupling}. If this doesn't make any sense to you, see, for example, my QED notes.}
+\mybox{
+    \be 
+    \label{eqn:GaugeInvariantDerivative}
+        D_{\mu}\psi := \big(\p_{\mu} + ieA_{\mu}\big) \psi,
+    \ee 
+}
+\noindent where we have introduced a new object $A_{\mu}$ called the \textit{gauge field} or \textit{gauge connection}. For a abelian theory we require 
+\be 
+\label{eqn:Abelian}
+    [A_{\mu},A_{\nu}] = 0 \qquad \forall \mu,\nu \in \{1,...,d\}. 
+\ee 
+
+We now use our gauge invariant derivative to make our action gauge invariant. How do we do this? Well we \textit{demand} that the gauge covariant derivative of $\psi$ has a \textit{nice} transformation property. What do we mean by "nice"? Well looking at the mass term calculation, we see that if we have 
+\bse 
+    D_{\mu}\psi(x) \to D_{\mu}' \psi'(x) \overset{!}{=} e^{-\Lambda(x)} D_{\mu}\psi(x). 
+\ese 
+then we expect the action to be gauge invariant. 
+
+Ok great, but how to we make such a demand? The answer is that we allow the gauge field $A_{\mu}$ to transform under our gauge transformation, and define its trasnformation property such that our demand holds. Explicitly we have 
+\bse 
+    \begin{split}
+        D_{\mu}' \psi'(x) & = \big(\p_{\mu} + ieA_{\mu}'\big) e^{i\Lambda(x)}\psi(x) \\
+        & = e^{i\Lambda(x)}\big(i\p_{\mu} \Lambda + ieA_{\mu}' + \p_{\mu}\big) \psi(x) \\
+        & \overset{!}{=} e^{i\Lambda(x)}\big(\p_{\mu} + ieA_{\mu}\big) \psi(x)
+    \end{split}
+\ese 
+from which it follows that we require 
+\mybox{
+    \be
+    \label{eqn:GaugeTransformationOnFields}
+        A_{\mu}' = A_{\mu} - \frac{1}{e} \p_{\mu}\Lambda, \qand \psi'(x) = e^{i\Lambda(x)}\psi. 
+    \ee
+}
+
+\bbox 
+    Confirm that the above transformation property does indeed give us a gauge invariant action. That is show that 
+    \bse 
+        \overline{\psi}'(x)(i\slashed{D}'-m)\psi'(x) = \overline{\psi}(x)(i\slashed{D}-m)\psi(x).
+    \ese 
+\ebox 
+
+So we have a  fully gauge-invariant Dirac action 
+\bse 
+    S[\psi,\overline{\psi}] = \int d^4x \, \overline{\psi}(x) \big[ i\slashed{D} - m\big] \psi(x),
+\ese 
+but what is $A$ good for?\footnote{Besides taking derivatives.} Well, firstly note that because $D_{\mu}\psi$ transforms nicely, therefore so does $D_{\mu}D_{\nu}\psi$.\footnote{Hopefully this is clear. Basically the idea is we defined $D_{\mu}$ to transform such that it took something that transformed as $A \to e^{i\Lambda(x)}A$ so that $D_{\mu}A \to e^{i\Lambda(x)}D_{\mu}A$. Well we have just shown that $D_{\mu}\psi$ transforms in exactly this way and so it follows immediately that $D_{\nu}D_{\mu}\psi \to e^{i\Lambda(x)}D_{\nu}D_{\mu}\psi$.} We may, then, consider the commutator of two $D$s. 
+\bse 
+    \begin{split}
+        [D_{\mu},D_{\nu}]\psi & = [\p_{\mu},\p_{\nu}] \psi + ie \big([\p_{\mu},A_{\nu}] + [A_{\mu},\p_{\nu}]\big) \psi \\
+        & = ie \big(\p_{\mu}A_{\nu} - \p_{\nu}A_{\mu}\big)\psi.
+    \end{split}
+\ese
+where we have made use of \Cref{eqn:Abelian}. We can then define 
+
+\mybox{
+    \be     
+    \label{eqn:Fmunu}
+        ieF_{\mu\nu} := [D_{\mu},D_{\nu}],
+    \ee 
+}
+known as the \textit{field strength}. This definition holds for both abelian and non-abelian theories. For the abelian case we have 
+\be 
+\label{eqn:FmunuAbelian}
+    F_{\mu\nu}^{\text{Abelian}} = \p_{\mu}A_{\nu} - \p_{\nu}A_{\mu}
+\ee 
+
+\bnn 
+    From now on we will drop the superscript "Abelian" and unless needed in order to avoid confusion. 
+\enn 
+
+\bbox 
+    Show that \Cref{eqn:FmunuAbelian} is itself gauge invariant. This can be shown explicitly using \Cref{eqn:GaugeTransformationOnFields} or it can be shown more generally using
+    \bse 
+        [D_{\mu},D_{\nu}]\psi \to e^{i\Lambda(x)}[D_{\mu},D_{\nu}]\psi.
+    \ese 
+    Try using the second method. \textit{Hint: Compare this to the transformation of $\psi$ itself.}
+\ebox 
+
+Why are we bothering to define the field strength? Well because we now note that it can be included into our action in a gauge invariant and renormalisable way. That is we can extend our Dirac action to be 
+\bse 
+    S[\psi,\overline{\psi},A] = \int d^4 x \bigg[ -\frac{1}{4} F_{\mu\nu}F^{\mu\nu} + \overline{\psi}(x)\big(i\slashed{D} - m\big)\psi(x)\bigg].
+\ese
+This additional term is important as it contains a kinetic term for the gauge field. That is we get terms of the form 
+\bse 
+    \p A \p A,
+\ese 
+where the indices have been dropped. Putting this together with the fact that we do \textit{not} have a term of the form 
+\bse 
+    \frac{1}{2}m_A^2 A^2,
+\ese 
+we see that this new term makes our gauge field into a propagating \textit{massless} degree of freedom. In QED $A_{\mu}$ is exactly the photon. 
+
+\bbox 
+    Verify that the new $F_{\mu\nu}F^{\mu\nu}$ term is indeed renormalisable. Also show that a mass term is forbidden by gauge invariance. \textit{Hint: Use dimensional arguments}.
+\ebox 
+
+\br 
+    As the above exercise shows, we exclude the mass term on gauge invariant grounds. It turns out that (for QED, at least) even if it wasn't excluded on these grounds it would instead be excluded because it would lead to the theory being non-renormalisable. This is a non-trivial statement to see, and comes from considering so-called \textit{box} diagrams. For more details see Section 3.3.5 of my QED notes.
+\er 
+
+The next question we can ask is "Is that it, or can we add more gauge invariant, renormalisable terms to our action?" The answer is that we can indeed add another term, giving us the most general renormalisable, gauge invariant action involving $A_{\mu}$ and $\psi$:
+\bse 
+    S[\psi,\overline{\psi}, A] = \int d^4 x \bigg[ -\frac{1}{4} F_{\mu\nu}F^{\mu\nu} + \overline{\psi}(x)\big(i\slashed{D} - m\big)\psi(x) + \Theta \epsilon^{\a\beta\mu\nu} F_{\mu\nu}F_{\a\beta}\bigg],
+\ese 
+where $\epsilon^{\a\beta\mu\nu}$ is the $4$-dimensional Levi-Civita symbol and $\Theta\in\R$ is just some constant. This last term looks scary and we would perhaps like it to not be there. Well, it turns out that 
+\ben[label=(\roman*)]
+    \item The $\epsilon$ symbol breaks parity and time reversal, and
+    \item It is a total derivative so in the classical theory we can drop it as it doesn't change our equations of motion.
+\een  
+If we, therefore, just specialise to theories that preserve parity-time (a physically reasonable thing to do) we can drop it (i.e. set $\Theta=0$) and move on. 
+
+\br 
+    This last term is actually important in the quantum theory. To see why we need to use some differential geometry:\footnote{If you are not familiar with this stuff, don't worry just move past this remark.} after staring at the expression for a moment we realise that this term if just $\theta F\wedge \star F$,\footnote{$\star$ here is the Hodge operator, it maps $n$-forms to $(d-n)$-forms. So here it maps a $2$-form to a $(4-2=2)$-form.} and recalling that $F$ is a 2-form we see that this term is a top form (we are considering a $4$-dimensional spacetime). The integral over it will, therefore, just be some number, say $C$, times $\theta$. In fact it turns out that the integral over the top form is an integer times $2\pi$, and so from this (after we recall that the action appears as $e^{iS}$) it follows that $\theta \in [0,2\pi)$. This whole term is referred to as a \textit{theta term}. Classically it has no effect on the equations of motion, as per (ii) above, however when we quantise the theory this term ends up weighting different fields by different numbers\footnote{I think called a \textit{winding number}, but this could be wrong. \textcolor{red}{Come back and maybe add a bit clearer/more correct statement once you've had time to read more of Tong's Gauge theory.}} and encodes information about the topological nature of the fields. 
+\er 
+
+\section{Some Classical Aspects of Abelian Gauge Theory}
+
+In order to get a motivation for a result we will shortly need, let us just consider the following part of the above action
+\bse 
+    S[A]_{\text{Maxwell}} = \int d^4 x \bigg[ -\frac{1}{4} F_{\mu\nu}F^{\mu\nu}\bigg].
+\ese 
+If we vary this w.r.t. $A_{\mu}$ we get
+\be 
+\label{eqn:Feom}
+    \p_{\mu}F^{\mu\nu} = 0.
+\ee 
+We can use these results to show that the above is really just Maxwell dynamics. We achieve this by picking the specific basis such that  $F^{0i}=E^i$ and $F^{ij} = \epsilon^{ijk} B^k$. Then the above condition (along with some other steps) can be used to derive the Maxwell equations. 
+
+Why are we bringing this up? Well recall Klein-Gordan equations of motion for massless scalar were 
+\bse 
+    \p^2 \phi = 0.
+\ese 
+This defines what is known as a \textit{well-posed Cauchy problem}. This basically says that our theory is predictable. Let's now show that this is indeed the case for the above equation of motion: pick a time, say $t=0$ for simplicity, and then specify $\phi(0,x^i)$ and $\p_t \phi(0,x^i)$. We can then solve the equations of motion to find out how $\phi(t,x^i)$ propagates in time. We can do this unambiguously and obtain the actual behaviour of $\phi(t,x^i)$ for all $t$. 
+
+What about \Cref{eqn:Feom}? Well the fundamental degree of freedom is $A_{\mu}(x)$, and so this plays the role of $\phi(x)$ for the Klein-Gordan field. The question we want to ask is "do these pose a well-posed Cauchy problem?" The answer is "no", and you can obtain this by solving the problem. However we can be a bit cleverer and simply recall that $F^{\mu\nu}$ was itself gauge invariant. This tells us that if $A_{\mu}(x)$ is a solution to our problem then so is $A_{\mu}'(x) = A_{\mu}(x) -\frac{1}{e}\p_{\mu}\Lambda(x)$. $\Lambda(x)$ here can be an arbitrary function on the spacetime, and so it follows that we could choose it so that our two solutions differ at large $t$ values. That is, we could pick $\Lambda(t\approx0,x^i)=0$ but $\Lambda(t >>0, x^i) \neq 0$, and so two solutions which agreed on our our initial Cauchy surface ($t=0$) differ at a later Cauchy surface ($t >>0$). This basically tells us that we can not predict what the theory will do a later time, giving some initial data. This is essentially the statement that the theory is non-predictive. 
+
+Hmm, this seems like a bit of a problem. How do we deal with this? Well, we declare a very important result:
+\mybox{
+    \begin{center}
+        Things that are not gauge invariant are \textit{not} physical.
+    \end{center}
+}
+
+\br 
+    Note the above declaration only constrains things that aren't gauge invariant, but says nothing about gauge invariant quantities. It turns our that things that are gauge invariant will always have a well-posed Cauchy problem. 
+\er 
+
+How does this declaration help us? Well the idea is we \textit{fix a gauge} and then use that to give us a well-posed Cauchy problem. For example, we can use \textit{Lorenz}\footnote{Note there is no $t$ in his name... unfortunate for him, people don't always notice this. } gauge 
+\bse 
+    \p_{\mu}A^{\mu} = 0 \qquad \implies \qquad \p^2 A^{\nu} = 0.  
+\ese
+In Fourier space $e^{i\omega t+ ikz}$ we then get 
+\bse 
+    (\omega^2 - k^2) A^{\nu} = 0 \qquad \implies \qquad \omega_k=k,
+\ese 
+so the photon is massless. 
+
+\br 
+    This doesn't actually completely fix our gauge. That is there is a remaining redundancy, which can be used to show that there are only two polarisations. We do not discuss this further here.
+\er 
+
+\section{Quantise QED}
+
+We want to understand the path integral\footnote{We drop the source terms for ease of notation.}
+\bse 
+    Z = \int [\pD A] \exp \bigg( -\frac{i}{4} \int d^4 x F_{\mu\nu}F^{\mu\nu}\bigg). 
+\ese 
+Of course this is only part of the full action, we have dropped the Fermion part. We are not interested in that here, but instead want to look for the propagator for our gauge field. We can get that from here as this part contains the quadratic derivative terms in $A_{\mu}$.
+
+Recall that we get the propagator by finding the inverse of the operator appearing between two $A_{\mu}$s. Explicitly, we have
+\bse 
+    \begin{split}
+        S[A] & = -\frac{1}{4}\int d^4x \big( \p_{\mu}A_{\nu} - \p_{\nu}A_{\mu}\big) \big( \p^{\mu}A^{\nu} - \p^{\nu}A^{\mu}\big) \\
+        & = \frac{1}{2} \int d^4x \big( A_{\nu}\p^2 A^{\nu} - A_{\nu} \p^{\nu}\p_{\mu}A^{\mu} \big) \\
+        & = \frac{1}{2} \int d^4 x A_{\mu} \big(\p^2 \eta^{\mu\nu} - \p^{\mu}\p^{\nu}\big)A_{\nu}. 
+    \end{split}
+\ese 
+We then find the propagator $D^F_{\mu\nu}$, by insisting it satisfies\footnote{Note that $D_{\mu\nu}^F$ is symmetric in its indices.} 
+\bse 
+    \big(\p^2 \eta^{\mu\nu} - \p^{\mu}\p^{\nu}\big) D_{\nu\rho}^F(x,y) = \del^{\mu}_{\rho} \del^{(4)}(x-y).
+\ese 
+
+The problem is, there is no \textit{unique} such $D^F$. In other words, we can't invert our differential operator. To see this, let's go to Fourier space, where we have 
+\bse 
+    \big(p^2\eta^{\mu\nu} - p^{\mu}p^{\nu}\big)D^F_{\mu\rho} = -i\del^{\nu\rho}. 
+\ese
+Now consider the test function $p_{\mu} \a(p)$:
+\bse 
+    \big(p^2\eta^{\mu\nu} -p^{\mu}p^{\nu}\big) p_{\mu}\a(p) = \big(p^2p^{\nu} - p^2 p^{\nu}\big)\a(x) = 0,
+\ese 
+where $\a(p)$ is an \textit{arbitrary} function. It follows from the arbitrariness of $\a(p)$ to conclude that we don't have a unique kernel, therefore it is non-invertable.\footnote{More mathematically, the map is non-injective as it doesn't have a unique kernel.}
+
+We can express the result more physically: any `pure gauge'
+\bse 
+    A_{\mu} = \frac{1}{e}\p_{\mu}\Lambda,
+\ese    
+has $F=0$ which implies $S[A]=0$. These are unsuppressed in the path integral, and it this gives us bad divergences. The problem is that we are still integrating over these in our path integral and that's not a clever idea as they are unphysical. We fix this by introducing something known as the \textit{Faddeev-Popov} procedure. Let's outline how this works now. 
+
+We start by defining $G(A)$ be a function that we set to $0$ to fix our gauge, e.g. for Lorenz $G(A) := \p_{\mu}A^{\mu}$. Next recall the normal delta functions, $\del : \R \to \R$, which satisfies $\del(x)=0$ for all $x\neq 0$ and it integrates to one. 
+
+As we have done with several things in this course already, we want to extend this to the case of functionals. That is we want to introduce the \textit{functional delta function}: it maps functions to the real numbers and\footnote{The condition $\phi(x) = 0$ here means the zero-function, that is the function $\phi : \R \to 0\in \R$.}
+\bse 
+    \begin{split}
+        \del[\phi] & =0 \qquad \text{if} \qquad  \phi(x) \neq 0 \\
+        \int [d\phi] \del[\phi] & = 1.
+    \end{split}
+\ese 
+
+We now want to somehow stick $\del(G(A))$ into our path integrals. In order to do this, let's first define the gauge transformed field 
+\bse 
+    A^{\Lambda}_{\mu}(x) := A_{\mu} - \frac{1}{e}\p_{\mu}\Lambda.
+\ese
+Then we introduce a fancy way of writing 1:
+\be 
+\label{eqn:FunctionalDelta1}
+    1 = \int [\pD \Lambda] \del\big(G(A^{\Lambda})\big) \det\bigg(\frac{\del G(A^{\Lambda})}{\del \Lambda}\bigg),
+\ee
+which is just the infinite dimensional version of 
+\bse 
+    1 = \int dy \del(y) = \int dx \del(y(x)) \frac{dy}{dx}. 
+\ese
+
+So, we take this and insert into the path integral to give us
+\bse 
+    Z = \int [\pD \Lambda][\pD A] \del\big(G(A^{\Lambda})\big) \det\bigg(\frac{\del G(A^{\Lambda})}{\del \Lambda}\bigg) e^{iS[A]}.
+\ese 
+This doesn't seem to have helped much. The thing that really doesn't look nice here is the determinant. Let us, therefore, pick a convenient $G$
+\be 
+\label{eqn:Gomega}
+    G_{\omega}(A) = \p_{\mu}A^{\mu} - \omega, 
+\ee 
+so that 
+\bse 
+    \frac{\del G(A^{\Lambda})}{\del \Lambda} = \frac{\del}{\del\Lambda} \bigg( \p_{\mu}\bigg(A^{\mu} - \frac{1}{e} \p^{\mu}\Lambda\bigg) - \omega\bigg) = - \frac{1}{e}\p^2.
+\ese 
+This means our determinant can be pulled out the path integral as it doesn't depend on $A$ or $\Lambda$.\footnote{As we will see later, this is only true for the non-Abelian case.} We therefore get 
+\be 
+\label{eqn:Zomega}
+    Z_{\omega} = \det\bigg(\frac{1}{e}\p^2\bigg) \int [\pD \Lambda] [\pD A] \del\big( G_{\omega}(A^{\Lambda})\big) e^{iS[A]}.
+\ee
+where the subscript is there to remind us that we're using \Cref{eqn:Gomega}. 
+
+Ok this is a bit nicer, but we still have to worry about the path integral over our gauge parameters $[\pD\Lambda]$. Well we can fix this to by using the following claim. 
+
+\bcl 
+    The path integral measure $[\pD \Lambda]$ is gauge invariant. More specifically it is left and right action invariant:
+    \be 
+    \label{eqn:PathIntegralMeasureInvariant}
+        [\pD (\Lambda' \Lambda)] = [\pD \Lambda] = \big[\pD (\Lambda \Lambda')\big],
+    \ee 
+    where $\Lambda'$ is our transformation. 
+\ecl 
+
+We then use \Cref{eqn:PathIntegralMeasureInvariant} to take the inverse transformation on the whole of \Cref{eqn:Zomega} without effecting our $[\pD \Lambda]$, i.e. we send $A_{\mu} \to A_{\mu}^{\Lambda^{-1}}$, so that $A_{\mu}^{\Lambda} \to A_{\mu}$, to give us 
+\bse 
+    Z_{\omega} = \det\bigg(\frac{1}{e}\p^2\bigg) \int [\pD A^{\Lambda^{-1}}] [\pD \Lambda] \del\big(G_{\omega}(A)\big) e^{iS[A^{\Lambda^{-1}}]}.
+\ese 
+Now we use that the measure $[\pD A]$ is gauge invariant\footnote{This can argued from the fact that a gauge transformation is just a shift in $A_{\mu}$ and so the integral measure just sees it as a change of variables} and the fact that we have a gauge invariant to obtain 
+\bse 
+    Z_{\omega} = \det\bigg(\frac{1}{e}\p^2\bigg) \int [\pD \Lambda] [\pD A]  \del\big(G_{\omega}(A)\big) e^{iS[A]}.
+\ese
+Finally we note that nothing in the integrand depends on $\Lambda$ and so we can "factor out" the path integral over $[\pD\Lambda]$, absorbing it into an overall constant
+\bse 
+    \cN = \det\bigg(\frac{1}{e}\p^2\bigg) \int [\pD \Lambda]. 
+\ese
+This is where our bad divergence was coming from; as we said before we have an unsuppressed path integral and so we get an infinite contribution. However this is going to appear for all our partition functions and so we just "forget about it" and pretend $\cN$ is finite. 
+
+Great, so we have removed the $\Lambda$ dependence of our path integral to obtain a finite result. The last thing we need to do is evaluate our functional delta function. In order to do this we need to remove the $\omega$ dependence, the question is "how do we do that?" Well we want to average over all $\omega$ values, and so we do this with a Gaussian with weight $\xi$, giving us\footnote{$\cN'$ is clearly related to $\cN$ above, but includes other factors from our averaging.} 
+\bse 
+    Z = \cN' \int [\pD \omega] [\pD A] \exp\bigg(-i\int d^4x \frac{1}{2\xi} \omega^2\bigg) \del\big(\p_{\mu}A^{\mu}-\omega\big) e^{iS[A]}.
+\ese
+If we then do the $\omega$ integral we get 
+\bse 
+    Z = \cN' \int [\pD A] \exp\bigg(iS[A] - i\int d^4x \, \frac{1}{2\xi} (\p_{\mu}A^{\mu})^2\bigg),
+\ese
+which is the gauge-fixed form of the path integral. 
+
+We therefore have the Faddeev-Popov action 
+\mybox{
+    \be 
+    \label{eqn:FadPopActionQED}
+        S_{FP}[A] = \int d^4 x \, \bigg( -\frac{1}{4}F_{\mu\nu}F^{\mu\nu} - \frac{1}{2\xi} (\p_{\mu}A^{\mu})^2\bigg).
+    \ee
+}
+\noindent We can use this to find the propagator for our gauge field (the photon). The first thing is to write this in our usual form by integrating by parts
+\bse 
+    S_{FP}[A] = = \int d^4 x \, \frac{1}{2}\bigg( A_{\mu} \bigg[ \p^2\eta^{\mu\nu} - \bigg(1-\frac{1}{\xi}\bigg) \p^{\mu}\p^\nu\bigg)A_{\nu}\bigg),
+\ese 
+and so we see that, in Fourier space, we require 
+\be 
+\label{eqn:QEDPropagatorEquation}
+    \bigg(-p^2\eta_{\mu\nu} + \bigg( 1 - \frac{1}{\xi}\bigg) p_{\mu}p_{\nu}\bigg) D_F^{\nu\rho}(p) = i \del^{\rho}_{\mu}. 
+\ee 
+We can guess the answer by noting that we need tensor indices and the only things that we have available to us are the metric $\eta^{\mu\nu}$ and momentum $p^{\mu}$. So we guess 
+\be
+\label{eqn:QEDDFGuess}
+    D_F^{\nu\rho}(p) = A(p) \eta^{\nu\rho} + p^{\nu}p^{\rho} \frac{B(p)}{p^2},
+\ee 
+which is we solve for $A(p)$ and $B(p)$. 
+
+\bbox 
+    Plugging \Cref{eqn:QEDDFGuess} into \Cref{eqn:QEDPropagatorEquation} show that our propagator is given by
+    \bse 
+         D_F^{\nu\rho}(p) = -\frac{i}{p^2}\bigg( \eta^{\mu\nu} - (1-\xi)\frac{p^{\mu}p^{\nu}}{p^2}\bigg).
+    \ese 
+\ebox 
+
+The result of the above exercise is very important (it's the photon propagator!), so we write it again in one of our nice boxes. 
+\mybox{
+    \be 
+    \label{eqn:PhotonPropagator}
+         D_F^{\nu\rho}(p) = -\frac{i}{p^2}\bigg( \eta^{\mu\nu} - (1-\xi)\frac{p^{\mu}p^{\nu}}{p^2}\bigg).
+    \ee 
+}
+
+\noindent The natural question to ask is "what is $\xi$?" The answer is it is a gauge parameter and therefore, by gauge invariance, nothing can depend on it. We can therefore set it to anything we like! Of course a common choice is $\xi=1$ as this removes the awkward fraction term. This is known as \textit{Feynman gauge}. Other gauges exist, and more details can be found, for example, in my QED notes. 
+
+Wow that was a lot of work, but the good news is we're done! That is we now have all the information we need to derive the full set of Feynman rules for QED and plough on with our calculations. For clarity, QED is given by the following action
+\bse 
+    S[\psi,\overline{\psi},A] = \int d^4 x\, \bigg[-\frac{1}{4}F^2 + \overline{\psi}(x) \big( i\slashed{D} - m\big) \psi(x)\bigg]
+\ese 
+with the following Feynman rules:
+\ben[label=(\roman*)]
+    \item All the usual stuff,
+    \item The propagator is given by \Cref{eqn:PhotonPropagator},
+    \item The Fermion propagator is given by \Cref{eqn:FermionPropagator}, 
+    \item The vertex is simply $-ie\g^{\mu}$,\footnote{Make sure you understand why it's this.}
+    \item Don't forget to include a factor of $(-1)$ for every closed Fermion loop. 
+\een 
+We do not go through any detailed diagram calculations here as this is done to death in the QED course, and any unfamiliar reader is directed there. 
+
+\br 
+    It is important to note that our vertex term came from the $-ie\overline{\psi}\slashed{A}\psi$ term in the Lagrangian. This term came fundamentally from our covariant gauge derivative $D_{\mu}$, and so are \textit{not} free to fix its form. This is a principle that carries over to all gauge theories: the gauge invariance fixes the kinds of interactions we can have. We will see in the next chapter that this gives some interesting results in non-Abelian theories. 
+\er 

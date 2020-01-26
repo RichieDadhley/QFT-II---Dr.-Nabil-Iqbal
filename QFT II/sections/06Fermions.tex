@@ -1,0 +1,462 @@
+\chapter{Fermions}
+
+\mybox{
+    Just a reminder/disclaimer: This chapter was not part of the taught material, however I have worked from Dr. Iqbal's notes to fill it in here.
+}
+
+So far we have only studied scalar fields, however we know that the physics of QFT is much richer than this. In particular we also have Fermions. Now recall from an introduction to QFT course that Fermions are distinctly different to bosons (which the scalar fields are), with the most prominent difference being that underlying fields obey \textit{anti}commutation relations. Let's now look into Fermions and how they appear in the path integral approach. 
+
+\section{Recap Of Canonical Approach To Fermions}
+
+We begin by giving a recap on the canonical approach to Fermions, as this will give us some motivation for what proceeds. Recall that Fermions arise from so-called \textit{Dirac} fields, which come from the action
+\bse 
+    S[\psi,\overline{\psi}] = \int d^4x \, \overline{\psi}(i\slashed{\p} -m) \psi 
+\ese 
+where $\slashed{\p} := \g^{\mu}\p_{\mu}$, whose equation of motion is the \textit{Dirac equation}
+\bse 
+    (i\slashed{\p}-m)\psi = 0.
+\ese 
+
+We can show that, upon quantisation, the resulting particles are four component objects, called \textit{spinors}, and, by considering the angular momentum current, we can show they carry spin $1/2$. Equally, as we said above, we see that if you want our energy to be bounded from below\footnote{See, for example, Section 11.2.3 of my IFT notes for more details.} that we require the fields obey (equal time) anticommutation relations:
+\bse 
+    \{\psi_a(\Vec{x}), \psi_b^{\dagger}(\Vec{y})\} = \del^{(3)}(\vec{x} - \vec{y}) \del_{ab}
+\ese 
+and all others vanishing. This anticommutation behaviour translates to the creation/annihilation operators anticommuting, which in turn gives us Pauli exclusion --- two Fermions with exactly the same spin and momentum can never occupy the same state. 
+
+
+\section{Grassman Variables}
+
+The important piece of information we need from this brief recap is the fact that stuff is anticommuting and so "squares to 0". It is not clear at all how we could produce such behaviour from our path integral approach as is: all we have available to us are complex valued functions $\phi(x)$, and these obviously commute. What we want, therefore, is some kind of number that anticommutes so that we can make our fields `some-kind-of-number' valued, thereby giving us anticommuting fields. Obviously no `normal' kind of number does this and so we essentially have to make them up. Let's do that now. 
+
+\subsection{Grassman Numbers}
+
+As uncomfortable as it might seem, we essentially just start by saying our new fancy numbers, known as \textit{Grassman numbers}, anticommute:
+\be 
+\label{eqn:GrassmanNunbers}
+    \theta \eta = - \eta \theta.
+\ee 
+From here we instantly see that they square to zero:
+\be
+\label{eqn:GrassmanSquared}
+    \theta\theta = -\theta\theta \qquad \iff \qquad \theta^2 = 0.
+\ee 
+Note it follows immediately from this that \textit{any} function $f(\theta)$ can be expanded as 
+\be 
+\label{eqn:f(theta)}
+    f(\theta) = A + B\theta,
+\ee 
+where $A$ and $B$ could be (but need not be) Grassman numbers themselves.  One it typically interested in commuting functions like \Cref{eqn:f(theta)}, and so we often take $A$ to be a `normal', commuting number while $B$ is a Grasmann number, this is what we shall do in this course.
+
+\br 
+   It is important to note that the above conditions on $A$ and $B$ gives us only a specific class of such functions $f(\theta)$. That is, in general $A$ and $B$ can be either Grassman or `normal'. It follows from this that $f(\theta)$ need not possess any specific commutation/anticommutation behaviour --- e.g. we could take both $A,B\in\C$ and then $f(\theta)$ neither commutes, nor anticommutes, with another general function $g(\eta)$. 
+\er 
+
+Ok great, but now what do we do? Well if we are going to use these in our path integrals we need to know how to manipulate them. More specifically we need to know how to differentiate and integrate them. There is essentially an ambiguity about how we go about doing this, and we need to chose a convention. 
+
+\subsubsection{Differentiation}
+
+First let's deal with differentiation. With Grassman numbers the derivative $\p_{\theta}$ is also Grassman with respect to its left/right action. That is 
+\bse 
+    \overset{\rightarrow}{\p}_{\theta}\theta = - \theta \lar{\p}_{\theta}.
+\ese 
+We therefore have the ambiguity of where to put this relative minus sign. In this course we will use the (perhaps surprising) convention that the \textit{right} action be positive:
+\be
+\label{eqn:GrassmanDerivativeConvention}
+    \theta \lar{\p}_{\theta} = 1 \qquad \iff \qquad \p_{\theta}\theta = -1,
+\ee 
+where we have dropped the arrow on the left action (as we are familiar with what it means).
+
+Therefore using our constraints on $A$ and $B$ in \Cref{eqn:f(theta)}, we have 
+\bse 
+    \p_{\theta}f(\theta) = -B.
+\ese
+
+Now what if we take the derivative of a product of Grassman numbers? The idea is that we don't simply use the product rule, but instead commute the numbers so that the derivative and w.r.t. number meet and then just take the derivative there. For clarity we have 
+\bse 
+    \p_{\theta} (\eta \theta) = -\p_{\theta}(\theta\eta) = -\eta,
+\ese 
+and similarly for higher products:
+\bse 
+    \p_{\theta}(\eta_1 \eta_2 ... \eta_n \theta \eta_{n+1} ... ) = (-1)^n \eta_1\eta_2 ... \eta_n\eta_{n+1} ...
+\ese
+We can therefore think of the derivative itself as a Grassman number and ask "how many other Grassman numbers do I have to anticommute it past to get to its w.r.t. number?" Obviously any `normal' numbers can simply be passed through with no problems. 
+
+\br 
+    Note the above procedure will always work and we never have to think about anything like the product rule. This is simply because we will only ever have 1 w.r.t. Grassman number in each expression. This follows simply because 
+    \bse 
+        \eta_1 ... \theta \eta_i ... \eta_{i+n} \theta ... \eta_m = (-1)^n \eta_1 ... \theta^2 \eta_i ... \eta_{i+n} ... \eta_m = 0,
+    \ese 
+    where we have used \Cref{eqn:GrassmanSquared}.
+\er 
+
+\subsubsection{Integration}
+
+What about integrating Grassman variables, how does that work? Well the idea is to define out integral such that is obeys the kinds of properties we used for the scalar field above. The two most heavily used properties were linearity in the integrand and invariance under a shift of variable. That is we want our Gaussian integral to obey 
+\bse 
+    \int d\theta \big(g(\theta) + f(\theta)\big) = \int d\theta g(\theta) + \int d\theta f(\theta)
+\ese 
+and 
+\bse 
+    \int d\theta f(\theta) = \int d\theta f(\theta+\eta),
+\ese 
+where the second line follows from $\theta\to \theta+\eta$. 
+
+We can put these two results together in the following manipulation
+\bse 
+    \begin{split}
+        \int d\theta \theta & = \int d\theta (\theta + \eta) \\
+        & = \int d\theta \theta + \int d\theta \eta \\
+        & = \int d\theta \theta \pm \eta\int d\theta 1 
+    \end{split}
+\ese
+where the $\pm$ is included on the last line as we don't yet know what happens when we move a Grassman $\eta$ through a Grassman $d\theta$. From which we can conclude 
+\mybox{
+    \be 
+    \label{eqn:GrassmanIntegral1}
+        \int d\theta \, 1 = 0.
+    \ee
+}
+This seems to be a problem. Why? Well recalling that a 'normal' integral "adds variables", e.g.
+\bse 
+    \int dx x = x^2,
+\ese 
+it appears that we get 
+\bse 
+    \int d\theta \theta = \theta^2 = 0,
+\ese 
+and so the Grassman integral appears to always give zero? This is obviously wrong, but what do we do? 
+
+Well \Cref{eqn:GrassmanIntegral1} appears to suggest the opposite to the `normal' integral, i.e. instead of "adding variables" we should "take them away". This would give us a finite result for 
+\bse 
+    \int d\theta \theta = C
+\ese
+for some constant $C$. Now we note that $C$ must be a `normal', commuting, number as the `product'\footnote{Inverted commas as this is not a real product, but we get the idea.} $d\theta \theta$ will commute (its two Grassman variables). We therefore just adopt the definition $C=1$, so that we have 
+\mybox{
+    \be 
+    \label{eqn:GrassmanIntegralTheta}
+        \int d\theta \theta = 1.
+    \ee 
+}
+
+Finally we need to return to the $\pm$ in the manipulation leading up to \Cref{eqn:GrassmanIntegral1}. Well we just said that we want to treat the `product' $d\theta \theta$ as a commuting number, so it follows that if we want to move the $\eta$ past $d\theta$, we need to pick up a minus sign. We can summarise this in the following convention for doing double Grassman integrals:
+\mybox{
+    \be 
+    \label{eqn:DoubleGrassmanIntegral}
+        \int d\theta \int d\eta (\eta \theta) = + 1,
+    \ee
+}
+\noindent which says move the inner most integral's variable to the left and do that integral first (similarly to the derivative case above). 
+
+\br 
+    Note it follows from the previous results that the integral over several Grassman numbers is only non vanishing if \textit{every} integrated number appears in the integrand. That is 
+    \bse 
+        \int d\theta_1  ... d\theta_n f(\{\theta_i\}) \neq 0
+    \ese 
+    only when (up to a prefactor)
+    \bse 
+        \prod_{i=1}^n\theta_i \in f(\{\theta_i\}).
+    \ese
+    We can write this result, along with \Cref{eqn:DoubleGrassmanIntegral}, as the following expression
+    \be 
+    \label{eqn:nGrassmanIntegrals}
+        \int d^n\theta (\theta_{a_1}...\theta_{a_n}) := \int d\theta_{a_1} ... d\theta_{a_n} \big(\theta_{a_1} ... \theta_{a_n}\big) = \epsilon_{a_1...a_n},
+    \ee 
+    where we have defined what we mean by $d^n\theta$, and where $\epsilon_{a_1...a_n}$ is the $n$-dimensional Levi-Civitia symbol.
+\er 
+
+\subsubsection{Complex Conjugation}
+
+Now recall that we have used a lot of complex conjugations in the treatment of the complex scalar field, and recall from your canonical field theory course that we treat the fields $\phi$ and $\phi^*$ as independent degrees of freedom in QFT. The question we now want to ask is "does this work for our Grassman numbers?" The answer is yes and a proof of which is the content of the next exercise. 
+
+\bbox 
+    Defining 
+    \bse 
+        \theta = \frac{1}{\sqrt{2}}\big(\theta_1 + i\theta_2) \qand \theta^* = \frac{1}{\sqrt{2}}\big(\theta_1 - i\theta_2),
+    \ese 
+    show that 
+    \bse 
+        \int d\theta d\theta^* (\theta^*\theta) = 1.
+    \ese
+    \textit{Hint: Use the linearity of $d$ to write}
+    \bse 
+        d\theta = \frac{1}{\sqrt{2}}\big(d\theta_1 + id\theta_2),
+    \ese 
+    \textit{and then use \Cref{eqn:GrassmanSquared}.}
+\ebox 
+
+It turns out to also be convenient to define the complex conjugation of the product of Grassman numbers to be like the Hermitian conjugate, namely they swap places:
+\be 
+\label{eqn:ComplexConjTwoGrassman}
+    (\theta\eta)^* = \eta^* \theta^* = -\theta^* \eta^*.
+\ee 
+
+\subsection{Gaussian Type Integrals}
+
+If we are going to use the methods employed on the scalar field above, we are obviously going to need to know how to do Gaussian type integrals over Grassman numbers. The following exercise will be a good hands on check that the above information has been understood.
+
+\bbox 
+    Show that 
+    \be
+    \label{eqn:GrassmanIntegralExp}
+        \int d\theta^* d\theta e^{-\theta^* b \theta} = b,
+    \ee
+    where $b$ is a `normal' number. 
+    
+    \textit{Hint: Expand the exponential and recall  \Cref{eqn:f(theta)}.}
+\ebox  
+
+We can compare \Cref{eqn:GrassmanIntegralExp} to the `normal' Gaussian result 
+\bse 
+    \int dx^*dx e^{-x^* b x} = \frac{2\pi}{b}.
+\ese
+The factor of $2\pi$ is not important,\footnote{If it really bothered us we could redefine \Cref{eqn:GrassmanIntegralTheta} to include it.} but what we see is that the difference between the Grassman integral and `normal' one is that in the former $b$ appears in the numerator, while in the latter it appears in the denominator. We can actually extend this result by introducing the following definition. 
+
+\bd[Pfaffian]
+    The \textit{Pfaffian} of a $2n\times 2n$, antisymmetric matrix, $A$, is defined to be 
+    \be 
+        \text{Pfaff}(A) := \frac{1}{2^n(n!)} A^{a_1a_2} A^{a_3a_4} ... A^{a_{2n-1}a_{2n}} \epsilon_{a_1...a_{2n}}.
+    \ee 
+\ed 
+
+\bcl 
+    The following identity holds 
+    \be 
+        \big[\text{Pfaff}(A)\big]^2 = \det(A).
+    \ee 
+\ecl
+
+\bq 
+    The proof is provided here, but details can be found via \href{http://scipp.ucsc.edu/~haber/webpage/pfaffian2.pdf}{this link}.
+\eq 
+
+Why are we introducing this Pfaffian thing? Well now consider the $2n$-dimensional Grassman integral over the exponential of a matrix equation (which has obvious use for us given the scalar field calculations):\footnote{Note there is no complex conjugation in here, we will return to that in a moment. I just thought it's also worth seeing this result.}
+\bse 
+    \begin{split}
+        \int d^{2N}\theta e^{-\frac{1}{2}\theta_i A^{ij} \theta_j} &= \int  d^{2N}\theta \sum_{n=0}^{N} \frac{(-1)^n}{2^n(n!)} \big(\theta_i A^{ij} \theta_j\big)^n \\
+        & = \frac{(-1)^N}{2^N(N!)} A^{a_1a_2} ... A^{a_{2N-1}a_{2N}} \int d^{2N}\theta (\theta_{a_1} ... \theta_{a_{2N}}) \\
+        & = (-1)^N \frac{1}{2^N(N!)} A^{a_1a_2} ... A^{a_{2N-1}a_{2N}}\epsilon_{a_1...a_{2N}} \\
+        & = (-1)^N \text{Pfaff}(A) \\
+        & = (-1)^N \sqrt{\det(A)},
+    \end{split}
+\ese 
+where we have used \Cref{eqn:nGrassmanIntegrals}. 
+
+\br 
+    Note that we stopped the sum at $N$ (rather than going to infinity) as $i,j \{1,...,2N\}$ and so if we went beyond $N$ we would end up having a $\theta_i^2$ term, which would kill everything.
+\er 
+
+\br 
+    Again the above result is in contrast to the `normal' case which we previous showed obeys 
+    \bse 
+        \int d^{2N}\phi e^{-\frac{1}{2}\phi_a A^{ab} \phi_b} = \sqrt{\frac{(2\pi)^N}{\det(A)}}.
+    \ese 
+\er 
+
+Ok what about if we do the complex integrals? Well the result of \Cref{eqn:GrassmanIntegralExp} seems to suggest if we remove the $1/2$ from the exponential we will get the the same thing without the square root. Removing the half makes sense for us as it's included as a symmetry factor but when we have a complex field we drop it.\footnote{For example compare the real scalar Klein-Gordan Lagrangian to the complex case. The former has a half, while the second doesn't.} To see that we remove the square root, let's just so the manipulation again using the above as a guide:\footnote{Be careful here, we get one $\epsilon$ symbol for each kind of integration. That is one comes from all the $d\theta$ integrals and another comes from the $d\theta^*$ integrals.}
+\bse 
+    \begin{split}
+        \int d^N \theta^* d^N\theta e^{-\theta^*_i A^{ij} \theta_j} & = \frac{(-1)^N}{N!} A^{a_1a_2} ... A^{a_{2N-1}a_{2N}} \int d^N \theta^* d^N\theta \big(\theta^*_{a_1}\theta_{a_2} ... \theta^*_{a_{2N-1}}\theta_{a_{2N}}\big) \\
+        & = (-1)^N \frac{1}{N!} A^{a_1a_2} ... A^{a_{2N-1}a_{2N}} (-1)^N \epsilon_{a_1a_3...a_{2N-3}a_{2N-1}} \epsilon_{a_2a_4...a_{2N-2}a_{2N}} \\
+        & = \det(A),
+    \end{split} 
+\ese 
+where we have used the notational shorthand 
+\be 
+\label{eqn:ComplexGrassmanIntegralMany}
+    \int d^N\theta^* d^N\theta := \int d \theta^*_{a_1} d\theta_{a_2} ... d\theta^*_{2N-1} d\theta_{2N}
+\ee 
+and the determinant definition 
+\bse 
+    \det(A) = A^{a_1a_2}... A^{a_{2N-1}a_{2N}} \epsilon_{a_1a_3...a_{2N-3}a_{2N-1}} \epsilon_{a_2a_4...a_{2N-2}a_{2N}}.
+\ese 
+
+\br 
+    Note that the ordering in \Cref{eqn:ComplexGrassmanIntegralMany} matters, i.e. we can't just move the $d\theta^*$s and $d\theta$s through each other. Also note that the way we have done it means that in order to satisfy our convention, \Cref{eqn:DoubleGrassmanIntegral}, we need to anticommute $N$ Grassman numbers, hence the additional $(-1)^N$ on the penultimate line above.
+\er 
+
+Ok finally let's see one last integral result. Consider the integral 
+\bse 
+    I[\eta,\eta^{\dagger}] = \int d^n\theta^* d^n\theta \exp\big( -\theta^{\dagger} A  \theta + \eta^{\dagger}\theta + \theta^{\dagger} \eta\big),
+\ese 
+where we have adopted a more "matrix like" notation. Let's further work with the special case when $A$ is Hermitian. Now we can use the invariance of the measure under shifts (a property we insisted our integrals obeyed) to take the transformation 
+\bse 
+    \theta \to \theta + A^{-1}\eta \qand \theta^{\dagger} \to  \theta^{\dagger} + \eta^{\dagger}A^{-1},
+\ese
+where the Hermitian nature of $A$ has been used. This gives us 
+\bse 
+    I[\eta,\eta^{\dagger}] = \int d^n\theta^* d^n\theta \exp\big( -\theta^{\dagger}A\theta + \eta^{\dagger}A^{-1}\eta\big) 
+\ese 
+which we can then split and use the above result to give 
+\mybox{
+    \be 
+    \label{eqn:Ietaeta}
+        I[\eta,\eta^{\dagger}] = \det (A) \exp\big(\eta^{\dagger}A^{-1}\eta\big).
+    \ee 
+}
+
+\section{Fermions From The Path Integral}
+
+We are now armed with the structures we need to obtain Fermions from the path integral. Luckily we have essentially done all the work in the development of the scalar field, we just need to make a couple changes here and there. 
+
+We start by recalling the Dirac action
+\be 
+\label{eqn:DiracAction}
+    S[\psi,\overline{\psi}] = \int d^4 x\, \overline{\psi}(i\slashed{\p} -m)\psi. 
+\ee
+We want our fields $\psi/\overline{\psi}$ to be Grassman valued functions (so that we get our anticommutation relations). The obvious question to ask is "how do we turn $\psi(x)$ into a anticommuting thing?" Well we simply decompose it as 
+\bse 
+    \psi(x) = \sum_n \psi_n f_n(x)
+\ese
+where $f_n(x)$ are `normal' well behaved functions (e.g. plane wave solutions) and $\psi_n$ are Grassman numbers. 
+
+Now recall that in the scalar field case we expressed the partition function $Z$ in terms of a source field $J$ via 
+\bse
+    Z[J] = \int [\pD\phi] \exp\bigg(iS[\phi] + i\int d^4x \, J(x) \phi(x)\bigg).
+\ese 
+We now want to do a similar thing for the Fermions. As we have seen we treat the complex conjugate part of a complex Grassman number independently, and so we will have two sources here: one for $\psi$ and the other for $\overline{\psi}$. We have to be a bit careful, though; Fermions are $4$ component spinors, and so we represent them as matrices. The action is meant to consist of just be a collection of numbers (i.e. no matrices) and so we need these source terms to contract the matrix-ness away. With a bit of thought it should be easy to see that what we require is 
+\mybox{
+    \be 
+    \label{eqn:ZFermion}
+        Z[\eta, \overline{\eta}] = \int [\pD\overline{\psi} \pD \psi] \exp\bigg( S[\psi,\overline{\psi}] + i\int d^4x \, \big[ \overline{\eta}(x)\psi(x) + \overline{\psi}(x)\eta(x) \big] \bigg)
+    \ee 
+}
+\noindent so that $\eta$ is the source for $\overline{\psi}$ and $\overline{\eta}$ the source for $\psi$. As the notation suggests, $\eta/\overline{\eta}$ are anticommuting fields. 
+
+Next recall that we got the $n$-point functions by considering functional derivatives of the of the free partition function w.r.t. the sources. We now do the same thing for the sources $\eta/\overline{\eta}$, but we have to take into account potential minus signs picked up from anticommutions. That is we have 
+\bse 
+    \frac{\del}{\del \eta(x)} \big(\overline{\psi}(y) \eta(y)\big) = - \overline{\psi} \frac{\del}{\del \eta(x)}\eta(y),
+\ese 
+and similarly for $\frac{\del}{\del\overline{\eta}}$. We then extend our derivative convention, \Cref{eqn:GrassmanDerivativeConvention}, to functional derivatives so that the left action gives a minus sign so that 
+\bse 
+    \begin{split}
+        \frac{\del}{\del \eta(x)} \int d^4y\, \big( \overline{\eta}(y) \psi(y) + \overline{\psi}(y) \eta(y)\big) & = +\overline{\psi}(x), \\
+        \frac{\del}{\del \overline{\eta}(x)} \int d^4y\, \big( \overline{\eta}(y) \psi(y) + \overline{\psi}(y) \eta(y)\big) & = -\psi(x).
+    \end{split}
+\ese 
+
+In order to account for this additional minus sign we have to make a small alteration to how we obtain $n$-point Green's functions: basically put an additional minus sign in with the $\overline{\eta}$ derivatives. For example, the $2$-point function is 
+\be 
+\label{eqn:2PointFunctionFermion}
+    \bra{0}\cT[\psi(x_1)\overline{\psi}(x_2)]\ket{0} = \frac{1}{Z_0[0]} \bigg(+i\frac{\del}{\del\overline{\eta}(x_1)}\bigg)\bigg(-i\frac{\del}{\del\eta(x_2)}\bigg) Z_0[\eta,\overline{\eta}]\Big|_{\eta,\overline{\eta}=0}.
+\ee 
+
+Recall that the two point function is related to the propagator. We can get this by manipulating \Cref{eqn:ZFermion} with the free action, \Cref{eqn:DiracAction}. It follows from \Cref{eqn:Ietaeta} that the result is 
+\mybox{
+    \be 
+    \label{eqn:Z0Fermion}
+        Z_0[\eta,\overline{\eta}] = \det\big(i\slashed{\p}-m\big) \exp\bigg(-\int d^4x d^4y \, \overline{\eta}(x) S_F(x,y) \eta(y)\bigg)
+    \ee 
+}
+\noindent where the propagator is given by
+\bse 
+    (i\slashed{\p}-m) S_F(x,y) = i\del^{(4)}(x-y) \b1_{4\times 4},
+\ese 
+where we note that the $4\times 4$ identity matrix is included as $\slashed{\p} = \g^{\mu}\p_{\mu}$ and $\g^{\mu}$ is a $4\times 4$ matrix. As before, we find a nicer expression for the propagator by going to momentum space by replacing $\slashed{\p} \to -i\slashed{p}$ and dropping the $\del^{(4)}(x-y)$:
+\mybox{
+    \be 
+    \label{eqn:FermionPropagator}
+        (\slashed{p}-m)S_F(p) = i \qquad \iff \qquad S_F(p) = \frac{i}{\slashed{p} -m}.
+    \ee 
+}
+
+\br 
+    The expression above for $S_F(p)$ is a formal expression, by which we mean it doesn't really make sense to divide by $\slashed{p}$ as it is a matrix. What we mean is to take the matrix inverse. We can write the result in a more "correct" way as
+    \bse 
+        S_F(p) = \frac{i(\slashed{p}+m)}{p^2-m^2}.
+    \ese 
+    We can go between these two expressions via 
+    \bse 
+        \frac{(\slashed{p}-m)}{(\slashed{p}-m)}\frac{i(\slashed{p}+m)}{p^2-m^2} = \frac{i}{\slashed{p}-m}
+    \ese 
+    where we have used $\slashed{p}^2=p^2$.\footnote{This is easily verified using $\{\g^{\mu},\g^{\nu}\} = \eta^{\mu\nu}$. Check it if you're not familiar.} However \Cref{eqn:FermionPropagator} is less writing and is also standard notation, so we shall use that. 
+\er 
+
+\bbox 
+    Using \Cref{eqn:Z0Fermion} and \Cref{eqn:2PointFunctionFermion} verify that 
+    \bse 
+        \bra{0}\cT[\psi(x_1)\overline{\psi}(x_2)]\ket{0} = S_F(x_1,x_2) = \int \frac{d^4p}{(2\pi)^4} \frac{i e^{ip\cdot(x_1-x_2)}}{\slashed{p}-m},
+    \ese 
+    where the second line just follows from the Fourier tranfsorm of \Cref{eqn:FermionPropagator}.
+    
+    \textit{Hint: Be careful about signs.}
+\ebox 
+
+\br 
+    \textcolor{red}{There's a comment in Nabil's notes here about the fact that the determinant appears in the numerator for Grassman variables being related to the fact that the zero-point energy for Fermions being negative. He gives a reference to Chapter II.5 of Zee. Look this up later and write something here.}
+\er 
+
+\section{Feynman Rules For Fermions}
+
+The last thing we need to do is obtain the Feynamn rules for our Fermion theory. We also want to take into consideration interactions and so we work with the common Yakawa interaction theory with action 
+\bse 
+    S[\psi,\overline{\psi},\phi] = \int d^4x \, \bigg[ \overline{\psi}(i\slashed{\p}-m)\psi + \frac{1}{2}(\p\phi)^2 - \frac{M^2}{2} \phi^2 + g\overline{\psi}\psi\phi\bigg].
+\ese 
+With a bit of thought we see that this corresponds to a theory containing Fermions of mass $m$, a real scalar field $\phi$ of mass $M$ and a $3$-point interaction. For this reason it is clear that we will get the relevant propagators, which we have already derived. We therefore just need to look at the interaction term. 
+
+We follow everything through as above, and we expand the interaction theory around the free theory in powers of $g$:
+\bse 
+    Z[\eta,\overline{\eta},J] = Z_0[0] \Bigg[ ig \int d^4x \, \bigg(-i\frac{\del}{\del J}\bigg) \bigg(-i\frac{\del}{\del \eta_a}\bigg) \bigg(+i\frac{\del}{\del \overline{\eta}_a}\bigg) \Bigg] Z_0[\eta,\overline{\eta},J],
+\ese
+where a sum over $a$ is assumed,\footnote{This just tells us that the theory doesn't allow for $\phi$ to change the type of Fermion we are considering. This is the case, for example, in QED where the photon cannot cause intergeneration changes.} and where $\eta/\overline{\eta}/J$ are the relative sources. Our free partition function is now given by 
+\bse 
+    Z_0[\eta,\overline{\eta},J] \sim \exp\bigg(-\int d^4xd^4y \, \overline{\eta}(x) S_F(x,y)\eta(y)\bigg) \exp\bigg(-\frac{1}{2}\int d^4x d^4y \, J(x) D_F(x,y) J(y)\bigg).
+\ese 
+
+\bbox 
+    Use the above to show that the interaction vertex term is given by 
+    \bse 
+        D_1 = ig \int d^4xd^4yd^4zd^4w \, \big[ \overline{\eta}(x) S_F(x,y)S_F(y,z)\eta(z)\big] D_F(y,w)J(w).
+    \ese 
+    This corresponds to the diagram 
+    \begin{center}
+        \btik 
+            \midarrow[rotate around ={45:(0,0)}] (0,0) -- (-1,0);
+            \node at (-0.85,-0.85) {$\overline{\eta}$};
+            \midarrow[rotate around ={-45:(0,0)}]  (-1,0) -- (0,0);
+            \node at (-0.85,0.85) {$\eta$};
+            \draw[thick, dashed] (0,0) -- (1,0) node [right] {$J$};
+            \draw[fill=black] (0,0) circle [radius=0.07cm];
+        \etik 
+    \end{center}
+\ebox 
+
+The result of the previous exercise basically tells us that the vertex comes with a factor of $ig$. The "trained" field theorist would "see" this by staring at the Lagrangian (i.e. basically just read off the prefactor and do the symmetry factors in your head).
+
+\br 
+    In the diagram in the above exercise we have adopted the convention that the arrows point towards the sources $\overline{\eta}$. As we are familiar with from our canonical approach, these arrows are needed whenever we have a complex field as they allow us to distinguish particles from antiparticles. 
+\er 
+
+\subsection{The Infamous "$-1$ For Closed Fermion Loops"}
+
+We have seen all the Feynman rules for our Dirac-Yakawa theory, expect for one: include a factor of $-1$ for every closed Fermion loop. This is one that is often injected into the canonical approach\footnote{For example, see Feynman rule (v)(a) in my QED notes.} with no explanation apart from "it's true". Here we present where it comes from. 
+
+First let's draw the closed Fermion loop diagram. With a bit of thought, we see that it is 
+\begin{center}
+    \btik 
+        \draw[thick, dashed] (-1.5,0) -- (-0.5,0);
+        \draw[thick, dashed] (0.5,0) -- (1.5,0);
+        \draw[thick] (0,0) circle [radius=0.5cm];
+        \draw[fill=black] (-0.5,0) circle [radius=0.07cm];
+        \draw[fill=black] (0.5,0) circle [radius=0.07cm];
+    \etik 
+\end{center}
+If we label the left-hand side vertex point with integration variable $x$ and the right-hand side one with $y$ then it's clear that this diagrams contains the following term
+\be 
+\label{eqn:SFLoop}
+    S_F(x,y) S_F(y,x) = \del_x\overline{\del}_y \big(\overline{\eta}\cdot S_F\cdot \eta) \,  \del_y\overline{\del}_x \big(\overline{\eta}\cdot S_F\cdot \eta)
+\ee
+where we have used the shorthand notation 
+\bse 
+    \del_x := \frac{\del}{\del \eta(x)} \qand \overline{\del}_x := \frac{\del}{\del \overline{\eta}(x)}
+\ese
+and the same $\overline{\eta}\cdot S_F \cdot \eta$ notation that we used for the scalar field (i.e. for $J\cdot D_F \cdot J$).
+
+Now a term of this form will come from our path integral in the form
+\bse 
+    \int d^4x d^4y, \del_x \overline{\del}_x \del_y \overline{\del}_y \big(\overline{\eta} \cdot S_F \cdot \eta\big)\big(\overline{\eta} \cdot S_F \cdot \eta\big),
+\ese 
+and so in order to get \Cref{eqn:SFLoop} we need to anticommute an odd number of functional derivatives. We therefore see that a closed Fermion loop comes with a $(-1)$ factor. 
+
+\subsection{A Nod To SUSY}
+
+As we have seen during this course, the difficulties in QFT come from loop diagrams. However we have also just seem that Fermion loops contribute a relative minus sign to Boson loops, so we could ask the question "is it possible these two things cancel?" This would clearly make our QFT lives a lot easier. Obviously there is absolutely no reason why this would happen a priori, and so we have to ask questions like "what constraints can we put on the system so that this happens?" One possibility would be to \textit{enforce} this result via some symmetry. This is one of the big motivations behind supersymmetry (SUSY).\footnote{Notes on SUSY to come on my website.} Unfortunately it seems as though nature doesn't want to play ball with SUSY, and so at least currently we need to continue worrying about loops. 

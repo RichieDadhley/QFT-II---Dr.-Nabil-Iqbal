@@ -1,0 +1,332 @@
+\chapter{Free Theories}
+
+First let's just remind ourselves why we even bother considering QFT from the path integral language, given that we already have the canonical approach. There are two main reasons 
+\ben[label=(\roman*)]
+    \item The symmetries of the problem are \textit{manifest}, as the action is the main object here. 
+    \item Path integrals allow us to ease over subtle points such as the question "what is the structure of the Hilbert space of our system exactly?" This is very convenient when discussing things like gauge field theories, where subtle constraints on the Hilbert space arise.
+\een 
+
+\section{Path Integral Of Fields}
+
+Before we can actually study free QFTs in terms of the path integral, we need to adapt our QM path integral, \Cref{eqn:QMPathIntegral}, to work for fields. That is, we need to change our path integral so that we integrate over \textit{fields} $\phi$ not just position variables $q$. 
+
+So how do we do this? Well recall that the path integral was derived using the intuitive notion of "all the different paths connecting two points". We imagined having a bunch of screens, which represented our time slices, with the points on the screen labelling the position at that time. This position label is exactly our $q(t)$. 
+
+Now it is reasonably easy to see how we could extend this concept to two dimensions by giving $q(t)$ an index $q_a(t)$, with $a=1,2$. We would then get \textit{sheets} for our equal time slices and the two $q_a(t)$s would tell us the `coordinate' positions on the sheets. We then just let $a$ run from $1$ to some large number $N$. We then make the argument that we let $a$ run over all the different points in spacetime and we formally get the definition of a field $\phi(x)=\phi(t,\Vec{x})$. So all we have to do is replace our path integral over positions with a path integral over fields:
+\bse
+    Z := \int [\pD\phi] \exp\big(iS[\phi]\big),
+\ese
+where $S[\phi]$ is the action for our field theory. 
+
+The rest of the definitions extend similarly, for example our $N$-point Green's functions become functions of spacetime variables, e.g. the $2$-point Green's function is 
+\bse
+    G(x,y) = \bra{0}\cT[\phi(x)\phi(y)]\ket{0} = \frac{1}{Z_0} \int [\pD\phi] \phi(x)\phi(y) \exp\big(S[\phi]\big).
+\ese 
+
+\section{Real Scalar Field}
+
+Ok so let's look at a QFT then. As always we go to the simplest case, which is the free real scalar field, which has the action\footnote{Here we use the common notation of $(\p\phi)^2 := \p_{\mu}\phi\p^{\mu}\phi$, as well as $\p^2 = \p_{\mu}\p^{\mu}$.}
+\be 
+\label{eqn:RealScalarAction}
+    \begin{split}
+        S[\phi] & = \frac{1}{2}\int d^4 x \big( (\p\phi)^2 - m^2\phi\big) \\
+        & = -\frac{1}{2}\int d^4x \big(\phi (\p^2+m^2)\phi\big),
+    \end{split}
+\ee 
+where the second line is a clever rewriting\footnote{Note the minus sign out the front and the plus sign between $\p^2$ and $m^2$.} that will come in use shortly. The equations of motion\footnote{Recall these just come from the Euler-Lagrange equations. See IFT, or any similar course.}
+\be 
+\label{eqn:KleinGordanEquation}
+    (\p^2+m^2)\phi = 0,
+\ee 
+known as the \textit{Klein-Gordan equation}.
+
+\subsection{Feynman Propagator: Green's Function Of KG Equation}
+
+\bd[Feynman Propagator]
+    We define the \textit{Feynman propagator} to be the time-ordered $2$-point function
+    \be 
+    \label{eqn:FeynmanPropagatorDefinition}
+        D_F(x,y) := \bra{0} \cT [\phi(x)\phi(y)]\ket{0}.
+    \ee 
+\ed 
+
+The Feynman propagator is a very important object in QFT, and we can obtain it by introducing a source term $J(x)$ into our path integral, just as we did in QFT I:
+\mybox{
+    \be 
+    \label{eqn:QFTPathIntegral}
+        Z := \cN \int [\pD\phi] \exp\bigg(iS[\phi] + i \int dx J(x)\phi(x)\bigg).
+    \ee 
+}
+\noindent where $\cN$ is some normalisation. From here, we can rederive the result from QFT I that related $N$-point Green's functions to functional derivatives of the partition function, e.g. the two point function is given by
+\be 
+\label{eqn:2PointFunctionDefinition}
+    G(x,y) = \frac{(-i)^2}{Z_0} \frac{\del^2 Z[J]}{\del J(x) \del J(y)}\bigg|_{J=0}. 
+\ee 
+This tells us that the Feynman propagator is given by
+\bse 
+    D_F(x,y) = \frac{(-i)^2}{Z_0} \frac{\del^2 Z[J]}{\del J(x) \del J(y)}\bigg|_{J=0},
+\ese
+where the partition function is given by
+\be 
+\label{eqn:PartitionFunctionRealScalar}
+    Z[J] = \cN \int [\pD\phi] \exp\bigg( -\frac{i}{2}\int d^4x\, \Big(\phi(\p^2+m^2)\phi\Big) + i \int dx\, J(x)\phi(x)\bigg).
+\ee 
+In order to get a nice result for the Feynman propagator, we introduce the following proposition. 
+
+\bp 
+    Let $\mathbf{A}$ be a real, symmetric $N\times N$ matrix with positive eigenvalues $\{a_1,...,a_N\}$, and let $\mathbf{x}$ and $\mathbf{J}$ be $N$-component column matrices. Then the following integral identity holds\footnote{Here the notation is such that an upper index tells us the row, while lower indices tell us the column.}
+    \be 
+    \label{eqn:ExtendedGaussianIntegral}
+        \int dx_1 ... dx_N \exp\bigg( -\frac{1}{2}x_a{A^a}_bx^b + iJ_ax^a\bigg) = \sqrt{\frac{(2\pi)^N}{\det\mathbf{A}}} \exp\bigg(-\frac{1}{2} J_a {\big(A^{-1}\big)^a}_bJ^b\bigg),
+    \ee 
+    where $\det\mathbf{A}$ means the product of the eigenvalues of $\mathbf{A}$. 
+\ep 
+
+\bq 
+    First we prove a slightly simpler result. Consider just
+    \bse 
+        I_1 = \int dx_1...dx_N \exp\bigg( -\frac{1}{2}x_a{A^a}_bx^b \bigg).
+    \ese 
+    Now because $\mathbf{A}$ is a real, symmetric $N\times N$ matrix, we can write it in terms of a diagonal matrix $\mathbf{D}$ by using some orthogonal matrix $\mathbf{R}\in O(N)$:
+    \bse 
+        \mathbf{A} = \mathbf{R}^T \mathbf{D}\mathbf{R},
+    \ese 
+    which in terms of the components reads 
+    \bse 
+        {A^a}_b = {R^a}_c {D^c}_d {R^d}_b.
+    \ese
+    Now we use the change of variables 
+    \bse 
+        \mathbf{y} = \mathbf{R}\mathbf{x} \qquad \implies \qquad y^a = {R^a}_b x^b
+    \ese 
+    which has Jacobean $|\det\mathbf{R}|$, to obtain 
+    \bse
+        \begin{split}
+            I_1 & = \int dx_1 ... dx_N \exp\bigg(-\frac{1}{2} x_a {R^a}_c {D^c}_d {R^d}_b x^b\bigg) \\
+            & = \int dy_1...dy_N |\det\mathbf{R}| \exp\bigg(-\frac{1}{2} y_c {D^c}_d y^d\bigg) \\
+            & = \int dy_1 ... dy_N \exp\bigg(-\frac{1}{2} \sum_{i=1}^N a_i y_i^2\bigg) \\
+            & = \prod_{i=1}^n \Bigg[\int dy_i \exp\bigg(-\frac{1}{2}a_i y_i^2\bigg)\Bigg],
+        \end{split}
+    \ese
+    where we have used $\det\mathbf{R} = \pm 1$. Now we use the standard Gaussian integral result 
+    \bse 
+        \int dx \exp\big(-ax^2\big) = \sqrt{\frac{\pi}{a}},
+    \ese 
+    to obtain 
+    \bse 
+        I_1 = \prod_{i=1}^N \sqrt{\frac{2\pi}{a_i}} = \sqrt{\frac{(2\pi)^N}{\det\mathbf{A}}}.
+    \ese 
+    Now we just have to manipulate the integral appearing in \Cref{eqn:ExtendedGaussianIntegral} so that we can use this result. We obtain this by completing the square: 
+    \bse 
+        -\frac{1}{2}x_a {A^a}_b x^b + i J_ax^a = - \frac{1}{2} \Big(x_a - i{\big(A^{-1}\big)^c}_aJ_c \Big) {A^a}_b \bigg(x^b - i{\big(A^{-1}\big)^b}_dJ^d \Big) - \frac{1}{2}J_c {\big(A^{-1}\big)^c}_a J^a,
+    \ese 
+    so if we define 
+    \bse 
+        \widetilde{x}_a := \Big(x_a - i{\big(A^{-1}\big)^c}_aJ_c \Big),
+    \ese 
+    we get 
+    \bse 
+        -\frac{1}{2}x_a {A^a}_b x^b + i J_ax^a = -\frac{1}{2}\widetilde{x}_a {A^a}_b \widetilde{x}^b - \frac{1}{2}J_c {\big(A^{-1}\big)^c}_a J^a. 
+    \ese 
+    Now the last term is independent of the $x_i$s, so we can take it out the integral, and then the result \Cref{eqn:ExtendedGaussianIntegral} follows immediately. 
+\eq 
+
+\bbox 
+    Convince yourself that the completing the square above is valid and that it does indeed give us \Cref{eqn:ExtendedGaussianIntegral}. 
+\ebox 
+
+Ok so we can use the result of this proposition to rewrite our partition function, \Cref{eqn:PartitionFunctionRealScalar}, with $A=i(\p^2+m^2)$. This gives us 
+\be 
+\label{eqn:PartitionDetKG}
+    Z[J] = \det(\frac{\p^2+m^2}{2\pi i})^{-1/2} \cN \exp\bigg(-\frac{1}{2}\int d^4x d^4y J(x) \Delta_F(x,y) J(y), \bigg) 
+\ee 
+where $\Delta_F(x,y)$ is the inverse of our operator, that is 
+\bse 
+    i(\p^2+m^2)\Delta_F(x,y) = \del^{(4)}(x-y),
+\ese 
+in other words it is a Green's function of the Klein-Gordan equation, \Cref{eqn:KleinGordanEquation}. 
+
+The above result allows us to take the functional derivatives easily, giving us\footnote{Note we have used $Z_0:=Z[0]=1$ here.}
+\bse 
+    D_F(x,y) := \bra{0}\cT[\phi(x)\phi(y)]\ket{0} = \Delta_F(x,y). 
+\ese 
+So what we have done is \textit{derived} that the Feynman propagator is the Green's function of the Klein-Gordan equation, i.e. 
+\mybox{
+    \be 
+    \label{eqn:FeynmanPropagatorKleinGordanEquation}
+        i(\p^2+m^2)D_F(x,y) = \del^{(4)}(x-y).
+    \ee 
+}
+\br 
+    Note the notation above alone obviously does not tell us that \Cref{eqn:FeynmanPropagatorKleinGordanEquation} holds, by which I mean we cannot use prior information from our IFT module to say "ah well we know that the Feynman propagator is a Green's function of the Klein-Gordan equation", but we need to explicitly show it. Indeed here I have chosen to use $D_F(x,y)$ to define the Feynman propagator, while in the IFT notes I used $\Delta_F(x,y)$ to be the defining symbol. I did this to hopefully stray us away from trying to use prior knowledge to jump to the answers. 
+\er 
+
+\br 
+    Note that the determinant appearing in \Cref{eqn:PartitionDetKG} is a \textit{functional determinant}. It is the determinant of an infinite number of eigenvalues. This might sound scary and ill-defined but is actually well defined. If it scares you, fear not as we will not probe it in much detail in this course. In fact we're just going to absorb it into the normalisation factor $\cN$ and essentially forget about it. 
+\er 
+
+\br 
+    As we have just seen, the Feynman propagatoris given by the inverse of the operator appearing as 
+    \bse 
+        -\frac{1}{2}\phi A \phi.
+    \ese
+    This is not something that is specific to the case considered here but is a general result for the path integral approach to QFT. That is, given the action for the QFT you can find the Feynman propagator by finding the "inverse" of the operator appearing between the quadratic terms. By inverse here we mean the function that is mapped to the identity of the target. For example if we were considering an action where the fields had index structure we would be looking for the inverse of 
+    \bse 
+        -\frac{1}{2} \psi^{\mu} A_{\mu\nu} \psi^{\nu}.
+    \ese 
+    The inverse $D_F^{\mu\nu}(x,y)$ would then need to satisfy\footnote{The $-i$ on the right-hand side just comes from the $i$ on the left-hand side of the expressions above.}
+    \bse 
+        A_{\mu\nu} D_F^{\nu\rho}(x,y) = -i\del^{\rho}_{\mu} \del^{(4)}(x-y).
+    \ese 
+    We will see an explicit calculation of this (and the problems that can arise) when looking at the quantisation of QED later.
+\er 
+\subsection{Calculating The Feynman Propagator}
+
+We have seen that the Feynman propagator is a Green's function of the Klein-Gordan equation, but now we actually want to obtain an explicit expression for it. The way we do this is by considering the Fourier transform 
+\be 
+\label{eqn:FeynmanPropagatorFourierTransform}
+    D_F(x,y) = \int \frac{d^4 p}{(2\pi)^4} e^{-ip\cdot(x-y)} \widetilde{D}_F(p),
+\ee 
+so that \Cref{eqn:FeynmanPropagatorKleinGordanEquation} becomes 
+\bse 
+    \int \frac{d^4 p}{(2\pi)^4} (-p^2+m^2) e^{-ip\cdot(x-y)} \widetilde{D}_F(p) = -i\del^{(4)}(x-y). 
+\ese 
+We now recall the result 
+\bse 
+    \int \frac{d^4p}{(2\pi)^4} e^{ip\cdot(x-y)} = \del^{(4)}(x-y). 
+\ese 
+which tells us 
+\be 
+\label{eqn:FeynmanPropagatorMomentumSpace}
+    \widetilde{D}_F(p) = \frac{i}{p^2-m^2}. 
+\ee 
+If we then substitute \Cref{eqn:FeynmanPropagatorMomentumSpace} into \Cref{eqn:FeynmanPropagatorFourierTransform}, we get\footnote{If you can't see how to get to the second line, see the proof of Claim 5.2.1 of my IFT notes. This is on page 41.}
+\bse
+    \begin{split}
+        D_F(x,y) & = \int \frac{dp_0}{2\pi} \int \frac{d^3\Vec{p}}{(2\pi)^3} \frac{i}{p_0^2 - \Vec{p}^2 - m^2} e^{-ip_0(x^0-y^0)+i\Vec{p}\cdot(\Vec{x}-\Vec{y})} \\
+        & = i\int \frac{dp_0}{2\pi} \int \frac{d^3\Vec{p}}{(2\pi)^3} \frac{1}{p_0 + \omega_{\Vec{p}}} \frac{1}{p_0 - \omega_{\Vec{p}}} e^{-ip_0(x^0-y^0)+i\Vec{p}\cdot(\Vec{x}-\Vec{y})}
+    \end{split}
+\ese 
+where we have defined 
+\bse 
+    \omega_{\Vec{p}} := \sqrt{\Vec{p}^2 +m^2}.
+\ese 
+So if we consider the complexification of our integral (i.e. we let $p_0\in\C$), then we see we get two poles at $p_0 = \pm \omega_{\Vec{p}}$. We then have to ask "how do we go around these poles?" 
+
+This is a point where the path integral perhaps gives a nicer answer then the canonical approach. In the latter we just claimed that if we wanted to get the Feynman propagator then we had to take the contour so that we only picked up one pole. That is we took the following integral 
+\begin{center}
+    \btik 
+        \draw[thick, ->] (-3.5,0) -- (3.5,0);
+        \node at (4.2,0) {\large{Re($p_0$)}};
+        \draw[thick, ->] (0,-1.5) -- (0,1.5);
+        \node at (-0.7,1.5) {\large{Im($p_0$)}};
+        \draw[fill=black] (-2,0) circle [radius=0.07cm];
+        \node at (-2,0.5) {\large{$-\omega_{\vec{p}}$}};
+        \draw[fill=black] (2,0) circle [radius=0.07cm];
+        \node at (2,-0.5) {\large{$+\omega_{\vec{p}}$}};
+        \draw[ultra thick, blue, ->] (-0.5,0) -- (-0.49,0);
+        \draw[ultra thick, blue, ->] (0.5,0) -- (0.51,0);
+        \draw[ultra thick, blue] (-3,0) -- (-2.5,0) .. controls (-2.25,-0.5) and (-1.75,-0.5) .. (-1.5,0)-- (1.5,0) .. controls (1.75,0.5) and (2.25,0.5) .. (2.5,0) -- (3,0);
+    \etik 
+\end{center}
+This way we pick up one pole for each case $x^0>y^0$ and $x^0<y^0$. It was perhaps not entirely obvious why doing this would give us the Feynman propagator over, say, taking a contour which picked up both poles for $x^0>y^0$ and neither for $x^0<y^0$. 
+
+In the path integral approach we can see exactly why. We recall from QFT I that the path integral is only really well defined when we take the Wick rotation.\footnote{We need this to check our integrals are convergent, see section 1.5 of those notes.} If we send $t\to -i\tau$, then we get the Euclidean momentum: $p_0 = ip_0^E$. So our integral $dp_0$ is to be taken along the $\Im(p_0)$ axis, and we have to take the orientation running up the the axis, i.e. we take 
+\begin{center}
+    \btik 
+        \draw[thick, ->] (-3.5,0) -- (3.5,0);
+        \node at (4.2,0) {\large{Re($p_0$)}};
+        \draw[thick, ->] (0,-1.5) -- (0,1.5);
+        \node at (-0.7,1.5) {\large{Im($p_0$)}};
+        \draw[fill=black] (-2,0) circle [radius=0.07cm];
+        \node at (-2,0.5) {\large{$-\omega_{\vec{p}}$}};
+        \draw[fill=black] (2,0) circle [radius=0.07cm];
+        \node at (2,-0.5) {\large{$+\omega_{\vec{p}}$}};
+        \draw[ultra thick, blue] (0,-1.5) -- (0,1.5);
+        \draw[ultra thick, blue, ->] (0,-.8) -- (0,-0.75);
+        \draw[ultra thick, blue, ->] (0,0.7) -- (0,0.75);
+    \etik 
+\end{center}
+This comes from the fact that the Wick rotation is defined by 
+\bse 
+    t \to e^{-i\theta} t, \qquad \theta \in [0,\pi/2],
+\ese 
+so we just rotate the contour from the real axis anticlockwise by $\pi/2$. 
+
+Now, from $p_0 = ip_0^E$, we have
+\bse 
+    D_F(x,y) \sim \int dp_0 \, e^{-p_0^E(x^0-y^0)}
+\ese 
+and so for $x^0>y^0$ we pick up the $+\omega_{\vec{p}}$ pole, as otherwise the integral diverges at the infinite boundary. That is we have 
+\bse 
+    D_F(x,y) = \frac{(-2\pi i)i}{2\pi} \int \frac{d^3\vec{p}}{(2\pi)^3} \frac{1}{2\omega_{\vec{p}}} e^{-i\omega_{\vec{p}}\,(x^0-y^0) + i \vec{p}\cdot (\vec{x}-\vec{y})} \qquad \text{for} \qquad  x^0>y^0,
+\ese 
+where we get the minus sign in $(-2\pi i)$ because we close the contour clockwise.\footnote{That is the convention says we get $+2\pi i$ for anticlockwise contours.} Similarly we close the contour anticlockwise and pick up the $-\omega_{\vec{p}}$ for $x^0<y^0$, giving us 
+\bse 
+    D_F(x,y) = \frac{(2\pi i)i}{2\pi} \int \frac{d^3\vec{p}}{(2\pi)^3} \frac{1}{-2\omega_{\vec{p}}} e^{+i\omega_{\vec{p}}\,(x^0-y^0) + i \vec{p}\cdot (\vec{x}-\vec{y})} \qquad \text{for} \qquad  x^0<y^0.
+\ese 
+We then note that we can take the minus sign appearing in the denominator here and put it with the $(2\pi i)$ prefactor, so the only difference between the two cases is the sign appearing in the $\omega_{\vec{p}}\,(x^0-y^0)$ exponential. 
+
+It is for this reason that we often present the momentum space Feynman propagator by shifting the two poles slightly off the real axis. That is we rewrite \Cref{eqn:FeynmanPropagatorMomentumSpace} as 
+\mybox{
+\be 
+\label{eq:FeynmanPropagatorMomentumSpaceEpsilon}
+    \widetilde{D}_F(p) = \frac{i}{p^2-m^2 + i\epsilon}
+\ee 
+}
+
+\br 
+    This result should look very familiar from IFT: it is the momentum space Feynman rule for internal $\phi$ line.
+\er 
+
+\section{Higher Point Functions}
+
+So far what we have computed is the Feynman propagator which corresponds to the two point function $\bra{0}\cT[\phi(x)\phi(y)]\ket{0}$, however obviously we can look at higher point functions. The nice thing\footnote{Or perhaps boring thing...} about free theories is that all the higher point functions can be expressed in terms of the Feynman propagator. Let's see this explicitly. 
+
+\bex 
+    Let's find the 4-point function 
+    \bse 
+        G(x_1,x_2,x_3,x_4) = \bra{0}\cT[\phi(x_1)\phi(x_2)\phi(x_3)\phi(x_4)]\ket{0},
+    \ese 
+    where the subscripts just label the different variables (i.e. they're not spacetime indices). We have already seen that this is given by taking functional derivatives, i.e. 
+    \bse 
+        G(x_1,x_2,x_3,x_4) = (-i)^4 \frac{1}{Z_0}\frac{\del^4 Z[J]}{\del J(x_1) \del J(x_2) \del J(x_3) \del J(x_4)}\Bigg|_{J=0}.
+    \ese 
+    Then using \Cref{eqn:PartitionDetKG} with $\Delta_F(x,y)=D_F(x,y)$ we get 
+    \bse 
+        G(x_1,x_2,x_3,x_4) = (-i)^4 \Big[ D_F(x_1,x_2)D_F(x_3,x_4) + D_F(x_1,x_3)D_F(x_2,x_4) + D_F(x_1,x_4)D_F(x_2,x_4)\Big].
+    \ese 
+    We can obtain this pictorially by plotting four points and then connecting them in all the possible ways, i.e. 
+    \begin{center}
+        \btik 
+            \begin{scope}[xshift=-4cm]
+                \draw[fill=black] (-1,1) circle [radius=0.07cm] node [left] {$1$}; 
+                \draw[fill=black] (-1,-1) circle [radius=0.07cm] node [left] {$2$};
+                \draw[fill=black] (1,1) circle [radius=0.07cm] node [right] {$3$};
+                \draw[fill=black] (1,-1) circle [radius=0.07cm] node [right] {$4$};
+                \draw[thick] (-1,-1) -- (-1,1);
+                \draw[thick] (1,1) -- (1,-1);
+                \node at (2,0) {\Large{$+$}};
+            \end{scope}
+            \begin{scope}
+                \draw[fill=black] (-1,1) circle [radius=0.07cm] node [left] {$1$}; 
+                \draw[fill=black] (-1,-1) circle [radius=0.07cm] node [left] {$2$};
+                \draw[fill=black] (1,1) circle [radius=0.07cm] node [right] {$3$};
+                \draw[fill=black] (1,-1) circle [radius=0.07cm] node [right] {$4$};
+                \draw[thick] (-1,-1) -- (1,-1);
+                \draw[thick] (1,1) -- (-1,1);
+                \node at (2,0) {\Large{$+$}};
+            \end{scope}
+            \begin{scope}[xshift=4cm]
+                \draw[fill=black] (-1,1) circle [radius=0.07cm] node [left] {$1$}; 
+                \draw[fill=black] (-1,-1) circle [radius=0.07cm] node [left] {$2$};
+                \draw[fill=black] (1,1) circle [radius=0.07cm] node [right] {$3$};
+                \draw[fill=black] (1,-1) circle [radius=0.07cm] node [right] {$4$};
+                \draw[thick] (-1,-1) -- (-0.1,-0.1);
+                \draw[thick] (0.1,0.1) -- (1,1);
+                \draw[thick] (-1,1) -- (1,-1);
+            \end{scope}
+        \etik 
+    \end{center}
+    This is the content of \textit{Wick's theorem} in the path integral approach. 
+\eex 

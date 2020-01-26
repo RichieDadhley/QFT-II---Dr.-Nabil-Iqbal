@@ -1,0 +1,748 @@
+\chapter{Interacting Theories \& LSZ Theorem}
+
+So far we have discussed free theories, but obviously physics is more interesting than this and we want to look at interactions. These interacting field theories will contain higher powers in the fields, e.g. $\phi^4$, and it is these terms that correspond to the scattering. As we are familiar from our previous courses on field theory, we cannot solve interacting field theories exactly and the usual approach is to study the theory perturbatively. This will, of course, lead to our Feynman diagrams. 
+
+However before diving in and computing something, let's just give an outline of the kinds of things we can expect for an interacting QFT. As we saw above, for the free theory essentially everything boils down to the $2$-point function $\bra{0}\cT[\phi(x)\phi(y)]\ket{0}$, and we saw that this was just the Feynman propagator $D_F(x,y)$. The question we want to ask is "what happens to this result for an interacting theory?" That is what is the two point function equal to in the interacting theory? 
+
+Well first we have to replace the free vacuum $\ket{0}$ with what is known as the \textit{interacting vacuum} and is denoted by $\ket{\Omega}$. This is essentially just defined the same way as for the free vacuum (i.e. it has the minimum energy) but now it is relative to the full interacting Hamiltonian, not just the free part of it. So our question is 
+\bse 
+    \bra{\Omega}\cT[\phi(x)\phi(y)]\ket{\Omega} = ?
+\ese
+The answer is what is known as \textit{K\"{a}ll\'{e}n-Lehmann spectral representation}:
+\be
+\label{eqn:KallenLehmann}
+    \bra{\Omega} \cT[\phi(x)\phi(y)]\ket{\Omega} = \int_0^{\infty} \frac{dM^2}{2\pi} \rho(M^2) D_F(x,y;M^2),
+\ee 
+where $D_F(x,y;M^2)$ is the Feynman propagator for a \textit{free} field of mass $M$, and $\rho(M^2)$ is a positive \textit{spectral density} function. 
+
+So what is this mysterious spectral density function? Well, for a free theory we see that we require
+\bse 
+    \rho(M^2) = 2\pi \del(M^2-m^2),
+\ese 
+which tells us that we just get single particle states with mass $m=M$. However it turns out for interacting theories we have\footnote{See section 7.1 of Peskin and Schroeder for more details.} 
+\bse 
+    \rho(M^2) = 2\pi Z \del(M^2-m^2) + \big(\text{other stuff when } M^2 \geq (2m)^2\big).
+\ese 
+The second term corresponds to producing two particle states. We note that we have some new factor $Z$ with our one particle states. This is called the \textit{field-strength renormalisation} and corresponds to the fact that we no longer have unit probability to produce one-particle states. It is clear that we require $0\leq Z \leq 1$, and whenever $Z>0$ we can still produce single particle states while when $Z=0$ our states \textit{must} contain at least two particles. An example of when the latter occurs is in QCD, where confinement basically says that it is impossible to produce a single quark state. We can depict this spectral density as the following plot:
+\begin{center}
+    \btik 
+        \begin{scope}[xshift=-7cm]
+            \draw[->] (-0.5,0) -- (4,0);
+            \node at (4,-0.3) {$M^2$};
+            \draw[->] (0,-0.5) -- (0,2);
+            \node at (-0.7,2) {$\rho(M^2)$};
+            \draw[ultra thick] (1,0) -- (1,2);
+            \node at (1,-0.3) {$m^2$};
+            \node at (2,-1) {Free Theory};
+        \end{scope}
+        \begin{scope}
+            \draw[->] (-0.5,0) -- (4,0);
+            \node at (4,-0.3) {$M^2$};
+            \draw[->] (0,-0.5) -- (0,2);
+            \node at (-0.7,2) {$\rho(M^2)$};
+            \draw[ultra thick] (1,0) -- (1,1.5);
+            \node at (1,-0.3) {$m^2$};
+            \draw[ultra thick] (2,0) .. controls (2,1.5) and (3,0.55) .. (4,0.5);
+            \node at (2.1,-0.3) {$(2m)^2$};
+            \begin{scope}
+                \clip (2,0) .. controls (2,1.5) and (3,0.55) .. (4,0.5) -- (4,0) -- (2,0);
+                \draw[fill = gray!40, opacity = 0.8] (2,0) .. controls (2,1.5) and (3,0.55) .. (4,0.5) -- (4.2,0.5) -- (4.2,0) -- (2,0);
+            \end{scope}
+            \node at (2,-1) {Interacting Theory};
+        \end{scope}
+    \etik 
+\end{center}
+
+\br 
+    Note that the two-particle states have a continuous spectral density (i.e. the shaded area). We can see this by considering the Fourier transform for the two-point function. Using \Cref{eqn:KallenLehmann}, this is 
+    \bse 
+        \int d^4 x \, e^{ip\cdot x} \bra{\Omega}\cT[\phi(x)\phi(y)]\ket{\Omega} = \frac{iZ}{p^2-m^2+i\epsilon} + \int_{\sim 4m^2}^{\infty} \frac{dM^2}{2\pi} \rho(M^2) \frac{i}{p^2-M^2+i\epsilon},
+    \ese 
+    where the first term is our one particle state, and the second term corresponds to the two-particle state. The former just has a single pole at $p^2=m^2$, which corresponds to the spike at $M^2=m^2$, while the second term corresponds to an entire \textit{branch cut} starting at $M^2=4m^2$ and going to infinity. It is all the points in this branch cut that give the continuous shaded area in the above plot. 
+\er 
+
+\br 
+    In this course we will assume $Z>0$ at all times.
+\er 
+
+\bnn 
+    In order to save time writing, in this course we shall sometimes adopt the short hand notation 
+    \be 
+    \label{eqn:VevNotation}
+        \la \cT[...]\ra := \bra{\Omega} \cT[...]\ket{\Omega}.
+    \ee 
+    This will always mean the interacting vacuum expectation value (vev). That is, if we have external states we will always use the full bra-ket notation. 
+\enn 
+
+\br 
+    Despite the above national definition, it is likely that I will default to writing $\ket{0}$ for the ground state. I shall try not to do this, but this is just a warning in case I do. 
+\er 
+
+\section{$\phi^4$ Theory}
+
+The proxy we will use to study interacting field theories is the usual $\phi^4$ theory which has the following action
+\be 
+\label{eqn:Phi4Action}
+    S[\phi] = \int d^4 x \, \bigg[ \frac{1}{2}(\p\phi)^2 - \frac{m^2}{2}\phi^2 - \frac{\l}{4!}\phi^4\bigg],
+\ee
+which physically says that now our particles can scatter off each other with $\l$ roughly giving the probability to scatter. Our perturbation theory expansion comes from us taking $\l$ to be a small parameter, i.e. the fields are weakly interacting, and so we categories the contributions to the full scattering process by their power of $\l$. This should be a familiar idea from other field theory courses, but if not it will become clear going forward.
+
+\section{LSZ Reduction Formula}
+
+Fundamentally in QFT the main thing we want to find are scattering cross sections. These answer questions like: if you smash together two protons, what is the probability we get one Higgs boson, given we know the momentum of the protons? In order to be able to answer such questions, we need some method that relates inner products of the form
+\bse 
+    \bra{\text{Higgs}} \text{Stuff} \ket{2\text{ protons}}
+\ese 
+to things we know, namely time-ordered correlation functions $\la \cT[...]\ra$. This relation is exactly the content of what is known as the \textit{LSZ theorem}, and the aim of this section is to derive this. We shall work it out in scalar field theory, but other field theories follow simply from here. We will consider $2\to 2$ scattering, again generalisations follow easily.\footnote{I have actually typed the general proof in my IFT notes, so see those for that.}
+
+First, we need to prepare our initial and final state particles. As we are talking about states, it is instructive to temporarily use the canonical formalism, where we recall that we can write our real scalar fields in terms of the creation and annihilation operators:
+\bse 
+    \phi(\Vec{x},t) = \int \frac{d^3p}{(2\pi)^3} \frac{1}{\sqrt{2\omega_{\Vec{p}}}} \Big[ a_{\vec{p}} \, e^{-ip\cdot x} + a_{\vec{p}}^{\dagger}\, e^{ip\cdot x}\Big],
+\ese 
+with $p_{\mu}=(\omega_p,\Vec{p})$ and $\omega_{\Vec{p}}=\sqrt{\vec{p}^2+m^2}$. In the free theory the creation/annihilation operators are time independent, however in interacting theories they are time dependant, and we can write them in the form 
+\bse 
+    a_{\vec{p}}(t) = \frac{1}{\sqrt{2\omega_{\vec{p}}}}\int d^3 x e^{ip\cdot x} \Big( i\p_0 \phi(x) + \omega_{\vec{p}}\,  \phi(x) \Big).
+\ese 
+We can rewrite this as 
+\be 
+\label{eqn:AnnihilationOperatorLeftRightArrow}
+    a_{\vec{p}}(t) = \frac{i}{\sqrt{2\omega_{\vec{p}}}} \int d^3 x e^{ip\cdot x} \lra{\p}_0 \phi(x).
+\ee 
+where we have introduced the definition 
+\be 
+\label{eqn:LeftRightArrow}
+    f \lra{\p} g := f \p g - (\p f) g.
+\ee 
+Similarly we have
+\be 
+\label{eqn:CreationOperatorLeftRightArrow} 
+    a_{\vec{p}}^{\dagger}(t) = -\frac{i}{\sqrt{2\omega_{\vec{p}}}} \int d^3 x e^{-ip\cdot x} \lra{\p}_0 \phi(x).
+\ee
+
+Now, for technical reasons which will become clear, we will scatter wavepackets \textit{not} momentum eigenstates. We create the envelope function 
+\bse 
+    f_1(\vec{k}) = \int \exp\bigg(\frac{(\vec{k}-\vec{k}_1)^2}{4\sig^2}\bigg),
+\ese 
+i.e. a Gaussian centred around $\vec{k}_1$. Now construct the momentum-smeared creation operator
+\bse 
+    a_1^{\dagger} := \int d^3 k f_1(\vec{k}) a_{\vec{k}}^{\dagger}.
+\ese 
+
+Recall that in the free theory we make initial states by acting with $a^{\dagger}_{\vec{p}}$, i.e. 
+\bse 
+    \ket{\vec{p}} = \sqrt{2\omega_{\vec{p}}} \, a^{\dagger}_{\vec{p}}\ket{0},
+\ese
+where the $\sqrt{2\omega_{\vec{p}}}$ is a relativistic normalisation factor.\footnote{See a canonical QFT course, e.g. section 4.2 of my IFT notes.} We are going to assume in the interacting theory, we make the initial state by acting with $a^{\dagger}$ in the distant past. This is our definition of the initial state: 
+\bse 
+    \ket{\text{initial packet}; \vec{k}_1} = \frac{\sqrt{2\omega_1}}{\sqrt{Z}} \lim_{t\to-\infty} a_1^{\dagger}(t)\ket{\Omega},
+\ese 
+where the $Z$ here is the same field-strength renormalisation we introduced in the spectral density above.\footnote{It's fine if it isn't clear why this is the case. To be honest I don't know why... I should really find out why!} Similarly we define \bse 
+    \ket{\text{final packet}; \vec{k}_1} = \frac{\sqrt{2\omega_1}}{\sqrt{Z}} \lim_{t\to+\infty} a_1^{\dagger}(t)\ket{\Omega}.
+\ese
+
+So let's look at our $2\to2$ scattering. We shall assume the initial state fields have momenta $k_1$ and $k_2$ and the final state fields have momenta $k_1'$ and $k_2'$. Our initial state is therefore 
+\bse 
+    \ket{i} = \frac{\sqrt{2\omega_1} \sqrt{2\omega_2}}{Z} \lim_{t\to-\infty} a_1^{\dagger}a_2^{\dagger}\ket{\Omega}.
+\ese 
+Similarly the final state is 
+\bse 
+    \ket{i} = \frac{\sqrt{2\omega_{1'}} \sqrt{2\omega_{2'}}}{Z} \lim_{t\to+\infty} a_{1'}^{\dagger}a_{2'}^{\dagger}\ket{\Omega}.
+\ese 
+
+We want to find the inner product
+\bse 
+    \braket{f}{i} = \frac{\sqrt{2\omega_1} \sqrt{2\omega_2} \sqrt{2\omega_{1'}} \sqrt{2\omega_{2'}} }{Z^2} \bra{\Omega} a_{1'}(+\infty) a_{2'}(+\infty)a_1^{\dagger}(-\infty)a_2^{\dagger}(-\infty)\ket{\Omega}.
+\ese 
+in terms of our time-ordered correlation functions. So what do we do? Well firstly we notice that everything is already time ordered so we can simply rewrite this as
+\bse 
+    \braket{f}{i} = \frac{\sqrt{2\omega_1} \sqrt{2\omega_2} \sqrt{2\omega_{1'}} \sqrt{\omega_{2'}}}{Z^2} \bra{\Omega} \cT[a_{1'}(+\infty) a_{2'}(+\infty)a_1^{\dagger}(-\infty)a_2^{\dagger}(-\infty)]\ket{\Omega}.
+\ese 
+
+Ok now what do we do? Well in the free theory we know that if the annihilation operator $a$ acts on a vacuum ket vector the result vanishes, and similarly if a creation operator acts to the left on a bra vector. We want to do a similar thing here in the interacting theory, but we have to remember that now our creation/annihilation operators are time dependent. So if we want our annihilation operator to annihilate our initial state vacuum, we need to `trade' the $+\infty$ for a $-\infty$ in its argument. If we do this, the time ordering will take care of the rest, as the annihilation operator is automatically pushed all the way to the right.\footnote{You will actually pick up a bunch of delta functions when doing this. These correspond to non-fully connected diagrams and so we don't consider them here. For more information on this, see my IFT notes.} So how do we do this trading? Well, first consider their difference:
+\bse 
+    \begin{split}
+        a_1^{\dagger}(+\infty) - a_1^{\dagger}(-\infty) & = \int_{-\infty}^{\infty} dt \, \p_t a^{\dagger}_1(t) \\
+        & = \int d^3 \vec{k} \, f_1(\vec{k}) \frac{1}{\sqrt{2\omega_{\vec{k}}}} \int d^4 x \,  \p_t \Big[ e^{-ik\cdot x} \big(-i\p_t\phi(x) + \omega_{\vec{k}}\, \phi(x)\big)\Big] \\
+        & = -i \int d^3\vec{k} \, f_1(\vec{k}) \frac{1}{\sqrt{2\omega_{\vec{k}}}} \int d^4 x \, e^{-ik\cdot x} \big[ \p_t^2 + \omega_{\vec{k}}^2\big] \phi(x)  \\
+        & = - i\int d^3 \vec{k} \, f_1(\vec{k}) \frac{1}{\sqrt{2\omega_{\vec{k}}}} \int d^4 x \, e^{-ik\cdot x} \big( \p_t^2 - \lar{\nabla}^2 + m^2\big) \phi(x)
+    \end{split}
+\ese 
+where the arrow above $\nabla$ means acts to the left. 
+We now do integration by parts in space and use the fact that the wavepackets vanish at the boundary (this is why we used them). This gives us 
+\bse 
+    a_1^{\dagger}(-\infty) = a_1^{\dagger}(+\infty)  +  i\int d^3 \vec{k} \, f_1(\vec{k}) \frac{1}{\sqrt{2\omega_{\vec{k}}}} \int d^4x \, e^{-ik\cdot x} \big(\p^2+m^2\big)\phi(x).
+\ese
+We get a similar expression for the annihilation operator\footnote{We can get it by simply taking the dagger of the above expression. Note that we have switched the $\pm \infty$s to counteract the change in sign from the $i$.}
+\bse 
+    a_1(+\infty) = a_1(-\infty)  +  i\int d^3 \vec{k} \, f_1(\vec{k}) \frac{1}{\sqrt{2\omega_{\vec{k}}}} \int d^4x \, e^{ik\cdot x} \big(\p^2+m^2\big)\phi(x).
+\ese
+
+\br 
+    Note for a free field the second term on the right hand sides vanish --- as they contain precisely the Klein-Gordan equation, \Cref{eqn:KleinGordanEquation} --- which we obviously want. However for an interacting field we get this additional term. 
+\er 
+
+We can now substitute these expressions into our expression for $\braket{f}{i}$. As we explained above, if we do this the $a_{1'}^{\dagger}(+\infty)$ gets replaced with a $a_{1'}(-\infty)$ + stuff and then the time ordering sends it all the way to the right and the annihilation operator gives $0$ acting on the vacuum. The same idea applies for creation operators. Finally, now that we're done with the wavepacket stuff let's set $f_1(\vec{k}) = \del(\vec{k}-\vec{k}_1)$, when we do this all our $(2\omega_{\vec{k}})^{-1/2}$ terms will become exactly the terms needed to cancel the factors in the numerator of $\braket{f}{i}$.
+
+Now there was nothing special about $2\to2$ scattering in the above, so for general $n\to n'$ scattering, we get 
+\mybox{
+    \be 
+    \label{eqn:LSZPosition}
+        \begin{split}
+            \braket{f}{i} & = i^{n+n'} \int d^4 x_1 Z^{-1/2} e^{-ik_1\cdot x_1} (\p_1^2+m^2) ... \int d^4 x_1' Z^{-1/2} e^{-ik_1'\cdot x_1'} (\p_{1'}^2+m^2) \\
+            & \qquad \times \bra{\Omega}\cT[\phi(x_1)...\phi(x_1')...]\ket{\Omega}.
+        \end{split}
+    \ee
+}
+\noindent This is the LSZ reduction formula. It tells you how to relate an inner product of Hilbert space states to a time ordered product of correlation functions of fields. We can make this look nicer by writing everything in momentum space instead. 
+\mybox{
+    \be 
+    \label{eqn:LSZMomentum}
+        \prod_{i=1}^n \frac{i\sqrt{Z}}{k_i^2-m^2}\prod_{i'=1}^{n'} \frac{i\sqrt{Z}}{(k_i')^2-m^2} \braket{f}{i} = \bra{\Omega} \phi(k_1) ... \phi(k_1') ... \ket{\Omega}.
+    \ee 
+}
+Notice that we have poles on the left-hand side. This tells us that if we want to find the transition amplitude (i.e. the inner product), compute the Fourier transformed time ordered correlation function and then put the external momenta near the on-shell values $k_i^2 \sim m^2$ and $(k_i')^2\sim m^2$. In this case the correlation function develops a pole, and the residue of the pole is the matrix element that you want. If you don't pick up the poles then it tells you perturbation theory has broken down. 
+
+\br 
+    Note that we get factors of $i$ in both \Cref{eqn:LSZPosition,eqn:LSZMomentum} even though they appear on the opposite sides of the equation. This at first might seem like a mistake,\footnote{By which I mean using $1/i = -i$.} however note that the derivatives appearing on the right-hand side of \Cref{eqn:LSZPosition} will give us $-k_i^2+m^2$, but the denominators on the left-hand side of \Cref{eqn:LSZMomentum} are $k_i^2-m^2$. This is where the minus signs are taken care of. 
+\er 
+
+\br 
+    Note the pole condition above corresponds exactly to considering amputated diagrams.\footnote{If you don't know what amputated diagrams are, this remark basically explains it. If you want a pictorial version, see, e.g., section 8.2 of my IFT notes.} Why? Well because amputated diagrams are simply those where the incoming particles are taken to be on-shell. This is a very neat result of the LSZ theorem and it allows us to \textit{drastically} reduce the complexity of our problem. 
+\er 
+
+\section{Perturbation Theory \& Feynman Diagrams}
+
+Ok we can now relate our goal, measuring transition amplitudes, to stuff we know, $N$-point functions, however there is a small problem in the interacting theory. To explain this problem, we will use $\phi^4$ theory as a proxy, but the argument trivially carries over to other interacting theories. The action is
+\bse 
+    S[\phi] = \int d^4 x \, \bigg[ \frac{1}{2}(\p\phi)^2 - \frac{m^2}{2}\phi^2 - \frac{\l}{4!}\phi^4\bigg].
+\ese
+In order to get our $N$-point functions, we need to compute the partition function
+\bse 
+    Z[J] = \int [\pD\phi] \exp\bigg( iS[\phi] + i\int d^4 x J(x) \phi(x)\bigg),
+\ese
+and then we can take functional derivatives. We saw before that we could do this nicely when our action was Gaussian-looking (i.e. quadratic in $\phi$). However now we have a $\phi^4$ term, and there is no hope for us to take the functional derivatives for general $\l$. The way we get around this is by considering $\l$ to be small (i.e. we have weak coupling) and then we Taylor expand in $\l$. To do this, let's write the action as 
+\bse 
+    S[\phi] = S_0[\phi] + \int d^4 x \cL_I\big(\phi(x)\big),
+\ese 
+with 
+\bse 
+    S_0[\phi] = \int d^4 x \, \bigg[ \frac{1}{2}(\p\phi)^2 - \frac{m^2}{2}\phi^2\bigg], \qand \cL_I = -\frac{\l}{4!}\phi^4.
+\ese 
+
+How does this help us? Well we recall from QFT I the argument made leading up to the Schwinger Dyson equation: that we can essentially replace $\phi$ factors in the path integral with functional derivatives of $J$. That is, we can replace 
+\bse 
+    \cL_I(\phi) \to \cL \bigg(-i\frac{\del}{\del J(x)}\bigg)
+\ese 
+in the path integral. This is now explicitly independent\footnote{Of course it is still \textit{implicitly} dependent} of $\phi$ and so we can take it outside our path integral, leaving us with a path integral over our free theory, $S_0[\phi]$. 
+
+Explicitly what we're saying above is the following:
+\bse 
+    \begin{split}
+        Z[J] & = \int [\pD\phi] \exp\bigg( iS_0[\phi] + i\int d^4x \big[\cL_I(\phi) + J(x) \phi(x)\big]\bigg) \\
+        & =  \exp\bigg( i\int d^4 x \cL\bigg(\frac{\del}{\del J(x)}\bigg)\bigg) \int [\pD\phi] \exp\bigg( iS_0[\phi] + i\int d^4x J(x) \phi(x)\big]\bigg) \\
+        & = \exp\bigg( i\int d^4 x \cL\bigg(\frac{\del}{\del J(x)}\bigg)\bigg)  Z_0[J],
+    \end{split}
+\ese 
+where $Z_0[J]$ is given by \Cref{eqn:PartitionDetKG}. Plugging this result in\footnote{All of the normalisation $\cN$ etc is contained in $Z_0[0]$.}
+\bse 
+    Z[J] = Z_0[0] \exp\bigg( i\int d^4 x \cL\bigg(-i\frac{\del}{\del J(x)}\bigg)\bigg) \exp\bigg( -\frac{1}{2}\int d^4x d^4y J(x) D_F(x,y) J(y)\bigg)
+\ese 
+
+This is a formal expression which works for any theory with any interactions. Let us now specialise to $\phi^4$ theory. Here we have 
+\bse 
+    Z[J] \propto \exp\Bigg[ -\frac{i\l}{4!}\int d^4 x \bigg(-i\frac{\del}{\del J(x)}\bigg)^4\Bigg] \exp\bigg( -\frac{1}{2}\int d^4x d^4y J(x) D_F(x,y) J(y)\bigg)
+\ese 
+We expand both sets of exponentials, and the result is exactly the Feynman diagram expansion. We get 
+\bse 
+    \begin{split}
+        \exp\Bigg[-\frac{i\l}{4!}\int d^4 x \bigg(-i\frac{\del}{\del J(x)}\bigg)^4\Bigg] = 1 - \frac{i\l}{4!}\int d^4 x  \bigg(-i\frac{\del}{\del J(x)}\bigg)^4 + \frac{1}{2} \Bigg[ -\frac{i\l}{4!}\int d^4 x \bigg(-i\frac{\del}{\del J(x)}\bigg)^4\Bigg]^2 + ...
+    \end{split}
+\ese 
+and 
+\bse 
+    \exp\bigg(-\frac{1}{2}J\cdot D_F\cdot J\bigg) = 1 - \frac{1}{2}J\cdot D_F\cdot J + \frac{1}{2}\bigg(- \frac{1}{2}J\cdot D_F\cdot J \bigg)^2 + ...,
+\ese 
+where we have introduced the notation\footnote{See section 4.1 of my QFT I notes for more examples using this notation.} 
+\bse 
+    J\cdot D_F \cdot J := \int d^4x d^4 y J(x) D_F(x,y) J(y).
+\ese 
+
+We then simply put this expansion together and look at the terms. The first non-trivial\footnote{I.e. not just $1$ but we actually have functional derivatives acting.} term is 
+\bse 
+    -\frac{i\l}{4!}\int d^4 x \bigg(-i\frac{\del}{\del J(x)}\bigg)^4 \frac{1}{2}\bigg(-\frac{1}{2}J\cdot D_F\cdot J\bigg) \bigg(- \frac{1}{2}J\cdot D_F\cdot J \bigg) = -\frac{N}{4!} i\l \int d^4x D_F(x,x) D_F(x,x),
+\ese 
+where the $N$ on the right-hand side is a number that will be explained shortly. We can depict this result as a Feynman diagram of the form
+\begin{center}
+    \btik 
+        \draw[thick] (-0.75,0) circle [radius=0.75cm];
+        \draw[thick] (0.75,0) circle [radius=0.75cm];
+        \draw[fill=black] (0,0) circle [radius=0.07cm];
+    \etik 
+\end{center}
+We will explain in just a moment how to obtain the Feynman diagrams, but let's give another example first. The term 
+\bse 
+    \frac{1}{2} \bigg(\frac{i\l}{4!}\bigg)^2 \int d^4 x d^4 y  \bigg(-i\frac{\del}{\del J(x)}\bigg)^4  \bigg(-i\frac{\del}{\del J(x)}\bigg)^4  \frac{1}{2} \bigg(-\frac{1}{2}J\cdot D\cdot J\bigg)^4.
+\ese 
+corresponds to a diagram with $4$ propagators and $2$ vertices. There are three such diagrams, which we draw below:
+\begin{center}
+    \btik 
+        \begin{scope}
+            \draw (-3.5,-1) -- (-3.5,1) -- (3.5,1) -- (3.5,-1) -- (-3.5,-1);
+            \draw[thick] (-2.5,0) circle [radius=0.75cm];
+            \draw[thick] (-1,0) circle [radius=0.75cm];
+            \draw[fill=black] (-1.75,0) circle [radius=0.07cm];
+            %
+            \draw[thick] (1,0) circle [radius=0.75cm];
+            \draw[thick] (2.5,0) circle [radius=0.75cm];
+            \draw[fill=black] (1.75,0) circle [radius=0.07cm];
+        \end{scope}
+        \begin{scope}[xshift=6.5cm]
+            \draw (-2.5,-1) -- (-2.5,1) -- (2.5,1) -- (2.5,-1) -- (-2.5,-1);
+            \draw[thick] (-1.5,0) circle [radius=0.75cm];
+            \draw[thick] (0,0) circle [radius=0.75cm];
+            \draw[thick] (1.5,0) circle [radius=0.75cm];
+            \draw[fill=black] (-0.75,0) circle [radius=0.07cm];
+            \draw[fill=black] (0.75,0) circle [radius=0.07cm];
+        \end{scope}
+        \begin{scope}[xshift=10.5cm]
+            \draw (-1,-1) -- (-1,1) -- (1,1) -- (1,-1) -- (-1,-1);
+            \draw[thick] (0,0) circle [radius=0.75cm];
+            \draw[thick] (-0.75,0) .. controls (-0.25,0.5) and (0.25,0.5) .. (0.75,0);
+            \draw[thick] (-0.75,0) .. controls (-0.25,-0.5) and (0.25,-0.5) .. (0.75,0);
+            \draw[fill=black] (-0.75,0) circle [radius=0.07cm];
+            \draw[fill=black] (0.75,0) circle [radius=0.07cm];
+        \end{scope}
+    \etik 
+\end{center}
+where the boxes around the diagrams mean nothing but are just put there to distinguish the three separate diagrams.
+
+\br 
+\label{rem:DiagramsWithJ}
+    The diagrams we have drawn above correspond to terms in the expansion which have no $J$s left over, i.e. there are the same number of $J$s as there are functional derivatives. Of course we also get terms where these two don't agree and we have $J$s left over after we've done the functional derivatives. For example the term 
+    \bse 
+        -\frac{i\l}{4!} \int d^4x \bigg(-i\frac{\del}{\del J(x)}\bigg)^4 \frac{1}{2}\bigg(-\frac{1}{2}J\cdot D_F \cdot J\bigg)^4
+    \ese 
+    will have $4$ $J$s left over. This corresponds to two diagrams:
+    \begin{center}
+        \btik 
+            \begin{scope}[xshift=-3cm]
+                \draw[thick] (1,1) -- (-1,-1);
+                \draw[thick] (1,-1) -- (-1,1);
+                \draw[fill=black] (0,0) circle [radius=0.07cm];
+                \node at (-1.2,1.2) {$J$};
+                \node at (-1.2,-1.2) {$J$};
+                \node at (1.2,1.2) {$J$};
+                \node at (1.2,-1.2) {$J$};
+            \end{scope}
+            \node at (0,0) {and};
+            \begin{scope}[xshift=3cm]
+                \draw[thick] (-0.75,0) circle [radius=0.75cm];
+                \draw[thick] (0.75,0) circle [radius=0.75cm];
+                \draw[fill=black] (0,0) circle [radius=0.07cm];
+                \draw[thick] (2.5,1) -- (3.5,1);
+                \draw[thick] (2.5,-1) -- (3.5,-1);
+                \node at (2.3,1) {$J$};
+                \node at (2.3,-1) {$J$};
+                \node at (3.7,1) {$J$};
+                \node at (3.7,-1) {$J$};
+            \end{scope}
+        \etik  
+    \end{center}
+    However because ultimately what we're interested in is the $N$-point Green's function, and this contains a restriction to $J=0$ at the end (see \Cref{eqn:2PointFunctionDefinition}) terms like this will vanish, so we can essentially forget about them. It is important to realise that terms like this do exist though, its only that they vanish when we consider $N$-point functions with $N$ less then the number of $J$s appearing in the expansion.
+\er 
+
+Ok so how did we draw the above diagrams? Well we used the position space Feynman rules, which we now list: 
+
+\mybox{
+    \begin{enumerate}
+        \item Each \textit{vertex}, 
+        \begin{center}
+            \btik 
+                \draw[thick] (-0.5,-0.5) -- (0.5,0.5);
+                \draw[thick] (-0.5,0.5) -- (0.5,-0.5);
+                \draw[fill=black] (0,0) circle [radius=0.07cm];
+            \etik 
+        \end{center}
+        comes with a factor of
+        \bse 
+            -i\l \int d^4 x 
+        \ese 
+        \item Each propagator
+        \begin{center}
+            \btik 
+                \draw[thick] (-1,0) -- (1,0);
+                \node at (-1,-0.3) {$x$};
+                \node at (1,-0.3) {$y$};
+            \etik 
+        \end{center}
+        comes with a $D_F(x,y)$ factor.
+        \item Each external $J$ 
+        \begin{center}
+            \btik 
+                \draw[thick] (-1,0) -- (1,0);
+                \draw[fill=black] (1,0) circle [radius=0.07cm];
+                \node at (1,-0.3) {$J$};
+            \etik 
+        \end{center}
+        comes with $\int d^4 x J(x)$ factor.
+    \end{enumerate}
+}
+Before moving on to the next subsection, let's just make few comments.
+\ben[label=(\roman*)]
+    \item Note for the vertex we loose the $1/4!$ that appears with the functional derivatives. This is essentially because there are $4!$ different ways to arrange the $4$ functional derivatives. This means that this diagram actually contains $4!$ different terms, corresponding to the combinatorics. This will hopefully be more clear in the following subsection.
+    \item Both the vertex and an external $J$ come with integrals $\int d^4x$. These two integrals should not be confused: the vertex integral corresponds to the overall integral that appears all the way to the left before the functional derivatives; the external $J$ integral corresponds to the integrals appearing in $J\cdot G \cdot J$.
+    \item Note that we label the ends of the propagators with $x/y$. This allows us to see what is contracted with what, in the sense that we integrate them and we need to know which integration variable goes where. 
+    \item Relating the two above comments, the integration variable $x$ appearing in the vertex term corresponds to labelling the vertex point (filled in circle) with a variable $x$. 
+    \item As we said above, these are the \textit{position space} Feynman rules. We will shortly present them in momentum space where they are nicer. 
+\een 
+
+\bbox 
+    Convince yourself that the two diagrams in \Cref{rem:DiagramsWithJ} are indeed the two diagrams you get. \textit{Hint: Take the derivatives appearing in the expression, and note that you are left with four factors of $D_F$, four factors of $J$ and one factor of $-i\l$. This corresponds to diagrams that have one vertex, four propagators (i.e. solid lines) and four $J$ insertions (i.e. end points to lines).}
+\ebox 
+
+\subsection{Combinatorics And Symmetry Factors}
+
+As we mentioned in (i) above, each diagram contains potential combinatoric factors, and we obviously need some way in order to see these. Let's look at these more carefully now.
+
+A general term takes the form 
+\be 
+\label{eqn:GeneralDiagram}
+    \sum_{V,P=0}^{\infty} \frac{1}{V!} \Bigg[ -i\int d^4 x \frac{\l}{4!}\bigg(-i\frac{\del}{\del J(x)}\bigg)^4\Bigg]^V \frac{1}{P!} \bigg(- \frac{1}{2}J\cdot D\cdot J \bigg)^P
+\ee 
+where $V$ is the number of vertices and $P$ the number of propagators. When we draw the diagram really we are capturing multiple different terms from this expression, corresponding to the different ways to get the same result by contracting with the functional derivatives in different ways. The question is "how many different contraction patterns does it correspond to?" 
+
+Well na\"{i}vely, we have $4!$ different ways to rearrange the functional derivatives at each vertex, $V!$ different ways to rearrange the vertices amongst themselves, similarly $P!$ different ways to arrange $P$ propagators amongst themselves, and finally we have $2$ ways to pick which end of the propagator goes where. So we expect to get a factor of
+\bse 
+    (4!)^V V! P! 2^P,
+\ese 
+which has the exact form to cancel all the denominators in \Cref{eqn:GeneralDiagram}. 
+
+Now recall before we introduced a factor of $N$ in our first non-trivial diagram (the \textit{two kissing-bubble} diagram) and said we would return to it. This $N$ corresponds exactly\footnote{Well we have to strip off a factor of $1/4!$ because that appeared explicitly in our expression.} to these combinatoric calculations, and so we have just argued  that $N$ is trivial. 
+
+Well, turns out we lied; this isn't true, as sometimes we over count. When we considered the rearrangements we said that each one was unique, but this isn't true, as some `cancel' each other. To see what we mean let's consider our two kissing bubble example: 
+\begin{center}
+    \btik 
+        \draw[thick] (-0.75,0) circle [radius=0.75cm];
+        \draw[thick] (0.75,0) circle [radius=0.75cm];
+        \draw[fill=black] (0,0) circle [radius=0.07cm];
+        %
+        \draw[ultra thick,->] (2,0) -- (3.75,0);
+        %
+        \begin{scope}
+            \clip (5,-1) -- (5,1) -- (4,1) -- (4,-1) -- (5,-1);
+            \draw[thick] (5,0) circle [radius=0.75cm];
+        \end{scope}
+        \draw[fill=red] (5,0.75) circle [radius=0.07cm];
+        \draw[fill=blue] (5,-0.75) circle [radius=0.07cm];
+        %
+        \draw[thick] (5.5,0.75) -- (7,-0.75);
+        \draw[thick] (5.5,-0.75) -- (7,0.75);
+        \draw[fill=black] (6.25,0) circle [radius=0.07cm];
+        \draw[fill=red] (5.5,0.75) circle [radius=0.07cm];
+        \draw[fill=blue] (5.5,-0.75) circle [radius=0.07cm];
+        \draw[fill=green] (7,0.75) circle [radius=0.07cm];
+        \draw[fill=yellow] (7,-0.75) circle [radius=0.07cm];
+        %
+        \begin{scope}
+            \clip (7.5,-1) -- (7.5,1) -- (8.5,1) -- (8.5,-1) -- (7.5,-1);
+            \draw[thick] (7.5,0) circle [radius=0.75cm];
+        \end{scope}
+        \draw[fill=green] (7.5,0.75) circle [radius=0.07cm];
+        \draw[fill=yellow] (7.5,-0.75) circle [radius=0.07cm];
+    \etik 
+\end{center}
+where the diagram on the right is meant to represent the `breaking apart' of the diagram into one vertex and two propagators. The coloured circles tell us how to `glue it back together' to get the diagram we started with. What our above na\"{i}ve calculation said was "there are $(4!)^1 1! 2! 2^2$ ways to glue this back together with a different colour gluing process" which clearly isn't the case. 
+
+Now that sentence was probably not super clear, so let's give an example of what \textit{doesn't} give a new "colour gluing process" to help clarify what we mean. Imagine we swapped the red tipped and blue tipped lines coming out the vertex and \textit{also} swapped the red and blue ends of the left detached propagator. Then we get 
+\begin{center}
+    \btik 
+        \begin{scope}
+            \clip (5,-1) -- (5,1) -- (4,1) -- (4,-1) -- (5,-1);
+            \draw[thick] (5,0) circle [radius=0.75cm];
+        \end{scope}
+        \draw[fill=blue] (5,0.75) circle [radius=0.07cm];
+        \draw[fill=red] (5,-0.75) circle [radius=0.07cm];
+        %
+        \draw[thick] (5.5,0.75) -- (7,-0.75);
+        \draw[thick] (5.5,-0.75) -- (7,0.75);
+        \draw[fill=black] (6.25,0) circle [radius=0.07cm];
+        \draw[fill=blue] (5.5,0.75) circle [radius=0.07cm];
+        \draw[fill=red] (5.5,-0.75) circle [radius=0.07cm];
+        \draw[fill=green] (7,0.75) circle [radius=0.07cm];
+        \draw[fill=yellow] (7,-0.75) circle [radius=0.07cm];
+        %
+        \begin{scope}
+            \clip (7.5,-1) -- (7.5,1) -- (8.5,1) -- (8.5,-1) -- (7.5,-1);
+            \draw[thick] (7.5,0) circle [radius=0.75cm];
+        \end{scope}
+        \draw[fill=green] (7.5,0.75) circle [radius=0.07cm];
+        \draw[fill=yellow] (7.5,-0.75) circle [radius=0.07cm];
+    \etik 
+\end{center}
+but clearly if we just glue this back together we get the same thing, i.e. red with red and blue with blue, so we shouldn't count it twice in our combinatorics. This process corresponds to us switching two of the functional derivatives round while simultaneously swapping the two $J$s that appear in the $J\cdot D_F \cdot J$ that these derivatives act on. 
+
+Contrast this with the "colour gluing process" of \textit{only} swapping the vertex lines (i.e. just swapping the functional derivatives), which would correspond to 
+\begin{center}
+    \btik 
+        \begin{scope}
+            \clip (5,-1) -- (5,1) -- (4,1) -- (4,-1) -- (5,-1);
+            \draw[thick] (5,0) circle [radius=0.75cm];
+        \end{scope}
+        \draw[fill=red] (5,0.75) circle [radius=0.07cm];
+        \draw[fill=blue] (5,-0.75) circle [radius=0.07cm];
+        %
+        \draw[thick] (5.5,0.75) -- (7,-0.75);
+        \draw[thick] (5.5,-0.75) -- (7,0.75);
+        \draw[fill=black] (6.25,0) circle [radius=0.07cm];
+        \draw[fill=blue] (5.5,0.75) circle [radius=0.07cm];
+        \draw[fill=red] (5.5,-0.75) circle [radius=0.07cm];
+        \draw[fill=green] (7,0.75) circle [radius=0.07cm];
+        \draw[fill=yellow] (7,-0.75) circle [radius=0.07cm];
+        %
+        \begin{scope}
+            \clip (7.5,-1) -- (7.5,1) -- (8.5,1) -- (8.5,-1) -- (7.5,-1);
+            \draw[thick] (7.5,0) circle [radius=0.75cm];
+        \end{scope}
+        \draw[fill=green] (7.5,0.75) circle [radius=0.07cm];
+        \draw[fill=yellow] (7.5,-0.75) circle [radius=0.07cm];
+    \etik 
+\end{center}
+but now we have red with blue and blue with red, which \textit{is} different. 
+
+\bbox
+    Prove that our na\"{i}ve argument for the two kissing bubble diagram over counts by $2\cdot 2\cdot 2 = 8$. 
+    \textit{Hint: The first factor of $2$ is the one just explained, the second factor should be trivial given this, and the third factor shouldn't be too hard to work out.}
+\ebox 
+
+The $8$ appearing in the above exercise is the \textit{symmetry factor}, $S$, of this diagram.\footnote{Note this is clearly the same symmetry factor as the one we encountered in the IFT course, and the argument used to obtain it is essentially the same, just there we talked about permutations of Wick contractions and here we're talking about different ways to take functional derivatives.} It is the number of "colour gluing" equivalent ways to draw the same diagram. Therefore if we want to convert our diagram back into the maths we have to divide by this factor to get the correct answer, that is our two kissing bubbles is given by the expression
+\bse 
+    \frac{i\l}{8} \int d^4 x D_F(x,x) D_F(x,x). 
+\ese 
+
+\bbox 
+    Verify that this result is true explicitly. That is, show that 
+    \bse 
+        -\frac{i\l}{4!}\int d^4 x \bigg(-i\frac{\del}{\del J(x)}\bigg)^4 \frac{1}{2}\bigg(-\frac{1}{2}J\cdot D_F\cdot J\bigg) \bigg(- \frac{1}{2}J\cdot D_F\cdot J \bigg)
+    \ese 
+    contains exactly this term in it. \textit{Hint: If you took QFT I at the same time as me,\footnote{Equally if Dr. Smith hasn't changed the questions.} this result should look somewhat familiar from the homework sheet...}
+\ebox  
+
+\bbox 
+    Show that the symmetry factor for the following diagram is $4! \cdot 2$. 
+    \begin{center}
+        \btik 
+            \draw[thick] (0,0) circle [radius=0.75cm];
+            \draw[thick] (-0.75,0) .. controls (-0.25,0.5) and (0.25,0.5) .. (0.75,0);
+            \draw[thick] (-0.75,0) .. controls (-0.25,-0.5) and (0.25,-0.5) .. (0.75,0);
+            \draw[fill=black] (-0.75,0) circle [radius=0.07cm];
+            \draw[fill=black] (0.75,0) circle [radius=0.07cm];
+        \etik 
+    \end{center}
+    \textit{Hint: Break it up into two vertices connected by $4$ propagators, and then use the result to see where the symmetry factors lie.}
+\ebox 
+
+\section{Connected Diagrams}
+
+Ok cool, we have seen how to represent a particular $N$-point function in terms of diagrams. Now recall from QFT I that the partition function is essentially a sum over all orders of $N$-point functions. As we have seen for a given $N$-point function, we get multiple different diagrams and some of these look like two copies of the same thing. For example
+\begin{center}
+    \btik 
+        \begin{scope}[xshift=-1.75cm]
+            \draw[thick] (-0.75,0) circle [radius=0.75cm];
+            \draw[thick] (0.75,0) circle [radius=0.75cm];
+            \draw[fill=black] (0,0) circle [radius=0.07cm];
+        \end{scope}
+        \begin{scope}[xshift=1.75cm]
+            \draw[thick] (-0.75,0) circle [radius=0.75cm];
+            \draw[thick] (0.75,0) circle [radius=0.75cm];
+            \draw[fill=black] (0,0) circle [radius=0.07cm];
+        \end{scope}
+    \etik 
+\end{center}
+looks like two copies of our two kissing bubbles. We call diagrams of this form \textit{disconnected}. If the diagram is not disconnected it is \textit{connected}.\footnote{Note Prof. Spannowsky made a further distinction in IFT between "connected" and "fully connected". In this course, connected means fully connected, and disconnected means both connected and disconnected in the IFT sense.} 
+
+The most generic contribution to $Z[J]$ will be from disconnected diagrams, and so there is a natural question to ask: "can we just consider the connected diagrams and still get the full $Z[J]$?" The answer is yes, and we shall now describe how. 
+
+The idea is label each connected diagram by $I$ and denote the contribution of this diagram $C_I$, then the general disconnected diagram gives contribution
+\bse 
+    D = \frac{1}{S_D} \prod_{I} \big(C_I\big)^{n_I}
+\ese 
+where $I$ runs over the set of diagrams, $n_I$ is the number of times the connected diagram appears, and $S_D$ 
+\bse 
+    S_D := \prod_I n_I!
+\ese 
+is a new symmetry factor which takes care of permuting the connected subdiagrams (e.g. for the one above, it's $2$ as we can swap the two kissing bubbles over and get the same thing). 
+
+Putting this all together we have 
+\bse 
+    \begin{split}
+        Z[J] & = \sum_{\{n_I\}} \prod_I \frac{1}{n_I!} \big(C_I\big)^{n_I} \\
+        & = \prod_I \sum_{n_I=0}^{\infty} \frac{1}{n_I!} \big(C_I\big)^{n_I} \\
+        & = \prod_I \exp\big(C_I\big) \\
+        & = \exp\Big(\sum_IC_I\Big)
+    \end{split}
+\ese 
+This tells us that the \textit{full} partition function is just given by an exponential of all the connected diagrams. This is a super nice result and massively reduces the number of different diagrams we have to compute. This result is actually so nice it is convenient to introduce a new generating functional $W[J]$ in the following manner:
+\mybox{
+    \be
+    \label{eqn:W[J]}
+        iW[J] := \sum_I C_I \qquad \implies \qquad Z[J] = \exp\big(iW[J]\big).
+    \ee 
+}
+
+\section{Scattering Amplitudes}
+
+Right so we have spent a long time developing/massaging the mathematics for calculating cross sections, let's now actually find one. We will use our $\phi^4$ theory, and consider the $2\to 2$ scattering we talked about while deriving the LSZ theorem. That is we want to find
+\bse 
+    \braket{f}{i} = \braket{k_1',k_2';\text{out}}{k_1,k_2;\text{in}}.
+\ese 
+The LSZ formula givs us
+\bse 
+    \braket{f}{i} = \bigg(\frac{i}{\sqrt{Z}}\bigg)^{2+2} \int d^4x_1 e^{-ik_1\cdot x_1} ... d^4x_2' e^{-ik_2'\cdot x_2'}  \bra{0}T\psi(x_1)\phi(x_2)\phi(x_1')\phi(x_2') \ket{0} (k_1^2 - m^2) ... (k_2'^2 - m^2).
+\ese 
+The notation is already getting quite heavy and long, so let's introduce some short hand notations. We define
+\bse 
+    G^{(4)}(\{x_i\}) := G\big(\phi(x_1),\phi(x_2),\phi(x_1')\phi(x_2')\big) =  \bra{0}T\psi(x_1)\phi(x_2)\phi(x_1')\phi(x_2') \ket{0},
+\ese 
+and
+\bse 
+    \del_{i} := \frac{-i\del}{\del J(x_i)}
+\ese
+so that 
+\bse 
+    G^{(4)}(\{x_i\}) = \frac{1}{Z[0]} \del_1\del_2\del_1'\del_2' Z[J]\Big|_{J=0}.
+\ese 
+
+As it is the four point function we are considering, it is only diagram with four external legs that will survive. This is just the statement that we have four functional derivatives and so, because we set $J=0$ at the end, it is only the terms in $Z[J]$ with exactly four $J$s that survive. Let's do this order by order in $\l$. 
+\ben
+    \item Order $\l^0$: 
+    \begin{center}
+        \btik
+            \begin{scope}[xshift=-3cm]
+                \draw[thick] (-0.5,0.5) -- (-0.5,-0.5);
+                \draw[thick] (0.5,0.5) -- (0.5,-0.5);
+                \node at (-0.7,0.7) {$1$};
+                \node at (-0.7,-0.7) {$2$};
+                \node at (0.7,0.7) {$1'$};
+                \node at (0.7,-0.7) {$2'$};
+            \end{scope}
+            %
+            \begin{scope}
+                \draw[thick] (-0.5,0.5) -- (0.5,0.5);
+                \draw[thick] (-0.5,-0.5) -- (0.5,-0.5);
+                \node at (-0.7,0.7) {$1$};
+                \node at (-0.7,-0.7) {$2$};
+                \node at (0.7,0.7) {$1'$};
+                \node at (0.7,-0.7) {$2'$};
+            \end{scope}
+            \begin{scope}[xshift=3cm]
+                \draw[thick] (-0.5,0.5) -- (0.5,-0.5);
+                \draw[thick] (-0.5,-0.5) -- (-0.1,-0.1);
+                \draw[thick] (0.1,0.1) -- (0.5,0.5);
+                \node at (-0.7,0.7) {$1$};
+                \node at (-0.7,-0.7) {$2$};
+                \node at (0.7,0.7) {$1'$};
+                \node at (0.7,-0.7) {$2'$};
+            \end{scope}
+        \etik 
+    \end{center}
+    The claim is these claim is these don't contribute to our scattering. Why? Well let's look at the Fourier transform expressions, the second term is 
+    \bse 
+        \int dx_1 e^{-ik_1\cdot x_1} ... dx_1' e^{ik_1'\cdot x_1'} D_F(x_1,x_1') D_F(x_2,x_2').
+    \ese 
+    However the Feynman propagator is transnational invariant, meaning it only depends on the \textit{difference} of its variables. We therefore have  
+    \bse 
+        \int dx_1 e^{-ik_1\cdot x_1} ... dx_1' e^{ik_1'\cdot x_1'} D_F(x_1-x_1') D_F(x_2-x_2').
+    \ese 
+    Now it would be nice if we could use some kind of delta function relation like $\int dx e^{-ix(a-b)} = \del(a-b)$. Well we note that Feynman propagators only depend on the difference and not the sum, i.e. $x_1+x_1'$ doesn't appear in them. We therefore split the measure 
+    \bse 
+        dx_1dx_1' = d(x_1+x_1')d(x_1-x_1')
+    \ese
+    and terms appearing the exponential
+    \bse 
+        k_1'\cdot x_1' - k_1\cdot x_1 = \frac{1}{2}\big(k_1-k_1'\big)\big(x_1+x_1'\big) + \frac{1}{2}\big(k_1+k_1'\big)\big(x_1-x_1'\big)
+    \ese 
+    so that we can do the integral over $x_1+x_1'$ and get a delta function. Our scattering amplitude is therefore proportional to
+    \bse
+        \del^{(4)}(k_1-k_1').
+    \ese 
+    We can do a similar thing to obtain a $\del^{(4)}(k_2-k_2')$. 
+    
+    What this result is telling us is that the ingoing momentum is \textit{the same} as the outgoing momentum, that is there is \textit{no scattering}. This is clear from the picture: the two initial state particles just become the final state ones without interacting at all. The same kind of argument can be made for the other two diagrams.
+    
+    So we see that scattering only comes from connected diagrams, so from now on we will only consider connected ones. This means that in the LSZ formula really we should just be considering\footnote{Note $\log Z[J] =iW[J]$, so we don't need the $1/Z[0]$ factor.}
+    \bse 
+        G^{(4)}(\{x_i\})_C = \del_1\del_2\del_1'\del_2' (iW[J])\big|_{J=0},
+    \ese
+    This makes the above calculation obvious because W[J] is trivial to $\l^0$ (i.e. it contains no $J$s at this order).
+    \item Go to first non-trivial order, $\l^1$. 
+    \begin{center}
+        \btik 
+            \draw[thick] (1,1) -- (-1,-1);
+            \draw[thick] (-1,1) -- (1,-1);
+            \draw[fill=black] (0,0) circle [radius=0.07cm];
+            \node at (-1.2,1.2) {$1$};
+            \node at (-1.2,-1.2) {$2$};
+            \node at (1.2,1.2) {$1'$};
+            \node at (1.2,-1.2) {$2'$};
+        \etik  
+    \end{center}
+    The position space expression for this is\footnote{Note that each Feynman propagator contains a $y$. This is because we have labelled the intersection point by $y$, hopefully this clears up any confusion regarding the comments made after the position space Feynman rules.} 
+    \bse 
+        G^{(4)} = -i\l \int d^4y D_F(x_1-y)D_F(x_2-y)D_F(x_1'-y)D_F(x_2'-y).
+    \ese 
+    As we know from IFT, it is often very useful to go to momentum space. The Feynman propagator is given by 
+    \bse 
+        D_F(x-y) \int \frac{d^4p}{(2\pi)^4} e^{\pm ip(x-y)} \frac{i}{p^2-m^2}.
+    \ese 
+    Note we are free to pick the sign in the exponential, and we pick the one that agrees with the inverse Fourier transform appearing in the LSZ formula. This corresponds to picking the positive sign for in states and negative sign for the out states. We therefore have 
+    \bse
+        \begin{split}
+            G^{(4)}_C(\{x_i\}) = -i\l \int d^4y \prod_{i=1}^4 \bigg[\frac{d^4p_i}{(2\pi)^4}\bigg]e^{ip_1(x_1-y) + ip_2(x_2-y) - ip_1'(x_1'-y) -ip_2'(x_2'-y)} \frac{i}{p_1^2-m^2} ... \frac{i}{p_2'^2-m^2}
+        \end{split}
+    \ese 
+    If we do the $y$ integral, we will get a factor of $(2\pi)^4\del^{(4)}(p_1+p_2-p_1'-p_2')$. We now note that this delta function is stemming from the fact that our four lines meet at the vertex, which we labelled by $y$. Similarly we note that each propagator comes with a factor of $(p^2-m^2)^{-1}$. These comments will be useful in just a moment. 
+    
+    If we insert this expression into our LSZ formula, \Cref{eqn:LSZPosition}, we see that the Klein-Gordan operators, $\p^2+m^2$, will give us exactly the $p^2+m^2$ factors needed to cancel the propagator terms. Next the integrals over the $x/x'$s in \Cref{eqn:LSZPosition} will act on our exponentials and give us more delta functions $\del^{(4)}(p_i-k_i)$, and similarly for the primed momenta. What this does is tie the momenta on the legs, $p_i$, to the physical momenta $k_i$.
+    
+    Putting this all together we see that all the remains in the scattering amplitude is
+    \bse 
+        \braket{k_1',k_2';\text{out}}{k_1,k_2;\text{in}} = -i\l (2\pi)^4 \del^{(4)}(k_1+k_2-k_1'-k_2'),
+    \ese
+    where we have set $Z=1$. It turns out that corrections to this may arise at $\cO(\l^2)$, we will return to this shortly.
+\een 
+
+Very good, we have found out first cross section. It was a lot of work but it has given us quite a nice insight into what's at play here. We note that the delta function in our answer above is simply the statement that the total $4$-momentum for the process is conserved. This is simply because we start with total $4$-momentum $k_1+k_2$ and we finish with $k_1'+k_2'$. We obviously expect this to appear in \textit{every} physical scatting process, and so we can strip it off and simply remember to include it right at the end. It is because of this we introduce what is known as the \textit{invariant matrix element}, $i\cM$. For a general scattering it is given by
+\bse 
+    \braket{k_1',k_2';\text{out}}{k_1,k_2;\text{in}} = i\cM(k) (2\pi)^4 \del^{(4)}(k_{\text{in}}-k_{\text{out}}'),
+\ese
+where $k_{\text{in}}$ means the total incoming momenta and similarly for $k_{\text{out}}$. In our order $\l$ calculation above, we see that $i\cM = -i\l$. 
+
+We are now in a position to state the momentum space Feynman rules, which are hopefully obvious given the comments etc. made along the way. 
+\mybox{
+    Momentum space Feynman rules: 
+    \ben 
+        \item For each amplitude you want, draw the external legs. Label the momentum flow on the legs with an arrow.
+        \item Draw all possible vertices to connect the lines.
+        \item Each vertex gives factor $-i\l$. 
+        \item Put a momentum on each line. If the line is external, this is the momentum of the ingoing/outgoing particle. 
+        \item For each internal line, include a factor 
+        \bse 
+            \frac{i}{p^2-m^2}
+        \ese 
+        \item For each external line, we have a factor $i/\sqrt{Z}$. 
+        \item Make sure momentum is conserved at each vertex. 
+        \item Integrate over any unfixed momenta, with measure $d^4k/(2\pi)^4$. 
+    \een
+}
+
+Perhaps some comments on each rule for clarity: 
+\ben
+    \item This should be reasonably straight forward.
+    \item This corresponds to considering all the different diagrams. 
+    \item This carries straight over from the position space rules. 
+    \item Again should be reasonably straight forward. For internal lines (i.e. ones that aren't the ones we drew in step 1) the momentum is not known before hand. It is an integration variable and will be fixed by momentum constraints, unless we have loops. This is what steps $6$ and $7$ take care of. 
+    \item This comes from the fact that we said every Feynman propagator comes with this factor. We saw that for \textit{external} states the LSZ formula will cancel these, however for internal states nothing will cancel them so we need to include them. 
+    \item This comes straight from the LSZ formula. 
+    \item This says the momentum is conserved locally at the vertex. This allows us to remove a bunch of our momentum integrals mention in step 4. 
+    \item If we have loops (see next chapter), then we won't have enough delta functions to cancel all our integrals, so we need to include these remaining integrals. 
+\een 

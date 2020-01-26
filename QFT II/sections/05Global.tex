@@ -1,0 +1,163 @@
+\chapter{Global Symmetries In The Functional Formalism}
+
+\mybox{
+    Just a reminder/disclaimer: This chapter was not part of the taught material, however I have worked from Dr. Iqbal's notes to fill it in here.
+}
+
+As we know from our other field theory courses, symmetries play a huge role in QFT and (the continuous symmetries) fall into two general categories: global and local/gauge. The former are simpler and so we consider them first here. We will return to gauge theories later and obtain some nice results. 
+
+\section{Classical Noether's Theorem}
+
+Recall that, classically, global continuous symmetries give rise to conserved currents, known as \textit{Noether currents}. This is the content of Noether's theorem. These conserved currents essentially trickle down to becoming the different charges our particles carry in the QFT. It is therefore important that we know how to use Noether's theorem in the path integral approach. The derivation we provide here will be slightly different to the one normally seen in a canonical field theory course, but is a standard approach in the path integral language. The reason for this change in approach will become apparent soon. 
+
+Let's consider a system with Lagrangian $\cL$. We purposefully do not specify the exact form of the Lagrangian so that we can see the generality of the results presented. Let's denote the field content of this theory by the set $\{\phi^a\}$, where each $a$ value corresponds to a different field. That is our action is $S[\{\phi^a\}]$.
+
+Now let's suppose that the system is invariant under some global symmetry transformation. As the global transformation is continuous, we can write it infinitesimally. That is the field transforms as 
+\be
+\label{eqn:GlobalFieldTransformation}
+    \phi^a(x) \to \phi^a(x) + \epsilon \del \phi(x),
+\ee 
+where $\epsilon$ is some small \textit{constant} parameter. Our requirement that this be a symmetry of the system is then just the statement
+\bse 
+    S[\phi^a + \epsilon \del\phi^a] = S[\phi^a].
+\ese 
+
+Now as we are considering a global symmetry we have that $\epsilon$ is a constant. However in order to arrive at Noether's theorem we perform a trick that at first is confusing: we \textit{imagine} that $\epsilon$ was actually a function of the spacetime events, i.e. $\epsilon = \epsilon(x)$. It is very important to note that \textit{physically} we are not saying that our \textit{symmetry} is dependent on the spacetime points, as this would be a gauge symmetry. What we are simply doing is using a trick to find the form of how the action changes. 
+
+As we just tried to clarify, we know that the action is invariant when $\epsilon$ is just a constant, but in the imagined situation there is no reason to assume this would still be true. We therefore conclude that the change in the action must be related to the \textit{derivative} of $\epsilon(x)$. The action id given by the integral of the Lagrangian (density), which is itself Lorentz invariant, and so we conclude 
+\bse 
+    \del_{\epsilon}S[\phi^a] = \int d^4 x \, j^{\mu}\p_{\mu}\epsilon(x),
+\ese 
+where $j^{\mu}$ is whatever else appears with $\p_{\mu}\epsilon(x)$ in the Lagrangian. Now we use the usual trick of integrating by parts and making the physicists typical argument of "boundary terms don't matter" we get
+\be 
+\label{eqn:VariationOfActionEpsilon}
+    \del_{\epsilon} S[\phi^a] = - \int d^4x (\p_{\mu}j^{\mu})\epsilon(x).
+\ee 
+
+Now as we said above, there is absolutely no reason to assume that \Cref{eqn:VariationOfActionEpsilon} vanishes itself, it was only when $\epsilon$ was a constant that it vanished. So what do we do? Well we know that when the fields $\phi^a$ are \textit{on-shell}, that is they obey the equations of motion, that the action \textit{must} be minimised (as this is where the equations of motion come from) and so we have 
+\be 
+\label{eqn:VariationActionField}
+    \del_{\phi} S[\phi^a] = 0.
+\ee 
+This is true for \textit{any} variation of the field, and so it must hold for the particular case of \Cref{eqn:GlobalFieldTransformation}, but this lead exactly to \Cref{eqn:VariationOfActionEpsilon}. We can therefore conclude that 
+\mybox{
+\be 
+\label{eqn:ConservedCurrent}
+    \p_{\mu}j^{\mu} = 0.
+\ee 
+}
+
+\br 
+    It is important to note that in order to derive \Cref{eqn:ConservedCurrent} we have used \textit{both} the fact that the action is invariant (to obtain \Cref{eqn:VariationOfActionEpsilon}) \textit{and} the fact the fields are on-shell (to use \Cref{eqn:VariationActionField}). 
+\er 
+
+As the above remark highlights, what we have shown is that classically we get a conserved current when we have a global symmetry and the fields obey the classical equations of motion. 
+
+\subsection{Quantum Ward Identities}
+
+As we have tried to stress above, the result \Cref{eqn:ConservedCurrent} is a \textit{classical} result. However this is a course on quantum field theory and so we obviously want to see what the quantum analogue is. 
+
+As is hopefully natural by now, our starting point is the partition function 
+\bse 
+    Z = \int [\pD \phi^a] e^{iS[\phi^a]}.
+\ese 
+We now consider our global transformation \Cref{eqn:GlobalFieldTransformation}, with $\epsilon=\epsilon(x)$, and see what happens. Well, as far as the path integral measure is concerned, this is just a change of variables\footnote{The tilde here is not a Fourier transform, just meant to indicate the transformation.}
+\bse 
+    \phi^a \to \widetilde{\phi}^a = \phi^a(x) + \epsilon(x) \del \phi(x).
+\ese 
+We therefore have 
+\bse 
+    \int [\pD \phi^a] e^{iS[\phi^a]} = \int [\pD \widetilde{\phi}^a] e^{iS[\widetilde{\phi}^a]}.
+\ese
+
+Now, as the transformation we are looking at is a symmetry, the claim is that the measure itself is invariant,\footnote{Apparently this is not always true, but exceptions happen when so-called \textit{anomalies} enter the game. I do not yet know what these are, so do not wish to comment further. Dr. Iqbal gives Chapter 19 of Peskin as a reference.} namely 
+\bse 
+    [\pD \widetilde{\phi}^a] = [\pD \phi^a].
+\ese 
+Putting this together with \Cref{eqn:VariationOfActionEpsilon}, we get 
+\bse 
+    \int [\pD \phi^a] e^{iS[\phi^a]} = \int [\pD \phi^a] \bigg(1 - i\int d^4x (\p_{\mu}j^{\mu}) \epsilon(x) + \cO(\epsilon^2) \bigg) e^{iS[\phi^a]},
+\ese 
+where we have Taylor expanded the $e^{i\del_{\epsilon}S[\phi^a]}$ part. From here we can conclude that 
+\mybox{
+\be 
+    \bra{0} \p_{\mu} j^{\mu}(x) \ket{0} \equiv \frac{1}{Z[0]}\int [\pD \phi^a] \p_{\mu}j^{\mu}(x) = 0.
+\ee 
+}
+
+Note that this is \textit{not} the same thing as saying $\p_{\mu}j^{\mu}=0$. To see why this is the case, let's consider the variation of the 2-point correlation function 
+\bse 
+    \begin{split}
+        \bra{0}\cT[ \phi^b(x_1) \phi^c(x_2) ] \ket{0} & = \frac{1}{Z[0]} \int [\pD \phi^a] \phi^b(x_1) \phi^c(x_2) e^{iS[\phi^a]} \\
+        & = \frac{1}{Z[0]} \int [\pD \widetilde{\phi}^a] \widetilde{\phi}^b(x_1) \widetilde{\phi}^c(x_2) e^{iS[\widetilde{\phi}^a]}
+    \end{split}
+\ese 
+where the second line follows from the same "change of variables" argument from above. If we then also again make the claim that the measure is invariant, we can write the last line as
+\bse 
+    \frac{1}{Z[0]} \int [\pD \phi^a] \big(\phi^b(x_1) + \epsilon(x_1) \del \phi^b(x_1)\big) \big(\phi^c(x_2) + \epsilon(x_2) \del \phi^c(x_2)\big) \bigg(1 -i\int d^4x (\p_{\mu}j^{\mu}) \epsilon(x) + \cO(\epsilon^2)\bigg) e^{iS[\phi^a]}.
+\ese 
+As before we see that the order $\epsilon$ terms must cancel and so we get
+\bse 
+    0 =  \frac{1}{Z[0]}\int [\pD\phi^a] \bigg(\epsilon(x_1)\del\phi^b(x_1)\phi^c(x_2) + \epsilon(x_2)\phi^b(x_1)\del\phi^c(x_2) - i \phi^b(x_1)\phi^c(x_2)\int d^4x (\p_{\mu}j^{\mu})\epsilon(x)\bigg) e^{iS[\phi^a]}.
+\ese 
+Now we want to write this in the form $\epsilon(x) \times (...)$, which we can achieve by writing 
+\bse 
+    \epsilon(x_1) \del\phi^b(x_1) \phi^c(x_2) = \int d^4x \epsilon(x) \del\phi^b(x_1) \phi^c(x_2) \del^{(4)}(x-x_1)
+\ese 
+and similarly for the $\del\phi^c$ term. We therefore get the result 
+\be 
+    i\la \phi^b(x_1)\phi^c(x_2) \p_{\mu}j^{\mu}(x) \ra = \la\epsilon(x) \del\phi^b(x_1) \phi^c(x_2)\ra \del^{(4)}(x-x_1) + \la\epsilon(x) \phi^b(x_1) \del\phi^c(x_2)\ra \del^{(4)}(x-x_2).
+\ee
+where we have suppressed the $\bra{0}...\ket{0}$ to just $\la ... \ra$ for notational reasons. This result is obviously specific to the case of a two point function but it is easy to convince yourself that this result extends to the following 
+\mybox{
+\be 
+\label{eqn:WardIdentity}
+    i \la \phi^{a_1}(x_1) ... \phi^{a_n}(x_n) \p_{\mu}j^{\mu}(x) \ra = \sum_{i=1}^{n} \la \phi^{a_1}(x_1) ... \del \phi^{a_i}(x_i) ... \phi^{a_n}(x_n) \ra \del^{(4)}(x-x_i).
+\ee     
+}
+\noindent This result is known as the \textit{Ward Identity} and is a the quantum analogue of Noether's theorem, and it has very powerful uses in QFT. Essentially what it is telling us is that the current is conserved, i.e. $\p_{\mu}j^{\mu}=0$, whenever $x\neq x_i$. However when one of the delta functions on the right-hand side is triggered, we get a non-zero result. Pictorially we can think of this as a plane with the the fields $\phi(x_i)$ inserted and we "move" the $j^{\mu}$ around. When it "hits" one of our $\phi$s we trigger our delta function. Terms of this kind are commonly referred to as \textit{contact terms}.
+
+\subsection{Comparison To Other Literature}
+
+The derivation we have presented above for \Cref{eqn:WardIdentity} is hopefully clearly algebraically sound, however this section is included to help raise a comparison to other literature on the subject. 
+
+As we have done it, everything is done in the \textit{Euclidean} formalism, for this reason there are no time-ordered products or anything appearing in our correlators. This therefore tell us that nothing (apart from $j^{\mu}$ obviously) on the left-hand side of \Cref{eqn:WardIdentity} depends on $x^{\mu}$, and so we are completely free to take the derivative outside the correlator
+\bse 
+    i \la \phi^{a_1}(x_1) ... \phi^{a_n}(x_n) \p_{\mu}j^{\mu}(x) \ra = i \p_{\mu} \la \phi^{a_1}(x_1) ... \phi^{a_n}(x_n) j^{\mu}(x) \ra.
+\ese 
+
+This is all very clear, however subtleties arise when we derive the Ward identity from the canonical picture. We do not present the canonical calculation here, apart from the relevant steps needed for the comparison.\footnote{The interested reader is directed towards Chapter 10.4 of Weinberg.} Using the 2-point function for convenience, and using $y,z$ as the variables for reasons that will be clear in a moment, the Ward identity in this approach is given by 
+\be 
+\label{eqn:WardIdentityCanonical}
+    \p_{\mu}\la \cT[\phi^{a_1}(y)\phi^{a_2}(z) j^{\mu}(x)]\ra = \la \del \phi^{a_1}(y) \phi^{a_2}(z) \ra \del^{(4)}(x-y) + \la \phi^{a_1}(y) \del \phi^{a_2}(z) \ra \del^{(4)}(x-z), 
+\ee 
+where now we \textit{do} have time orderings. This makes a difference as now when we allow the derivative to act on the full correlator it will act on the Heaviside functions that order our operators and give a temporal delta function. With a bit of thought (or a quick calculation) we see that this gives us 
+\bse 
+    \begin{split}
+        \p_{\mu}\la \cT[\phi^{a_1}(y)\phi^{a_2}(z) j^{\mu}(x)]\ra & = \del(x^0 - y^0) \la [j^0(x),\phi^{a_1}(y)] \phi^{a_2}(z)\ra + \del(x^0 - z^0) \la [j^0(x),\phi^{a_2}(z)] \phi^{a_1}(y)\ra \\
+        & \qquad + \la \cT[\phi^{a_1}(y) \phi^{a_2}(z) \p_{\mu}j^{\mu}(x)]\ra 
+    \end{split}
+\ese 
+where the commutators come from the fact that we have to consider both orderings, i.e. 
+\bse 
+    \cT[A(x)B(y)] = A(x)B(y) \Theta(x^0-y^0) +  B(y)A(x) \Theta(y^0-x^0).
+\ese 
+
+Now it turns out to be true that the commutator with the temporal component of $j^{\mu}$ gives the variation times a spatial delta function, 
+\bse 
+    [j^0(x), \phi^{a_1}(y)] = \del\phi^{a_1}(y) \del^{(3)}(\Vec{x}-\Vec{y}),
+\ese 
+and similarly for the other field. Putting this all together we have 
+\bse 
+    \begin{split}
+        \p_{\mu}\la \cT[\phi^{a_1}(y)\phi^{a_2}(z) j^{\mu}(x)]\ra & = \la \del\phi^{a_1}(y) \phi^{a_2}(z)\ra \del^{(4)}(x-y) + \la \phi^{a_1}(y) \del\phi^{a_2}(z)\ra \del^{(4)}(x-z) \\
+        & \qquad + \la \cT[\phi^{a_1}(y) \phi^{a_2}(z) \p_{\mu}j^{\mu}(x)]\ra. 
+    \end{split}
+\ese 
+However if we compare this to \Cref{eqn:WardIdentityCanonical} we see that we must conclude 
+\bse 
+    \la \cT[\phi^{a_1}(y) \phi^{a_2}(z) \p_{\mu}j^{\mu}(x)]\ra = 0 \qquad \implies \qquad \p_{\mu}j^{\mu} = 0.
+\ese
+This last step makes sense as we know that in the canonical theory our current obeys such a relation. This seems harmless until we notice that this suggests that the left-hand side of \Cref{eqn:WardIdentity} vanishes! 
+
+How do we reconcile these two things? The answer is I don't personally know, but Dr. Iqbal suggests that it could be to do with where you choose to analytically continue our Euclidean result to a Minkowski result, where the time orderings become important. Clearly we cannot do it while the derivative is still inside the correlator, as in \Cref{eqn:WardIdentity}, as then we get a vanishing result. It therefore seems that we should first remove the integral and \textit{then} do the analytic continuation on just the correlator part. The idea is that some subtleties could arise in this process that makes the two agree. This section is \textit{not} meant to explain this (again because I don't know how) but merely just to point out that the result is given in different forms depending on how it is derived. 

@@ -1,0 +1,25 @@
+\chapter{Conventions}
+
+This course is a continuation of the QFT I course taught by Dr. Douglas Smith, and as such it is expected that the reader has taken this course/one similar. There's a couple tiny convention changes between these two courses, so here we just highlight these. 
+
+We still work with the field theorist's metric convention of $\eta^{\mu\nu} = \text{diag}(+1,-1,-1,-1)$, and still use Greek letters to denote spacetime indices (i.e. $\mu=0,...,(d-1)$) and Latin letters to denote just spatial indices (e.g. $a=1,...,(d-1)$). Of course we will often use $4$-dimensional spacetime, however we will try to avoid doing this too often as a lot of the results will hold for higher dimensions also. 
+
+However in contrast to the QFT I course, here we will work in \textit{natural units} and set $\hbar=c=1$. The other different convention is the definition of the source term in the partition function. In QFT I, we had that the partition function for QM was\footnote{I've slightly changed notation to use a fancy $\pD$ for the path integral measure, in contrast to the regular boring $D$ I used in QFT I. I have also included square brackets around the variable, in agreement with Dr. Iqbal's notation. I have done this purely because I think its a nice way to keep track of what the paths are. I might go back to QFT I and change this later, we'll see.}
+\bse 
+    Z[J] = \cN \int [\pD q] \exp\bigg(\frac{i}{\hbar} S[q] + \int dt \, q(t) J(t)\bigg),
+\ese 
+where the $i/\hbar$ only appears with the action term. In this course we shall redefine $J(t) \to -i\hbar J(t)$, so that (with $\hbar=1$) the partition function for QM is 
+\be 
+\label{eqn:QMPathIntegral}
+    Z[J] = \cN \int [\pD q] \exp\bigg(iS[q] + i\int dt \, q(t) J(t)\bigg),
+\ee
+
+From this definition it follows that we also have to alter our functional derivatives relating the partition function to the $N$-point Green's functions to include the $-i$ factors. That is
+\bse 
+    G(t_1,...,t_N) = \bra{0}\cT[q(t_1)...q(t_N)]\ket{0} =  \frac{(-i)^N}{Z_0} \frac{\del Z[J]}{\del J(t_1) ... \del J(t_N)}\bigg|_{J=0},
+\ese 
+where $\cT[...]$ is the time ordering function, and $Z_0 = Z[0]$ is the normalisation factor.
+
+\br 
+    One quick remark before we start. The aim of this course is essentially to represent QFT in terms of path integrals. For this reason we will derive \textit{a lot} of relationships we have seen before from the canonical treatment (e.g. in IFT). However as much as possible it is advised that we try forget that we know the results before hand, so that we can appreciate the self contained nature of the path integral approach. I will include small remarks here and there to remind us of this.  
+\er 
